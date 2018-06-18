@@ -5,12 +5,14 @@
 #include <iostream>
 using std::cout;
 using std::endl;
+
 int main()
 {
-cout << "Rafa was here." << endl;
-    cout << "Luis' commit\n";cout << "Hello World!" << endl;
-	cout << "From Lian MO.";for (int i = 0; i < 2147483647; i++) {
-		cout << i << endl;
-	}    return 0;
+	cout << "Rafa was here." << endl;
+    cout << "Luis' commit\n";
+	cout << "Hello World!" << endl;
+	cout << "From Lian MO.";
+	cout << "Daniel's code was here...";
+	return 0;
 }
 
