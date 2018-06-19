@@ -1,3 +1,6 @@
 ﻿  stdafx.cpp
+  BioNet.cpp
   Dijkstra.cpp
-  Dijkstra.vcxproj -> C:\Users\student\Desktop\BioNet\Dijkstra\x64\Debug\Dijkstra.exe
+  Generating Code...
+  LINK : C:\Users\student\source\repos\BioNet\Dijkstra\x64\Debug\Dijkstra.exe not found or not built by the last incremental link; performing full link
+  Dijkstra.vcxproj -> C:\Users\student\source\repos\BioNet\Dijkstra\x64\Debug\Dijkstra.exe
