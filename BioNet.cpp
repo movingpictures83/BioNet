@@ -5,7 +5,45 @@
 //
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+BioNet::BioNet()
+{
 
+}
+
+BioNet::BioNet(float, float)
+{
+
+}
+
+BioNet::~BioNet()
+{
+
+}
+
+void BioNet::setRange()
+{
+
+}
+
+void BioNet::setNetwork(int, int, float)
+{
+
+}
+
+void BioNet::setName(int, string)
+{
+
+}
+// Accessors
+float BioNet::getNetwork(int, int)
+{
+	return 0.0;
+}
+
+string BioNet::getName(int)
+{
+	return "";
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MORNING COHORT TURING
 //
