@@ -49,8 +49,6 @@ public:
 
 	float degree(int);
 
-	float shortestPath(int, int);
-
 	int numberOfEdges();
 
    //
