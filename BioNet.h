@@ -2,6 +2,7 @@
 #define BIONET_H
 #include <string>
 using std::string;
+using std::pair;
 
 #define NETWORK_SIZE 5
 class BioNet {
@@ -24,6 +25,7 @@ public:
 	void setRange(float, float);
 	void setEdge(int, int, float);
 	void setNode(int, string);
+	float shortestPath(int, int);
 	// Accessors
 	float getEdge(int, int);
 	string getNode(int);

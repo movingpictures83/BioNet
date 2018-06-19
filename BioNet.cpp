@@ -2,10 +2,14 @@
 #include "BioNet.h"
 #include <string>
 #include <numeric>
+#include <algorithm>
 #include <vector>
+#include <limits>
 
 using std::to_string;
 using std::accumulate;
+using std::make_heap;
+using std::vector;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MORNING COHORT EINSTEIN
@@ -73,6 +77,24 @@ float BioNet::degree(int index)
 {
 	return std::accumulate(network[index], network[index] + NETWORK_SIZE, 0.0f);
 }
+
+float BioNet::shortestPath(int start, int end)
+{
+	vector<float> dist(NETWORK_SIZE, std::numeric_limits<float>::max());
+
+	vector<int> prev(NETWORK_SIZE, -1);
+
+	vector<float> queue(NETWORK_SIZE, std::numeric_limits<float>::max());
+
+	std::make_heap(queue.begin(), queue.end());
+
+	while (queue.size())
+	{
+
+	}
+
+}
+
 
 
 int BioNet::numberOfEdges()
