@@ -2,8 +2,9 @@
 #include "CSVReader.h"
 
 
-CSVReader::CSVReader()
+CSVReader::CSVReader(const string &fname)
 {
+	this->_filename = fname;
 }
 
 
