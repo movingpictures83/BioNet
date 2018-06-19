@@ -4,8 +4,8 @@
 #include <string>
 using std::string;
 
+#define NETWORK_Size 5
 class BioNet {
-
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // MORNING COHORT EINSTEIN
    //
@@ -14,8 +14,8 @@ class BioNet {
 private:
 	float minweight;
 	float minweight;
-	float network[5][5];
-	string names[5];
+	float network[NETWORK_Size][NETWORK_Size];
+	string names[NETWORK_Size];
 
 public:
 	BioNet();
@@ -28,6 +28,7 @@ public:
 	// Accessors
 	float getNetwork(int, int);
 	string getName(int);
+
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // MORNING COHORT TURING
    //
