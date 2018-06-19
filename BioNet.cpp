@@ -20,29 +20,25 @@ BioNet::~BioNet()
 
 }
 
-void BioNet::setRange()
-{
-
+void BioNet::setRange(float min, float max) {
+	minweight = min;
+	maxweight = max;
 }
 
-void BioNet::setNetwork(int, int, float)
-{
-
+void BioNet::setEdge(int i, int j, float w) {
+	network[i][j] = w;
 }
 
-void BioNet::setName(int, string)
-{
-
+void BioNet::setNode(int i, string n) {
+	names[i] = n;
 }
 // Accessors
-float BioNet::getNetwork(int, int)
-{
-	return 0.0;
+float BioNet::getEdge(int i, int j) { 
+	return network[i][j]; 
 }
 
-string BioNet::getName(int)
-{
-	return "";
+string BioNet::getNode(int i) {
+	return names[i];
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MORNING COHORT TURING
