@@ -2,6 +2,8 @@
 #include "BioNet.h"
 #include <string>
 #include <numeric>
+#include <vector>
+
 using std::to_string;
 using std::accumulate;
 
@@ -15,8 +17,9 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 	// BioNet(-1.0, 1.0);
 }
 
-BioNet::BioNet(float min, float max) {
+BioNet::BioNet(float min, float max, bool dir) {
 	setRange(min, max);
+	directed = dir;
 	// for now start a default unconnected network
 	for (int i = 0; i < NETWORK_SIZE; i++) {
 		names[i] = to_string(i);
@@ -69,6 +72,20 @@ string BioNet::getNode(int i) {
 float BioNet::degree(int index)
 {
 	return std::accumulate(network[index], network[index] + NETWORK_SIZE, 0.0f);
+}
+
+
+int BioNet::numberOfEdges()
+{
+	int edges = 0;
+
+	for (int i = 0; i < NETWORK_SIZE; i++)
+		for (int j = directed ? 0:i ; j < NETWORK_SIZE; j++)
+		{
+			if (network[i][j] > -FLT_EPSILON && network[i][j] < FLT_EPSILON)
+				edges++;
+		}
+	return edges;
 }
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

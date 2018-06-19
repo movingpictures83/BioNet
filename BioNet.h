@@ -13,11 +13,12 @@ private:
 	float minweight;
 	float maxweight;
 	float network[NETWORK_SIZE][NETWORK_SIZE];
+	bool directed;
 	string names[NETWORK_SIZE];
 
 public:
 	BioNet();
-	BioNet(float, float);
+	BioNet(float, float, bool=false);
 	~BioNet();
 
 	void setRange(float, float);
@@ -47,6 +48,10 @@ public:
    //
 
 	float degree(int);
+
+	float shortestPath(int, int);
+
+	int numberOfEdges();
 
    //
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
