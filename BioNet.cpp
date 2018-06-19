@@ -1,4 +1,6 @@
 #include "BioNet.h"
+#include <string>
+using std::to_string;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MORNING COHORT EINSTEIN
@@ -6,22 +8,19 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 BioNet::BioNet() {
+	// for now start a default unconnected network with default range
+	BioNet(-1.0, 1.0);
+}
+
+BioNet::BioNet(float min, float max) {
+	setRange(min, max);
 	// for now start a default unconnected network
-	setRange(1.0, -1.0);
 	for (int i = 0; i < NETWORK_SIZE; i++) {
-		names[i] = (string) i;  // needs proper conversion to string
+		names[i] = to_string(i);
 		for (int j = 0; j < NETWORK_SIZE; j++) {
 			network[i][j] = 0;
 		}
 	}
-
-}
-
-BioNet::BioNet(float, float)
-{
-	// for now start a default unconnected network
-	setRange(1.0, -1.0);
-	fr
 }
 
 BioNet::~BioNet() {
