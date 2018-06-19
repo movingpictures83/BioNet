@@ -9,9 +9,10 @@ using std::accumulate;
 // MORNING COHORT EINSTEIN
 //
 //
-BioNet::BioNet() {
+BioNet::BioNet() : BioNet(-1.0, 1.0){
 	// for now start a default unconnected network with default range
-	BioNet(-1.0, 1.0);
+	// The following code only creates a local version variable - Corrected by Dijkstra Team
+	// BioNet(-1.0, 1.0);
 }
 
 BioNet::BioNet(float min, float max) {
@@ -20,7 +21,7 @@ BioNet::BioNet(float min, float max) {
 	for (int i = 0; i < NETWORK_SIZE; i++) {
 		names[i] = to_string(i);
 		for (int j = 0; j < NETWORK_SIZE; j++) {
-			network[i][j] = 0;
+			network[i][j] = 0.0f;
 		}
 	}
 }
