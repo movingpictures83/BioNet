@@ -22,12 +22,14 @@ public:
 	BioNet(float, float);
 	~BioNet();
 
-	void setRange();
+	void setRange(float, float);
 	void setEdge(int, int, float);
 	void setNode(int, string);
 	// Accessors
 	float getEdge(int, int);
 	string getNode(int);
+	float getMinWeight() { return minweight; }
+	float getMaxWeight() { return maxweight; }
 
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // MORNING COHORT TURING
