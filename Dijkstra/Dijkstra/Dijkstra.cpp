@@ -11,12 +11,15 @@ using std::fixed;
 bool UnitTest();
 int main()
 {
-	cout << "Rafa was here." << endl;
-    cout << "Luis' commit\n";
-	cout << "Hello World!" << endl;
-	cout << "From Lian MO.";
-	cout << "Daniel's code was here...\n";
-	
+	//Test for BioNet shortest path WIP
+	BioNet net; // Default min -1 max 1
+	net.setNode(0, "A");
+	net.setNode(1, "B");
+	net.setNode(2, "C");
+	net.setEdge(0, 1, -1);
+	net.setEdge(1, 2, 1);
+	net.setEdge(0, 2, 1);
+	//int shortest_path = net.shortestPath(0, 2)
 	UnitTest();
 	return 0;
 }
