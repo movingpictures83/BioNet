@@ -1,6 +1,5 @@
 #ifndef BIONET_H
 #define BIONET_H
-
 #include <string>
 using std::string;
 
