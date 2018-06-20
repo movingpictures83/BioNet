@@ -145,6 +145,12 @@ float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
 
 float BioNet::shortestPath(int start, int end) {  //converting network to vectors - EINSTEIN
 
+	if (start < 0 || start > network.size())
+		throw BioNetException("Start node is not in the matrix range");
+
+	if (end < 0 || end > network.size())
+		throw BioNetException("End node is not in the matrix range");
+
 	float negativeEdges = 0.0;
 
 	if (minweight < 0)
@@ -189,19 +195,18 @@ float BioNet::shortestPath(int start, int end) {  //converting network to vector
 		}
 	}
 
-	if (dist[end] != std::numeric_limits<float>::max())
-	{
-		auto result = dist[end];
-		auto current = end;
-		if (negativeEdges)
-			while (prev[current] != -1)
-			{
-				current = prev[current];
-				result -= negativeEdges;
-			}
-		return result;
-	}
-	return 0.0;
+	if (dist[end] == std::numeric_limits<float>::max())
+		throw BioNetException("No path found from start to end nodes.");
+
+	auto result = dist[end];
+	auto current = end;
+	if (negativeEdges)
+		while (prev[current] != -1)
+		{
+			current = prev[current];
+			result -= negativeEdges;
+		}
+	return result;
 }
 
 
