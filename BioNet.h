@@ -58,7 +58,8 @@ public:
    //
 
 	float degree(int);
-
+	void reserve(size_t);
+	size_t size();
 	int numberOfEdges();
 
    //

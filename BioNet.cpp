@@ -88,9 +88,24 @@ void BioNet::clear() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // AFTERNOON COHORT DIJKSKTRA
 //
+
+size_t BioNet::size()
+{
+	return network.size();
+}
+
+void BioNet::reserve(size_t size)
+{
+	names.resize(size);
+	network.reserve(size);
+	for (int i{ 0 }; i < size; i++)
+		network.emplace_back(size);
+}
+
 float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
 	return std::accumulate(network[index].begin(), network[index].end(), 0.0f);
 }
+
 
 float BioNet::shortestPath(int start, int end) {  //converting network to vectors - EINSTEIN
 	vector<float> dist(network.size(), std::numeric_limits<float>::max());

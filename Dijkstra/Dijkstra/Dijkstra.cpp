@@ -11,10 +11,12 @@ bool ShortestPathUnitTest();
 bool UnitTest();
 int main()
 {
+	cout << "======UNIT TEST======" << endl;
+	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+
 	cout << "======SHORTEST PATH UNIT TEST======";
 	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
-	cout << "======UNIT TEST======";
-	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	
 	return 0;
 }
 
@@ -22,6 +24,7 @@ bool ShortestPathUnitTest()
 {
 	//Test for BioNet shortest path WIP
 	BioNet net; // Default min -1 max 1
+	net.reserve(3);
 	net.setNode(0, "A");
 	net.setNode(1, "B");
 	net.setNode(2, "C");
@@ -34,13 +37,14 @@ bool ShortestPathUnitTest()
 bool UnitTest()
 {
 	BioNet TestBio;
+	TestBio.reserve(NETWORK_SIZE);
 	char posNeg = 1;
 	//Random Values
 	cout << " \t0\t1\t2\t3\t4\n";
-	for (int i{ 0 }; i < NETWORK_SIZE; i++)
+	for (int i{ 0 }; i < TestBio.size(); i++)
 	{
 		cout << i << '\t';
-		for (int j{ 0 }; j < NETWORK_SIZE; j++)
+		for (int j{ 0 }; j < TestBio.size(); j++)
 		{
 			TestBio.setEdge( i, j, ((i + j) % 2 == 0 ? -1 : 1) * (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)));
 			cout.precision(2);
@@ -48,7 +52,7 @@ bool UnitTest()
 		}
 		cout << endl;
 	}
-	for (int i{ 0 }; i < NETWORK_SIZE; i++)
+	for (int i{ 0 }; i < TestBio.size(); i++)
 	{
 		cout << "Element# " << i << ": " << TestBio.degree(i) << endl;
 	}
