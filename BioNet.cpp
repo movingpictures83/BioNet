@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "BioNet.h"
 #include <string>
 #include <numeric>
@@ -92,7 +91,7 @@ float BioNet::shortestPath(int start, int end)
 	{
 
 	}
-
+	return 0.0;
 }
 
 

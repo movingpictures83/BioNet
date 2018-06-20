@@ -4,11 +4,11 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest
-{		
+{
 	TEST_CLASS(UnitTest1)
 	{
 	public:
-		
+
 		TEST_METHOD(TestMethod1)
 		{
 			BioNet b = BioNet();
@@ -19,11 +19,11 @@ namespace UnitTest
 					float min = b.getMinWeight();
 					float max = b.getMaxWeight();
 
-					Assert::IsTrue(b.getEdge(i,j) >= min);
-					Assert::IsTrue(b.getEdge(i,j) <= max);
+					Assert::IsTrue(b.getEdge(i, j) >= min);
+					Assert::IsTrue(b.getEdge(i, j) <= max);
 				}
 			}
-			
+
 		}
 
 	};

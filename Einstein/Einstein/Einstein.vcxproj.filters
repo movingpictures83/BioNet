@@ -35,5 +35,8 @@
     <ClCompile Include="..\..\BioNet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BioNetTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
