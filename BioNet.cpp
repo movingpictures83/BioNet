@@ -1,3 +1,5 @@
+#include "BioNet.h"
+#include "BioNetException.h"
 #include <string>
 #include <numeric>
 #include <algorithm>
@@ -132,6 +134,8 @@ size_t BioNet::size()
 
 void BioNet::reserve(size_t size)
 {
+	if (size < 0)
+		throw BioNetException("Size is negative!");
 	names.resize(size);
 	network.reserve(size);
 	for (int i{ 0 }; i < size; i++)
@@ -139,6 +143,8 @@ void BioNet::reserve(size_t size)
 }
 
 float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
+	if (index < 0 || index >= network.size())
+		throw BioNetException("Index out of bounds!");
 	return std::accumulate(network[index].begin(), network[index].end(), 0.0f);
 }
 
@@ -217,7 +223,7 @@ int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 	for (int i = 0; i < network.size(); i++)
 		for (int j = directed ? 0:i ; j < network.size(); j++)
 		{
-			if (network[i][j] > -FLT_EPSILON && network[i][j] < FLT_EPSILON)
+			if (network[i][j] < -FLT_EPSILON || network[i][j] > FLT_EPSILON)
 				edges++;
 		}
 	return edges;
