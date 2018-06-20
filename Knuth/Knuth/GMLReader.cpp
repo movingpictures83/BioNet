@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "GMLReader.h"
+#include <algorithm>
 
 GMLReader::GMLReader(string filename) {
+	nodes.reserve(20);
 	infile.open(filename, ios::in);
-
 
 }
 
@@ -13,7 +14,6 @@ void GMLReader::ReadFile(BioNet b, string name) {
 	string temp;
 	do {
 		infile >> temp;
-		//	temp >> temp >> temp;
 		if (0 == temp.compare("node"))
 		{
 			infile >> temp >> temp >> temp;
@@ -21,9 +21,25 @@ void GMLReader::ReadFile(BioNet b, string name) {
 			node.id = stoi(temp);
 			infile >> temp >> temp;
 			node.label = temp;
-			b.setNode(node.id, node.label);
+			//b.setNode(node.id, node.label);
+			nodes.push_back(node);
 		}
-		else if (0 == temp.compare("edge"))
+		else  if (0 == temp.compare("edge"))
+		{
+			break;
+		}
+		else continue;
+	} while (!infile.eof());
+
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		b.setNode(nodes[i].id, nodes[i].label);
+	}
+
+	b.resize(nodes.size());
+
+	do {
+		 if (0 == temp.compare("edge"))
 		{
 			infile >> temp >> temp >> temp;
 			edge.source = stoi(temp);
@@ -32,10 +48,13 @@ void GMLReader::ReadFile(BioNet b, string name) {
 			infile >> temp >> temp;
 			edge.weight = stof(temp);
 			b.setEdge(edge.source, edge.target, edge.weight);
+			
 		}
-		else
-		{
-			continue;
-		}
-	} while (temp.length() > 0);
+		 else 
+		 {
+			 infile >> temp;
+			 continue;
+		 }
+	} while (!infile.eof());
+
 }

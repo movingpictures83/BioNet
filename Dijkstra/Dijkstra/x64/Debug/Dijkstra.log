@@ -1,4 +1,5 @@
 ﻿  BioNet.cpp
+  BioNetException.cpp
   Dijkstra.cpp
   Generating Code...
   Dijkstra.vcxproj -> C:\Users\student\Desktop\BioNet\Dijkstra\x64\Debug\Dijkstra.exe

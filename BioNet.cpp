@@ -5,11 +5,19 @@
 #include <algorithm>
 #include <vector>
 #include <limits>
+#include <set>
+#include <functional>
+#include "BioNet.h"
+#include "BioNetException.h"
 
 using std::to_string;
 using std::accumulate;
-using std::make_heap;
 using std::vector;
+using std::bind;
+using std::placeholders::_1;
+using std::placeholders::_2;
+using std::set;
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MORNING COHORT EINSTEIN
@@ -22,6 +30,7 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 }
 
 BioNet::BioNet(float min, float max, bool dir) {
+
 	setRange(min, max);
 	directed = dir;
 	// Converting network/names to vectors, no initialization needed
@@ -38,27 +47,55 @@ BioNet::~BioNet() {
 }
 
 void BioNet::setRange(float min, float max) {
+	if (min > max)
+	{
+		throw BioNetException("mininum value is larger than maximum value");
+	}
 	minweight = min;
 	maxweight = max;
 }
 
 void BioNet::setEdge(int i, int j, float w) {
+	if (i < 0 || i > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
+	if (j < 0 || j > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
+	if (w < minweight || w > maxweight)
+		throw BioNetException("Weight is not in the minWeight and maxWeight");
+
 	network[i][j] = w;
 }
 
 void BioNet::setNode(int i, string n) {
+	if (i < 0 || i > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
 	names[i] = n;
 }
 // Accessors
 float BioNet::getEdge(int i, int j) { 
-	return network[i][j]; 
+	if (i < 0 || i > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
+	if (j < 0 || j > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
+	return network[i][j];
 }
 
 string BioNet::getNode(int i) {
+	if (i < 0 || i > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
 	return names[i];
 }
 
 void BioNet::resize(int size) {
+
+	if (size <= 0)
+		throw BioNetException("resize value is invalid");
 	network.resize(size);
 	for (int i = 0; i < network.size(); i++) {
 		network[i].resize(size);
@@ -113,17 +150,62 @@ float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
 
 
 float BioNet::shortestPath(int start, int end) {  //converting network to vectors - EINSTEIN
+
+	float negativeEdges = 0.0;
+
+	if (minweight < 0)
+		negativeEdges = minweight * -1 + 1;
+
 	vector<float> dist(network.size(), std::numeric_limits<float>::max());
 
 	vector<int> prev(network.size(), -1);
 
-	vector<float> queue(network.size(), std::numeric_limits<float>::max());
+	set<int> vertexSet;
 
-	std::make_heap(queue.begin(), queue.end());
+	dist[start] = 0;
 
-	while (queue.size())
+	for (int i = 0; i < network.size(); i++)
+		vertexSet.insert(i);
+
+	auto distFunct = bind([](vector<float>& d, int x, int y) {return d[x] < d[y]; }, dist, _1, _2);
+
+	while (vertexSet.size())
 	{
+		auto current = *std::min_element(vertexSet.begin(), vertexSet.end(), distFunct);
 
+		if (current == end)
+			break;
+
+		vertexSet.erase(current);
+
+		for (int i = 0; i < network[current].size(); i++)
+		{
+			if (network[current][i])
+			{
+				auto weight = negativeEdges ? network[current][i] + negativeEdges : network[current][i];
+
+				auto alt = dist[current] + weight;
+
+				if (alt < dist[i])
+				{
+					dist[i] = alt;
+					prev[i] = current;
+				}
+			}
+		}
+	}
+
+	if (dist[end] != std::numeric_limits<float>::max())
+	{
+		auto result = dist[end];
+		auto current = end;
+		if (negativeEdges)
+			while (prev[current] != -1)
+			{
+				current = prev[current];
+				result -= negativeEdges;
+			}
+		return result;
 	}
 	return 0.0;
 }
