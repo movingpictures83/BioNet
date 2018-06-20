@@ -6,7 +6,7 @@ using std::string;
 using std::pair;
 using std::vector;
 
-//#define NETWORK_SIZE 5  //converting network/names to vectors - EINSTEIN
+#define NETWORK_SIZE 5  //converting network/names to vectors - EINSTEIN
 
 class BioNet {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
