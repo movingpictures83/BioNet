@@ -31,6 +31,11 @@ void GMLReader::ReadFile(BioNet b, string name) {
 		else continue;
 	} while (!infile.eof());
 
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		b.setNode(nodes[i].id, nodes[i].label);
+	}
+
 	b.resize(nodes.size());
 
 	do {
