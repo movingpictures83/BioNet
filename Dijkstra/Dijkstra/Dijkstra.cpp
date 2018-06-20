@@ -16,6 +16,7 @@ using std::for_each;
 bool ShortestPathUnitTest();
 bool UnitTest();
 void ExceptionTest();
+bool UndirectedTest();
 
 int main()
 {
@@ -28,6 +29,7 @@ int main()
 	
 	cout << "======Exception UNIT TEST======" << endl;
 	ExceptionTest();
+	UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	return 0;
 }
 
@@ -43,6 +45,24 @@ bool ShortestPathUnitTest()
 	net.setEdge(1, 2, 1);
 	net.setEdge(0, 2, 1);
 	return net.shortestPath(0, 2) == 1;
+}
+
+bool UndirectedTest()
+{
+	try
+	{
+		BioNet net;
+		net.reserve(2);
+		net.setNode(0, "A");
+		net.setNode(1, "B");
+		net.setEdge(1, 0, 1);
+		net.setEdge(0, 1, 1);
+		return false;
+	}
+	catch(...)
+	{
+		return true;
+	}
 }
 
 bool UnitTest()
