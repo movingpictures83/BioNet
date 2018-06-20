@@ -1,10 +1,13 @@
 #ifndef BIONET_H
 #define BIONET_H
 #include <string>
+#include <vector>
 using std::string;
 using std::pair;
+using std::vector;
 
-#define NETWORK_SIZE 5
+//#define NETWORK_SIZE 5  //converting network/names to vectors - EINSTEIN
+
 class BioNet {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // MORNING COHORT EINSTEIN
@@ -13,9 +16,11 @@ class BioNet {
 private:
 	float minweight;
 	float maxweight;
-	float network[NETWORK_SIZE][NETWORK_SIZE];
+	//float network[NETWORK_SIZE][NETWORK_SIZE]; //converting network to vectors
+	vector<string> names;
+	vector<vector<float> > network;
 	bool directed;
-	string names[NETWORK_SIZE];
+	//string names[NETWORK_SIZE];  //converting names to vector
 
 public:
 	BioNet();

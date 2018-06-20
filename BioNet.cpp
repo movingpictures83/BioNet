@@ -23,13 +23,14 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 BioNet::BioNet(float min, float max, bool dir) {
 	setRange(min, max);
 	directed = dir;
-	// for now start a default unconnected network
+	// Converting network/names to vectors, no initialization needed
+	/*// for now start a default unconnected network
 	for (int i = 0; i < NETWORK_SIZE; i++) {
 		names[i] = to_string(i);
 		for (int j = 0; j < NETWORK_SIZE; j++) {
 			network[i][j] = 0.0f;
 		}
-	}
+	}*/
 }
 
 BioNet::~BioNet() {
@@ -72,18 +73,16 @@ string BioNet::getNode(int i) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // AFTERNOON COHORT DIJKSKTRA
 //
-float BioNet::degree(int index)
-{
-	return std::accumulate(network[index], network[index] + NETWORK_SIZE, 0.0f);
+float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
+	return std::accumulate(network[index].begin(), network[index].end(), 0.0f);
 }
 
-float BioNet::shortestPath(int start, int end)
-{
-	vector<float> dist(NETWORK_SIZE, std::numeric_limits<float>::max());
+float BioNet::shortestPath(int start, int end) {  //converting network to vectors - EINSTEIN
+	vector<float> dist(network.size(), std::numeric_limits<float>::max());
 
-	vector<int> prev(NETWORK_SIZE, -1);
+	vector<int> prev(network.size(), -1);
 
-	vector<float> queue(NETWORK_SIZE, std::numeric_limits<float>::max());
+	vector<float> queue(network.size(), std::numeric_limits<float>::max());
 
 	std::make_heap(queue.begin(), queue.end());
 
@@ -96,12 +95,11 @@ float BioNet::shortestPath(int start, int end)
 
 
 
-int BioNet::numberOfEdges()
-{
+int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 	int edges = 0;
 
-	for (int i = 0; i < NETWORK_SIZE; i++)
-		for (int j = directed ? 0:i ; j < NETWORK_SIZE; j++)
+	for (int i = 0; i < network.size(); i++)
+		for (int j = directed ? 0:i ; j < network.size(); j++)
 		{
 			if (network[i][j] > -FLT_EPSILON && network[i][j] < FLT_EPSILON)
 				edges++;
