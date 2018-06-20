@@ -7,9 +7,15 @@
 using std::cout;
 using std::endl;
 using std::fixed;
-
+bool ShortestPathUnitTest();
 bool UnitTest();
 int main()
+{
+	UnitTest();
+	return 0;
+}
+
+bool ShortestPathUnitTest()
 {
 	//Test for BioNet shortest path WIP
 	BioNet net; // Default min -1 max 1
@@ -19,9 +25,7 @@ int main()
 	net.setEdge(0, 1, -1);
 	net.setEdge(1, 2, 1);
 	net.setEdge(0, 2, 1);
-	//int shortest_path = net.shortestPath(0, 2)
-	UnitTest();
-	return 0;
+	return net.shortestPath(0, 2) == 1;
 }
 
 bool UnitTest()
