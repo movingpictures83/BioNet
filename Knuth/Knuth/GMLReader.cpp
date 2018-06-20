@@ -10,7 +10,7 @@ GMLReader::GMLReader(string filename) {
 
 GMLReader::~GMLReader() {};
 
-void GMLReader::ReadFile(BioNet b, string name) {
+void GMLReader::ReadFile(BioNet& b, string name) {
 	string temp;
 	do {
 		infile >> temp;
