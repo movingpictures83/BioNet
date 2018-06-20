@@ -1,4 +1,3 @@
-#include "BioNet.h"
 #include <string>
 #include <numeric>
 #include <algorithm>
@@ -6,6 +5,8 @@
 #include <limits>
 #include <set>
 #include <functional>
+#include "BioNet.h"
+#include "BioNetException.h"
 
 using std::to_string;
 using std::accumulate;
@@ -27,6 +28,7 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 }
 
 BioNet::BioNet(float min, float max, bool dir) {
+
 	setRange(min, max);
 	directed = dir;
 	// Converting network/names to vectors, no initialization needed
@@ -43,27 +45,55 @@ BioNet::~BioNet() {
 }
 
 void BioNet::setRange(float min, float max) {
+	if (min > max)
+	{
+		throw BioNetException("mininum value is larger than maximum value");
+	}
 	minweight = min;
 	maxweight = max;
 }
 
 void BioNet::setEdge(int i, int j, float w) {
+	if (i < 0 || i > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
+	if (j < 0 || j > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
+	if (w < minweight || w > maxweight)
+		throw BioNetException("Weight is not in the minWeight and maxWeight");
+
 	network[i][j] = w;
 }
 
 void BioNet::setNode(int i, string n) {
+	if (i < 0 || i > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
 	names[i] = n;
 }
 // Accessors
 float BioNet::getEdge(int i, int j) { 
-	return network[i][j]; 
+	if (i < 0 || i > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
+	if (j < 0 || j > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
+	return network[i][j];
 }
 
 string BioNet::getNode(int i) {
+	if (i < 0 || i > network.size())
+		throw BioNetException("Node is not in the matrix range");
+
 	return names[i];
 }
 
 void BioNet::resize(int size) {
+
+	if (size <= 0)
+		throw BioNetException("resize value is invalid");
 	network.resize(size);
 	for (int i = 0; i < network.size(); i++) {
 		network[i].resize(size);
