@@ -218,7 +218,7 @@ int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 	for (int i = 0; i < network.size(); i++)
 		for (int j = directed ? 0:i ; j < network.size(); j++)
 		{
-			if (network[i][j] > -FLT_EPSILON && network[i][j] < FLT_EPSILON)
+			if (network[i][j] < -FLT_EPSILON || network[i][j] > FLT_EPSILON)
 				edges++;
 		}
 	return edges;
