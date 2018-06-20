@@ -32,6 +32,7 @@ public:
 	void setNode(int, string);
 	float shortestPath(int, int);
 	void resize(int size);
+	void clear();
 	// Accessors
 	float getEdge(int, int);
 	string getNode(int);
