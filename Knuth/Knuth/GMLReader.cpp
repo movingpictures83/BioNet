@@ -12,7 +12,7 @@ GMLReader::GMLReader(string filename) {
 
 GMLReader::~GMLReader() {};
 
-void GMLReader::ReadFile(BioNet b, string name) {
+void GMLReader::ReadFile(BioNet& b, string name) {
 	try {
 		string temp;
 		do {
@@ -41,7 +41,29 @@ void GMLReader::ReadFile(BioNet b, string name) {
 			else continue;
 		} while (!infile.eof());
 
-		b.resize(nodes.size());
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		b.setNode(nodes[i].id, nodes[i].label);
+	}
+
+	do {
+		 if (0 == temp.compare("edge"))
+		{
+			infile >> temp >> temp >> temp;
+			edge.source = stoi(temp);
+			infile >> temp >> temp;
+			edge.target = stoi(temp);
+			infile >> temp >> temp;
+			edge.weight = stof(temp);
+			b.setEdge(edge.source, edge.target, edge.weight);
+			
+		}
+		 else 
+		 {
+			 infile >> temp;
+			 continue;
+		 }
+	} while (!infile.eof());
 
 		do {
 			if (0 == temp.compare("edge"))
