@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include "../../BioNet.h"
+#include "../../BioNetException.h"
 
 using std::string;
 using std::to_string;
@@ -14,14 +15,19 @@ using std::for_each;
 
 bool ShortestPathUnitTest();
 bool UnitTest();
+void ExceptionTest();
+
 int main()
 {
 	cout << "======UNIT TEST======" << endl;
 	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
-	cout << "======SHORTEST PATH UNIT TEST======";
+	cout << "======SHORTEST PATH UNIT TEST======" << endl;
+
 	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
 	
+	cout << "======Exception UNIT TEST======" << endl;
+	ExceptionTest();
 	return 0;
 }
 
@@ -73,4 +79,35 @@ bool UnitTest()
 	}
 	
 	return TestBio.numberOfEdges() == nEdges;
+}
+
+void ExceptionTest()
+{
+	BioNet TestBio;
+	TestBio.reserve(NETWORK_SIZE);
+
+	try {
+		TestBio.getEdge(10, 3);
+	}
+	catch (BioNetException & e)
+	{
+		cout << "First Parameter of getEdge() -" << e.what() << endl;
+	}
+
+	try {
+		TestBio.getEdge(3, 10);
+	}
+	catch (BioNetException & e)
+	{
+		cout << "Second Parameter of getEdge() -" << e.what() << endl;
+	}
+
+	try {
+		TestBio.getNode(10);
+	}
+	catch (BioNetException & e)
+	{
+		cout << "Parameter of getNode() -" << e.what() << endl;
+	}
+
 }
