@@ -1,12 +1,17 @@
 ﻿// Dijkstra.cpp : Defines the entry point for the console application.
 //
-
-#include "stdafx.h"
+#include <string>
 #include <iostream>
+#include <algorithm>
 #include "../../BioNet.h"
+
+using std::string;
+using std::to_string;
 using std::cout;
 using std::endl;
 using std::fixed;
+using std::for_each;
+
 bool ShortestPathUnitTest();
 bool UnitTest();
 int main()
@@ -36,17 +41,27 @@ bool ShortestPathUnitTest()
 
 bool UnitTest()
 {
-	BioNet TestBio;
+	BioNet TestBio(-1, 1, true);
 	TestBio.reserve(NETWORK_SIZE);
 	char posNeg = 1;
 	//Random Values
-	cout << " \t0\t1\t2\t3\t4\n";
+	cout << '\t';
+	for (int i{ 0 }; i < TestBio.size(); i++)
+		cout << i << '\t';
+	cout << endl;
+
+	unsigned short nEdges = 0;
+
 	for (int i{ 0 }; i < TestBio.size(); i++)
 	{
 		cout << i << '\t';
+		TestBio.setNode(i, to_string(i));
 		for (int j{ 0 }; j < TestBio.size(); j++)
 		{
-			TestBio.setEdge( i, j, ((i + j) % 2 == 0 ? -1 : 1) * (static_cast <float> (rand()) / static_cast <float> (RAND_MAX)));
+			float amount = (i+j) % 5 == 0 ? 0.0f : (static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+			TestBio.setEdge( i, j, ((i + j) % 2 == 0 ? -1 : 1) * amount);
+			if (amount > FLT_EPSILON || amount < -FLT_EPSILON)
+				nEdges++;
 			cout.precision(2);
 			cout << fixed << TestBio.getEdge(i, j) << '\t';
 		}
@@ -54,7 +69,8 @@ bool UnitTest()
 	}
 	for (int i{ 0 }; i < TestBio.size(); i++)
 	{
-		cout << "Element# " << i << ": " << TestBio.degree(i) << endl;
+		cout << "Element [ " << TestBio.getNode(i) << "]: " << TestBio.degree(i) << endl;
 	}
-	return true;
+	
+	return TestBio.numberOfEdges() == nEdges;
 }
