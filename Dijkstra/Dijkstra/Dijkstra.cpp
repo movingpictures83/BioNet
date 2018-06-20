@@ -11,7 +11,10 @@ bool ShortestPathUnitTest();
 bool UnitTest();
 int main()
 {
-	UnitTest();
+	cout << "======SHORTEST PATH UNIT TEST======";
+	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
+	cout << "======UNIT TEST======";
+	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	return 0;
 }
 
