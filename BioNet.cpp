@@ -64,8 +64,13 @@ void BioNet::setEdge(int i, int j, float w) {
 
 	if (w < minweight || w > maxweight)
 		throw BioNetException("Weight is not in the minWeight and maxWeight");
-
 	network[i][j] = w;
+	if (!directed) {
+		if (network[j][i] == 0)
+			network[j][i] = w;
+		if (network[j][i] != w)
+			throw BioNetException("Both directions do not have the same weight");
+	}
 }
 
 void BioNet::setNode(int i, string n) {
