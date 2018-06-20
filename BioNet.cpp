@@ -4,11 +4,17 @@
 #include <algorithm>
 #include <vector>
 #include <limits>
+#include <set>
+#include <functional>
 
 using std::to_string;
 using std::accumulate;
-using std::make_heap;
 using std::vector;
+using std::bind;
+using std::placeholders::_1;
+using std::placeholders::_2;
+using std::set;
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MORNING COHORT EINSTEIN
@@ -108,17 +114,62 @@ float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
 
 
 float BioNet::shortestPath(int start, int end) {  //converting network to vectors - EINSTEIN
+
+	float negativeEdges = 0.0;
+
+	if (minweight < 0)
+		negativeEdges = minweight * -1 + 1;
+
 	vector<float> dist(network.size(), std::numeric_limits<float>::max());
 
 	vector<int> prev(network.size(), -1);
 
-	vector<float> queue(network.size(), std::numeric_limits<float>::max());
+	set<int> vertexSet;
 
-	std::make_heap(queue.begin(), queue.end());
+	dist[start] = 0;
 
-	while (queue.size())
+	for (int i = 0; i < network.size(); i++)
+		vertexSet.insert(i);
+
+	auto distFunct = bind([](vector<float>& d, int x, int y) {return d[x] < d[y]; }, dist, _1, _2);
+
+	while (vertexSet.size())
 	{
+		auto current = *std::min_element(vertexSet.begin(), vertexSet.end(), distFunct);
 
+		if (current == end)
+			break;
+
+		vertexSet.erase(current);
+
+		for (int i = 0; i < network[current].size(); i++)
+		{
+			if (network[current][i])
+			{
+				auto weight = negativeEdges ? network[current][i] + negativeEdges : network[current][i];
+
+				auto alt = dist[current] + weight;
+
+				if (alt < dist[i])
+				{
+					dist[i] = alt;
+					prev[i] = current;
+				}
+			}
+		}
+	}
+
+	if (dist[end] != std::numeric_limits<float>::max())
+	{
+		auto result = dist[end];
+		auto current = end;
+		if (negativeEdges)
+			while (prev[current] != -1)
+			{
+				current = prev[current];
+				result -= negativeEdges;
+			}
+		return result;
 	}
 	return 0.0;
 }
