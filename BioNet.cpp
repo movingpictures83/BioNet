@@ -1,3 +1,5 @@
+#include "BioNet.h"
+#include "BioNetException.h"
 #include <string>
 #include <numeric>
 #include <algorithm>
@@ -132,6 +134,8 @@ size_t BioNet::size()
 
 void BioNet::reserve(size_t size)
 {
+	if (size < 0)
+		throw BioNetException("Size is negative!");
 	names.resize(size);
 	network.reserve(size);
 	for (int i{ 0 }; i < size; i++)
@@ -139,11 +143,19 @@ void BioNet::reserve(size_t size)
 }
 
 float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
+	if (index < 0 || index >= network.size())
+		throw BioNetException("Index out of bounds!");
 	return std::accumulate(network[index].begin(), network[index].end(), 0.0f);
 }
 
 
 float BioNet::shortestPath(int start, int end) {  //converting network to vectors - EINSTEIN
+
+	if (start < 0 || start > network.size())
+		throw BioNetException("Start node is not in the matrix range");
+
+	if (end < 0 || end > network.size())
+		throw BioNetException("End node is not in the matrix range");
 
 	float negativeEdges = 0.0;
 
@@ -189,19 +201,18 @@ float BioNet::shortestPath(int start, int end) {  //converting network to vector
 		}
 	}
 
-	if (dist[end] != std::numeric_limits<float>::max())
-	{
-		auto result = dist[end];
-		auto current = end;
-		if (negativeEdges)
-			while (prev[current] != -1)
-			{
-				current = prev[current];
-				result -= negativeEdges;
-			}
-		return result;
-	}
-	return 0.0;
+	if (dist[end] == std::numeric_limits<float>::max())
+		throw BioNetException("No path found from start to end nodes.");
+
+	auto result = dist[end];
+	auto current = end;
+	if (negativeEdges)
+		while (prev[current] != -1)
+		{
+			current = prev[current];
+			result -= negativeEdges;
+		}
+	return result;
 }
 
 
@@ -212,7 +223,7 @@ int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 	for (int i = 0; i < network.size(); i++)
 		for (int j = directed ? 0:i ; j < network.size(); j++)
 		{
-			if (network[i][j] > -FLT_EPSILON && network[i][j] < FLT_EPSILON)
+			if (network[i][j] < -FLT_EPSILON || network[i][j] > FLT_EPSILON)
 				edges++;
 		}
 	return edges;

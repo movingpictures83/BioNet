@@ -10,7 +10,7 @@ GMLReader::GMLReader(string filename) {
 
 GMLReader::~GMLReader() {};
 
-void GMLReader::ReadFile(BioNet b, string name) {
+void GMLReader::ReadFile(BioNet& b, string name) {
 	string temp;
 	do {
 		infile >> temp;
@@ -31,12 +31,12 @@ void GMLReader::ReadFile(BioNet b, string name) {
 		else continue;
 	} while (!infile.eof());
 
+	b.resize(nodes.size());
+
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		b.setNode(nodes[i].id, nodes[i].label);
 	}
-
-	b.resize(nodes.size());
 
 	do {
 		 if (0 == temp.compare("edge"))

@@ -36,6 +36,6 @@ private:
 public:
 	GMLReader(string filename);
 	~GMLReader();
-	void ReadFile(BioNet b, string name);
+	void ReadFile(BioNet& b, string name);
 };
 
