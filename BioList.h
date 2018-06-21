@@ -8,6 +8,7 @@ using std::string;
 
 class BioList {
 private:
+	string name;
 	BioNode * head;
 	bool doSearch(string name, BioNode* start);
 public:
@@ -15,7 +16,7 @@ public:
 	~BioList();
 	bool search(string name) { doSearch(name, head); }
 	BioNode* insertFront(float weight, string name);
-	BioNode* deleteNode(string name);
+	void deleteNode(string name);
 	void clear();
 
 

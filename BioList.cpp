@@ -1,6 +1,9 @@
 #include "../BioNet/BioList.h"
 #include "../BioNet/BioNet.h"
+#include <iostream>
 
+using std::cout;
+using std::endl;
 
 BioList::BioList(float weight, string index) {
 	head = new BioNode(weight, index, NULL);
@@ -34,3 +37,27 @@ BioNode* BioList::insertFront(float weight, string name) {
 	return head;
 }
 
+void BioList::deleteNode(string name) {
+	BioNode* temp = head;
+	if (temp->getName() == name)
+	{
+		BioNode* tempNext = temp->getNext();
+		delete temp->getNext();
+		temp->getNext = tempNext;
+
+		return;
+	}
+	while (temp->getNext()->getNext() != nullptr && temp->getNext()->getName() != name)
+	{
+		temp = temp->getNext(); 
+	}
+	if (temp->getNext()->getNext() == nullptr && temp->getNext()->getName() != name)
+		cout << "Node " << name << " is not in the list" << endl;
+	else
+	{
+		BioNode* tempNext = temp->getNext();
+		delete temp->getNext();
+		temp->getNext = tempNext;
+	}
+
+}
