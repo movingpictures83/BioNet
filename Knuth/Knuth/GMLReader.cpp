@@ -25,12 +25,12 @@ void GMLReader::ReadFile(BioNet& b, string name) {
 				{
 					node.id = stoi(temp);
 				}
-				catch (exception e)
+				catch (DataInvalidFormatException e)
 				{
-
+					
 				}
 				infile >> temp >> temp;
-				node.label = temp;
+				node.label = temp.substr(1, temp.length() - 2);
 				//b.setNode(node.id, node.label);
 				nodes.push_back(node);
 			}
