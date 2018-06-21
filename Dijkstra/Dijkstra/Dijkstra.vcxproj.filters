@@ -27,6 +27,9 @@
     <ClInclude Include="..\..\BioNetException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\BioAdj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\BioNetException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\BioAdj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -147,12 +147,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\BioAdj.h" />
     <ClInclude Include="..\..\BioNet.h" />
     <ClInclude Include="..\..\BioNetException.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\BioAdj.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
     <ClCompile Include="..\..\BioNetException.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
