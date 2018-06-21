@@ -56,6 +56,8 @@ void BioNet::setRange(float min, float max) {
 }
 
 void BioNet::setEdge(int i, int j, float w) {
+	network->setEdge(i, j, w);
+	/* Converting to a Network Class
 	if (i < 0 || i > network.size())
 		throw BioNetException("Node is not in the matrix range");
 
@@ -70,28 +72,32 @@ void BioNet::setEdge(int i, int j, float w) {
 			network[j][i] = w;
 		if (network[j][i] != w)
 			throw BioNetException("Both directions do not have the same weight");
-	}
+	}*/
 }
 
 void BioNet::setNode(int i, string n) {
+	network->setNode(i, n);
+	/* Converting to a Network Class
 	if (i < 0 || i > network.size())
 		throw BioNetException("Node is not in the matrix range");
-
+	*/
 	names[i] = n;
 }
 // Accessors
 float BioNet::getEdge(int i, int j) { 
+	/* Converting to a Network Class
 	if (i < 0 || i > network.size())
 		throw BioNetException("Node is not in the matrix range");
 
 	if (j < 0 || j > network.size())
 		throw BioNetException("Node is not in the matrix range");
-
 	return network[i][j];
+	*/
+	return network->getEdge(i, j);
 }
 
 string BioNet::getNode(int i) {
-	if (i < 0 || i > network.size())
+	if (i < 0 || i > names.size())  // corrected from network.size()
 		throw BioNetException("Node is not in the matrix range");
 
 	return names[i];
@@ -101,16 +107,20 @@ void BioNet::resize(int size) {
 
 	if (size <= 0)
 		throw BioNetException("resize value is invalid");
+	network->resize();
+	/* Converting to a Network Class
 	network.resize(size);
 	for (int i = 0; i < network.size(); i++) {
 		network[i].resize(size);
 	}
+	*/
 
 	names.resize(size);
 }
 
 void BioNet::clear() {
-	network.clear();
+	network->clear();
+	// network.clear();  // Converting to a Network Class
 	names.clear();
 }
 
