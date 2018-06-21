@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\BioList.h" />
     <ClInclude Include="..\..\BioNet.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GMLReader.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\BioList.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
     <ClCompile Include="..\..\BioNetException.cpp" />
     <ClCompile Include="GMLReader.cpp" />
