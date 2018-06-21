@@ -16,5 +16,6 @@ public:
 	virtual void setNode(int, string) = 0;
 	virtual string getNode(int) = 0;
 	virtual int size() = 0;
+	virtual float degree(int);
 };
 
