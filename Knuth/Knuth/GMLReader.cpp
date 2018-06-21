@@ -2,7 +2,8 @@
 #include "GMLReader.h"
 #include <algorithm>
 #include "Exception.h"
-
+#include <iostream>
+using std::cout;
 
 GMLReader::GMLReader(string filename) {
 	nodes.reserve(20);
@@ -25,9 +26,10 @@ void GMLReader::ReadFile(BioNet& b, string name) {
 				{
 					node.id = stoi(temp);
 				}
-				catch (DataInvalidFormatException e)
+				catch (DataInvalidFormatException ex)
 				{
-					
+					cout << ex.getMsg();
+					exit(1);
 				}
 				infile >> temp >> temp;
 				node.label = temp.substr(1, temp.length() - 2);
@@ -50,11 +52,38 @@ void GMLReader::ReadFile(BioNet& b, string name) {
 		 if (0 == temp.compare("edge"))
 		{
 			infile >> temp >> temp >> temp;
-			edge.source = stoi(temp);
+			
+			try
+			{
+				edge.source = stoi(temp);
+			}
+			catch (DataInvalidFormatException ex)
+			{
+				cout << ex.getMsg();
+				exit(1);
+			}
 			infile >> temp >> temp;
-			edge.target = stoi(temp);
+			
+			try
+			{
+				edge.target = stoi(temp);
+			}
+			catch (DataInvalidFormatException ex)
+			{
+				cout << ex.getMsg();
+				exit(1);
+			}
 			infile >> temp >> temp;
-			edge.weight = stof(temp);
+			
+			try
+			{
+				edge.weight = stof(temp);
+			}
+			catch (DataInvalidFormatException ex)
+			{
+				cout << ex.getMsg();
+				exit(1);
+			}
 			b.setEdge(edge.source, edge.target, edge.weight);
 			
 		}
@@ -84,9 +113,9 @@ void GMLReader::ReadFile(BioNet& b, string name) {
 			}
 		} while (!infile.eof());
 	}
-	catch (exception e)
+	catch (IncorrectFileFormatException ex)
 	{
-		throw IncorrectFileFormatException("Incorrect File format !!");
+		ex.getMsg();
 		exit(1);
 
 	}
