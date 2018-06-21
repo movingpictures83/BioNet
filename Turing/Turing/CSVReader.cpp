@@ -35,27 +35,28 @@ void CSVReader::readFile(BioNet &bionet, const string & fname)
 	vector <string> col_Values;
 	getline(inputFile, line);
 	col_Values = split(line, ',');
-	int cols = 0;
 	//vector<vector<string>> v(row, vector<string>(col));
-	cols = (col_Values.size()) - 1;
-	//bionet.resize(col);
+	auto cols = col_Values.size();
+	bionet.resize(cols-1);
 	for (int col = 1; col < cols; col++)
 	{
 		bionet.setNode(col - 1, col_Values[col]);
 	}
+	//bionet.resize(cols);
 	vector <string> row_line;
 	int row_count = 0;
-	int row_perCol = 0;
-	while (!inputFile.eof)
+	while (!inputFile.eof())
 	{
 		getline(inputFile, line);
+		if (line == "")
+			continue;
 		col_Values = split(line, ',');
-		row_perCol = col_Values.size();
+		auto row_perCol = col_Values.size();
 		//Verify each row has the same column numbers
 		//Moving through every row, and setting the col value.
 		for (int i = 1; i < cols; i++)
 		{
-			bionet.setEdge(row_count, i, stof(col_Values[i]));
+			bionet.setEdge(row_count, i-1, stof(col_Values[i]));
 		}
 		row_count++;
 	}
