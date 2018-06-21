@@ -15,6 +15,5 @@ public:
 	virtual void getEdge(string, string);
 	virtual void setNode(int, string);
 	virtual void getNode(int);
-	virtual void shortestPath(int, int);
 };
 
