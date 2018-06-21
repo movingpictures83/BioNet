@@ -61,3 +61,5 @@ void BioList::deleteNode(string name) {
 	}
 
 }
+
+bool setWeight(string name, float weight){}
