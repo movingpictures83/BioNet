@@ -33,6 +33,9 @@ public:
 	void setRange(float, float);
 	void setEdge(int, int, float);
 	void setNode(int, string);
+	void deleteEdge(int int);
+	void deleteEdge(string, string);
+
 	float shortestPath(int, int);
 	void resize(int size);
 	void clear();
