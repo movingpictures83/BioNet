@@ -14,6 +14,8 @@ public:
 	BioList(float weight, string name);
 	~BioList();
 	bool search(string name) { doSearch(name, head); }
+	BioNode* insertFront(float weight, string name);
+	BioNode* deleteNode(string name);
 	void clear();
 
 
