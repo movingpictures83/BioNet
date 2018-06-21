@@ -17,5 +17,6 @@ public:
 	virtual string getNode(int) = 0;
 	virtual int size() = 0;
 	virtual float degree(int);
+	virtual int numberOfEdges();
 };
 
