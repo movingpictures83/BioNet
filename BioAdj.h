@@ -8,6 +8,7 @@ protected:
 	string keyword;
 public:
      BioAdj();
+	 BioAdj(BioAdj &&bioAdg);
 	~BioAdj();
 	virtual void setEdge(int, int, float);
 	virtual void setEdge(string, string, float);
