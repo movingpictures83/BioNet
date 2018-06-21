@@ -48,6 +48,8 @@ BioNet::~BioNet() {
 	delete network;
 }
 
+std::pair<int, int> getPair() { return {1, 1 }; }
+
 
 void BioNet::setRange(float min, float max) {
 	if (min > max)
@@ -227,6 +229,16 @@ float BioNet::shortestPath(int start, int end) {  //converting network to vector
 
 int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 	return network->numberOfEdges();
+}
+
+void BioNet::deleteEdge(int lval, int rval)
+{
+	network->deleteEdge(lval, rval);
+}
+
+void BioNet::deleteEdge(stringl lstr, string rstr)
+{
+	network->deleteEdge(lstr, rstr);
 }
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
