@@ -11,9 +11,10 @@ public:
 	~BioAdj();
 	virtual void setEdge(int, int, float);
 	virtual void setEdge(string, string, float);
-	virtual void getEdge(int, int);
-	virtual void getEdge(string, string);
+	virtual float getEdge(int, int);
+	virtual float getEdge(string, string);
 	virtual void setNode(int, string);
-	virtual void getNode(int);
+	virtual string getNode(int);
+	virtual int size();
 };
 
