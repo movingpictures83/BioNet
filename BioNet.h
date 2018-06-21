@@ -2,12 +2,18 @@
 #define BIONET_H
 #include <string>
 #include <vector>
+#include <typeinfo>
+#include "BioAdj.h"
+#include "BioAdjList.h"
+#include "BioAdjMat.h"
 using std::string;
 using std::pair;
 using std::vector;
+using std::type_info;
 
+using BioAdjList = BioAdj;
+using BioAdjMat = BioAdj;
 #define NETWORK_SIZE 5  //converting network/names to vectors - EINSTEIN
-
 class BioNet {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // MORNING COHORT EINSTEIN
@@ -16,15 +22,12 @@ class BioNet {
 private:
 	float minweight;
 	float maxweight;
-	//float network[NETWORK_SIZE][NETWORK_SIZE]; //converting network to vectors
-	vector<string> names;
-	vector<vector<float> > network;
-	bool directed;
-	//string names[NETWORK_SIZE];  //converting names to vector
+	BioAdj * network;
+	bool directed;//
 
 public:
 	BioNet();
-	BioNet(float, float, bool=false);
+	BioNet(float, float,bool=false, bool=false);
 	~BioNet();
 
 	void setRange(float, float);
@@ -58,7 +61,7 @@ public:
    //
 
 	float degree(int);
-	void reserve(size_t);
+	//void reserve(size_t);
 	size_t size();
 	int numberOfEdges();
 
