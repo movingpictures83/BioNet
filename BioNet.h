@@ -24,7 +24,7 @@ private:
 
 public:
 	BioNet();
-	BioNet(float, float, bool=false, bool=false);
+	BioNet(float, float, bool=false);
 	~BioNet();
 
 	void setRange(float, float);
