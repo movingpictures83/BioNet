@@ -32,14 +32,15 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 }
 
 
-BioNet::BioNet(float min, float max, bool isDir, bool isList) {
+BioNet::BioNet(float min, float max, bool isDir /*, bool isList*/) {
 
 	setRange(min, max);
 	directed = isDir;
 
+	/* BioAdjList not implemented yet
 	if (isList)
 		network = new BioAdjList();
-	else
+	else*/
 		network = new BioAdjMat();
 	// Converting network/names to vectors, no initialization needed
 }
