@@ -19,5 +19,11 @@ public:
 	virtual float degree(int) = 0;
 	virtual int numberOfEdges() = 0;
 	virtual void resize(int) = 0;
+
+	virtual int findNodeIndex(const string&) =0;
+	virtual void deleteEdge(const string &, const string &) =0;
+	virtual void deleteEdge(int, int) = 0;
+	virtual void deleteNode(const string &) = 0;
+	virtual void deleteNode(int) = 0;
 };
 
