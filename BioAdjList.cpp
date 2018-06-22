@@ -14,21 +14,26 @@ void BioAdjList::setEdge(string, string, float)
 {
 }
 
-float BioAdjList::getEdge(int, int)
+float BioAdjList::getEdge(int a , int b)
 {
+	return network[a].getWeight(network[b].getName());
+}
+
+float BioAdjList::getEdge(string a , string b)
+{
+	for (int i = 0; i < network.size(); i++) {
+		if (strcmp(network[i].getName().c_str(), a.c_str()) == 0)
+			return network[i].getWeight(b);
+	}
 	return 0.0f;
 }
 
-float BioAdjList::getEdge(string, string)
+void BioAdjList::setNode(int i , string s)
 {
-	return 0.0f;
+	
 }
 
-void BioAdjList::setNode(int, string)
+string BioAdjList::getNode(int i)
 {
-}
-
-string BioAdjList::getNode(int)
-{
-	return string();
+	return network[i].getName();
 }
