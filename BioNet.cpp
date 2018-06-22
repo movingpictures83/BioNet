@@ -8,6 +8,8 @@
 #include <set>
 #include <functional>
 #include "BioNetException.h"
+#include "BioAdjMat.h"
+#include "BioAdjList.h"
 
 using std::to_string;
 using std::accumulate;
@@ -102,7 +104,7 @@ string BioNet::getNode(int i) {
 	if (i < 0 || i > network->size())  // corrected from network.size()
 		throw BioNetException("Node is not in the matrix range");
 
-	return network->getNode(i)
+	return network->getNode(i);
 }
 
 
@@ -115,7 +117,7 @@ void BioNet::resize(int size) {
 
 
 void BioNet::clear() {
-	network->clear();
+	//network->clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -195,9 +197,9 @@ float BioNet::shortestPath(int start, int end) {  //converting network to vector
 
 		for (int i = 0; i < network[current].size(); i++)
 		{
-			if (network[current][i])
+			if (network->getEdge(current, i))
 			{
-				auto weight = negativeEdges ? network[current][i] + negativeEdges : network[current][i];
+				auto weight = negativeEdges ? network->getEdge(current,i) + negativeEdges : network->getEdge(current,i);
 
 				auto alt = dist[current] + weight;
 
@@ -232,12 +234,14 @@ int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 
 void BioNet::deleteEdge(int lval, int rval)
 {
-	network->deleteEdge(lval, rval);
+	// not implemented
+	//network->deleteEdge(lval, rval);
 }
 
-void BioNet::deleteEdge(stringl lstr, string rstr)
+void BioNet::deleteEdge(string lstr, string rstr)
 {
-	network->deleteEdge(lstr, rstr);
+	// not implemented
+	//network->deleteEdge(lstr, rstr);
 }
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

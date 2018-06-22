@@ -14,13 +14,13 @@ BioList::~BioList() {
 }
 
 void BioList::clear() {
-	if (head->getNext == NULL)
+	if (head->getNext() == NULL)
 	{
 		delete head;
 		return;
 	}
 	BioNode* temp = head;
-	head = temp->getNext;
+	head = temp->getNext();
 	delete temp;
 	clear();
 }
@@ -43,7 +43,7 @@ void BioList::deleteNode(string name) {
 	{
 		BioNode* tempNext = temp->getNext();
 		delete temp->getNext();
-		temp->getNext = tempNext;
+		temp->setNext(tempNext);
 
 		return;
 	}
@@ -57,7 +57,7 @@ void BioList::deleteNode(string name) {
 	{
 		BioNode* tempNext = temp->getNext();
 		delete temp->getNext();
-		temp->getNext = tempNext;
+		temp->setNext(tempNext);
 	}
 
 }
