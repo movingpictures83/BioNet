@@ -7,7 +7,6 @@
 #include <limits>
 #include <set>
 #include <functional>
-#include "BioNet.h"
 #include "BioNetException.h"
 
 using std::to_string;

@@ -11,8 +11,7 @@ using std::pair;
 using std::vector;
 using std::type_info;
 
-using BioAdjList = BioAdj;
-using BioAdjMat = BioAdj;
+
 #define NETWORK_SIZE 5  //converting network/names to vectors - EINSTEIN
 class BioNet {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +32,7 @@ public:
 	void setRange(float, float);
 	void setEdge(int, int, float);
 	void setNode(int, string);
-	void deleteEdge(int int);
+	void deleteEdge(int, int);
 	void deleteEdge(string, string);
 
 	float shortestPath(int, int);
