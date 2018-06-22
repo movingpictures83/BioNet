@@ -67,4 +67,29 @@ void BioList::deleteNode(string name) {
 
 }
 
-bool BioList::setWeight(string name, float weight) { return false; }
+bool BioList::setWeight(string name, float weight)
+{ 
+	auto * current = head;
+	while (current)
+	{
+		if (current->getName() == name)
+		{
+			current->setWeight(weight);
+			return true;
+		}
+		current = current->getNext();
+	}
+	return false;
+}
+
+float BioList::getWeight(string name)
+{
+	auto * current = head;
+	while (current)
+	{
+		if (current->getName() == name)
+			return current->getWeight();
+		current = current->getNext();
+	}
+	return 0;
+}
