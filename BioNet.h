@@ -2,12 +2,12 @@
 #define BIONET_H
 #include <string>
 #include <vector>
-#include <typeinfo>
+#include <typeindex>
 #include "BioAdj.h"
 using std::string;
 using std::pair;
 using std::vector;
-using std::type_info;
+using std::type_index;
 
 
 #define NETWORK_SIZE 5  //converting network/names to vectors - EINSTEIN
@@ -24,7 +24,7 @@ private:
 
 public:
 	BioNet();
-	BioNet(float, float, bool=false);
+	BioNet(float, float, bool=false, type_index=typeid(BioAdjMat));
 	~BioNet();
 
 	void setRange(float, float);
@@ -59,7 +59,7 @@ public:
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // AFTERNOON COHORT DIJKSTRA
    //
-
+	void convertToType(type_index);
 	float degree(int);
 	//void reserve(size_t);
 	size_t size();
