@@ -7,6 +7,7 @@
 #include <limits>
 #include <set>
 #include <functional>
+#include "BioAdjFactory.h"
 #include "BioNetException.h"
 #include "BioAdjMat.h"
 #include "BioAdjList.h"
@@ -18,7 +19,6 @@ using std::bind;
 using std::placeholders::_1;
 using std::placeholders::_2;
 using std::set;
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MORNING COHORT EINSTEIN
@@ -32,11 +32,12 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 }
 
 
-BioNet::BioNet(float min, float max, bool isDir /*, bool isList*/) {
+BioNet::BioNet(float min, float max, bool isDir, type_index ti) {
 
 	setRange(min, max);
 	directed = isDir;
 
+	network = BioAdjFactory::create(ti);
 	/* BioAdjList not implemented yet
 	if (isList)
 		network = new BioAdjList();
@@ -139,6 +140,18 @@ void BioNet::clear() {
 // AFTERNOON COHORT DIJKSKTRA
 //
 
+void BioNet::convertToType(type_index ti)
+{
+	auto old = network;
+	network = BioAdjFactory::create(ti);
+	for (int i{ 0 }; i < network->size(); i++)
+	{
+		network->setNode(i, old->getNode(i));
+		for (int j{ 0 }; j < network->size(); j++)
+			network->setEdge(i, j, old->getEdge(i, j));
+	}
+	delete old;	
+}
 
 size_t BioNet::size()
 {
