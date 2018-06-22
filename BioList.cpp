@@ -25,11 +25,6 @@ void BioList::clear() {
 	clear();
 }
 
-string BioList::getName()
-{
-	return name;
-}
-
 bool BioList::doSearch(string name, BioNode* start) {
 	if (start == NULL) return false;
 	else if (start->getName() == name) return true;
@@ -92,4 +87,9 @@ float BioList::getWeight(string name)
 		current = current->getNext();
 	}
 	return 0;
+}
+
+
+string BioList::getName() {
+	return name;
 }
