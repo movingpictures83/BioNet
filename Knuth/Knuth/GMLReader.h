@@ -36,7 +36,7 @@ private:
 	vector<Edge> edges;
 
 public:
-	GMLHandler(string e = "gml", string p = "") : Reader(e, p), Writer(e, p) {};
+	GMLHandler(string p = "") : Reader("gml", p), Writer("gml", p) {};
 	~GMLHandler();
 	void readFile(BioNet&, string& fname);
 	void writeFile(BioNet&, string& fname);

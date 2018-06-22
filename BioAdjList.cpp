@@ -30,7 +30,12 @@ float BioAdjList::getEdge(string a , string b)
 
 void BioAdjList::setNode(int i , string s)
 {
-	
+	auto oldName = network[i].getName();
+	network[i].setName(s);
+	for (int z = 0; z < network.size(); z++) {
+		if (z != i)
+		 network[z].setEdgeName(oldName, s);
+	}
 }
 
 string BioAdjList::getNode(int i)

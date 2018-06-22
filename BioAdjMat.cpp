@@ -1,5 +1,7 @@
 #include "BioAdjMat.h"
 #include "BioNetException.h"
+#include <numeric>
+
 
 void BioAdjMat::setEdge(int i, int j, float w)
 {
@@ -132,6 +134,23 @@ int BioAdjMat::size() {
 	return names.size();
 }
 
+float BioAdjMat::degree(int index) {
+	if (index < 0 || index >= matrix.size())
+		throw BioNetException("Index out of bounds!");
+	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
+}
+
+int BioAdjMat::numberOfEdges(bool directed) {  //converting network to vectors - EINSTEIN 
+	int edges = 0;
+	
+	for (int i = 0; i < matrix.size(); i++)
+		for (int j = directed ? 0 : i; j < matrix[i].size(); j++)
+		{
+			if (matrix[i][j] < -FLT_EPSILON || matrix[i][j] > FLT_EPSILON)
+				edges++;
+		}
+	return edges;
+}
 /* OLD CODE FROM BIONET, FOR BioAdjMat.  DO NOT DELETE
  *
  *

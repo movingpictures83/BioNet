@@ -14,17 +14,23 @@ private:
 	vector<string> names;
 
 public:
-	BioAdjMat() {}
+	BioAdjMat(int size = 5) {
+		names.resize(size);
+		matrix.resize(size);
+		for (auto n : matrix)
+			n.resize(size);
+	}
 	~BioAdjMat() {}
 
-	virtual void setEdge(int, int, float);
-	virtual void setEdge(string, string, float);
-	virtual float getEdge(int, int);
-	virtual float getEdge(string, string);
-	virtual void setNode(int, string);
-	virtual string getNode(int);
-	virtual int size();
-	virtual void resize(int);
+	void setEdge(int, int, float);
+	void setEdge(string, string, float);
+	float getEdge(int, int);
+	float getEdge(string, string);
+	void setNode(int, string);
+	string getNode(int);
+	int size();
+	void resize(int);
+	float degree(int);
 	int findNodeIndex(const string&);
 	void deleteEdge(const string &, const string &);
 	void deleteEdge(int, int);
