@@ -21,7 +21,7 @@ public:
 	float getEdge(string, string);
 	void setNode(int, string);
 	string getNode(int);
-	int size();
+	int size() { return network.size(); };
 	float degree(int);
 	int numberOfEdges();
 	void resize(int);
