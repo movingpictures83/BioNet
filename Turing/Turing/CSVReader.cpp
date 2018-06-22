@@ -41,7 +41,7 @@ void CSVReader::readFile(BioNet &bionet, const string & fname)
 	getline(inputFile, line);
 	col_Values = split(line, ',');
 	auto cols = col_Values.size();
-	bionet.resize(cols-1);
+	bionet.resize((int) cols-1);
 	for (int col = 1; col < cols; col++)
 	{
 		bionet.setNode(col - 1, col_Values[col]);
