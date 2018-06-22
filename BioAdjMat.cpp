@@ -30,7 +30,7 @@ string BioAdjMat::getNode(int index)
 }
 
 
-void BioAdjMat::deleteEdge(string istr, string jstr)
+void BioAdjMat::deleteEdge(const string & istr, const string & jstr)
 {
 
 	int i = findNodeIndex(istr);
@@ -39,17 +39,24 @@ void BioAdjMat::deleteEdge(string istr, string jstr)
 }
 void BioAdjMat::deleteEdge(int i, int j)
 {
-	int size = names.size();
+	auto size = names.size();
 	if (i < 0 || j < 0 || i >= size || j >= size)
 		throw BioNetException("Trying to delete invaid edge");
 	matrix[i][j] = 0;
 }
 
-void BioAdjMat::deleteNode(string)
+void BioAdjMat::deleteNode(const string & nodeName)
 {
-
+	auto node = findNodeIndex(nodeName);
+	deleteNode(node);
 }
-void BioAdjMat::deleteNode(int)
+void BioAdjMat::deleteNode(int nodeIndex)
 {
+	auto size = names.size();
+	if (nodeIndex < 0 || nodeIndex >= size )
+		throw BioNetException("Trying to delete invaid Node");
 
+	matrix.erase(matrix.begin() + nodeIndex);
+	for (auto & node : matrix)
+		node.erase(node.begin() + nodeIndex);
 }
