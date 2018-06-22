@@ -21,12 +21,12 @@ class BioNet {
 private:
 	float minweight;
 	float maxweight;
-	BioAdj * network;
+	BioAdj* network;
 	bool directed;//
 
 public:
 	BioNet();
-	BioNet(float, float,bool=false, bool=false);
+	BioNet(float, float, bool=false, bool=false);
 	~BioNet();
 
 	void setRange(float, float);

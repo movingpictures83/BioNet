@@ -30,12 +30,12 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 }
 
 
-BioNet::BioNet(float min, float max, bool dir, bool list) {
+BioNet::BioNet(float min, float max, bool isDir, bool isList) {
 
 	setRange(min, max);
-	directed = dir;
+	directed = isDir;
 
-	if (list)
+	if (isList)
 		network = new BioAdjList();
 	else
 		network = new BioAdjMat();
@@ -102,7 +102,7 @@ string BioNet::getNode(int i) {
 	if (i < 0 || i > network->size())  // corrected from network.size()
 		throw BioNetException("Node is not in the matrix range");
 
-	return network->getNode(i)
+	return network->getNode(i);
 }
 
 
@@ -230,13 +230,11 @@ int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 	return network->numberOfEdges();
 }
 
-void BioNet::deleteEdge(int lval, int rval)
-{
+void BioNet::deleteEdge(int lval, int rval) {
 	network->deleteEdge(lval, rval);
 }
 
-void BioNet::deleteEdge(stringl lstr, string rstr)
-{
+void BioNet::deleteEdge(string lstr, string rstr) {
 	network->deleteEdge(lstr, rstr);
 }
 //
