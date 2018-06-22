@@ -1,6 +1,8 @@
 #include "BioAdjMat.h"
 #include "BioNetException.h"
 
+<<<<<<< HEAD
+
 void BioAdjMat::setEdge(int i, int j, float w)
 {
 	matrix[i][j] = w;
@@ -22,7 +24,7 @@ void BioAdjMat::setEdge(string n1, string n2, float w)
 			j = x;
 		}
 	}
-
+	
 	if (i == -1 || j == -1) throw BioNetException("Node not found");
 
 	setEdge(i, j, w);
@@ -51,8 +53,7 @@ float BioAdjMat::getEdge(string n1, string n2)
 	if (i == -1 || j == -1) throw BioNetException("Node not found");
 
 	return getEdge(i, j);
-}
-
+=======
 int BioAdjMat::findNodeIndex(const string & lookup)
 {
 	int index = 0;
@@ -111,4 +112,5 @@ void BioAdjMat::deleteNode(int nodeIndex)
 	matrix.erase(matrix.begin() + nodeIndex);
 	for (auto & node : matrix)
 		node.erase(node.begin() + nodeIndex);
+>>>>>>> d12cb7d67e71c631235081417d5708d273985105
 }
