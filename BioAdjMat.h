@@ -24,8 +24,6 @@ public:
 	virtual void setNode(int, string);
 	virtual string getNode(int);
 	virtual int size();
-	virtual float degree(int);
-	virtual int numberOfEdges();
 	virtual void resize(int);
 	int findNodeIndex(const string&);
 	void deleteEdge(const string &, const string &);

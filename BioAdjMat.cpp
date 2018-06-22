@@ -3,6 +3,8 @@
 
 void BioAdjMat::setEdge(int i, int j, float w)
 {
+	if (i < 0 || i > names.size() || j < 0 || j > names.size())
+		throw BioNetException("setEdge() has wrong range");
 	matrix[i][j] = w;
 }
 void BioAdjMat::setEdge(string n1, string n2, float w)
@@ -13,11 +15,11 @@ void BioAdjMat::setEdge(string n1, string n2, float w)
 	// loop through to find indeces
 	for (int x = 0; x < names.size(); x++)
 	{
-		if (names[x] == n1)
+		if (!n1.compare(names[x]))
 		{
 			i = x;
 		}
-		if (names[x] == n2)
+		if (!n2.compare(names[x]))
 		{
 			j = x;
 		}
@@ -28,6 +30,9 @@ void BioAdjMat::setEdge(string n1, string n2, float w)
 	setEdge(i, j, w);
 }
 float BioAdjMat::getEdge(int i, int j) {
+	if (i < 0 || i > names.size() || j < 0 || j > names.size())
+		throw BioNetException("setEdge() has wrong range");
+
 	return matrix[i][j];
 }
 float BioAdjMat::getEdge(string n1, string n2)
@@ -38,11 +43,11 @@ float BioAdjMat::getEdge(string n1, string n2)
 	// loop through to find indeces
 	for (int x = 0; x < names.size(); x++)
 	{
-		if (names[x] == n1)
+		if (!n1.compare(names[x]))
 		{
 			i = x;
 		}
-		if (names[x] == n2)
+		if (!n2.compare(names[x]))
 		{
 			j = x;
 		}
@@ -58,7 +63,7 @@ int BioAdjMat::findNodeIndex(const string & lookup)
 	int index = 0;
 	for (auto node : names)
 	{
-		if (node == lookup)
+		if (lookup.compare(node))
 			return index;
 
 		index++;
@@ -67,7 +72,7 @@ int BioAdjMat::findNodeIndex(const string & lookup)
 }
 void BioAdjMat::setNode(int index, string name)
 {
-	if (index >= names.size())
+	if (index < 0 || index >= names.size())
 		throw BioNetException("Trying to add name out of range");
 
 	names[index] = name;
@@ -75,7 +80,7 @@ void BioAdjMat::setNode(int index, string name)
 
 string BioAdjMat::getNode(int index)
 {
-	if (index >= names.size())
+	if (index < 0 || index >= names.size())
 		throw BioNetException("Trying to add name out of range");
 
 	return names[index];
@@ -104,13 +109,27 @@ void BioAdjMat::deleteNode(const string & nodeName)
 }
 void BioAdjMat::deleteNode(int nodeIndex)
 {
-	auto size = names.size();
+	auto size = matrix.size();
 	if (nodeIndex < 0 || nodeIndex >= size )
 		throw BioNetException("Trying to delete invaid Node");
 
 	matrix.erase(matrix.begin() + nodeIndex);
 	for (auto & node : matrix)
 		node.erase(node.begin() + nodeIndex);
+}
+
+void BioAdjMat::resize(int size) {
+	if (size <= 0)
+		throw BioNetException("resize value is invalid");
+	matrix.resize(size);
+	for (int i = 0; i < matrix.size(); i++) {
+		matrix[i].resize(size);
+	}
+	matrix.resize(size);
+}
+
+int BioAdjMat::size() {
+	return names.size();
 }
 
 /* OLD CODE FROM BIONET, FOR BioAdjMat.  DO NOT DELETE
