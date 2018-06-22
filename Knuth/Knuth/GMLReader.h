@@ -4,6 +4,8 @@
 #include <string>
 #include <fstream>
 #include "../../BioNet.h"
+#include "../../Reader.h"
+#include "../../Writer.h"
 #include <vector>
 using std::string;
 using std::ifstream;
@@ -24,7 +26,7 @@ struct Edge {
 };
 
 
-class GMLReader
+class GMLHandler : public Reader, public Writer
 {
 private:
 	Node node;
@@ -34,8 +36,9 @@ private:
 	vector<Edge> edges;
 
 public:
-	GMLReader(string filename);
-	~GMLReader();
-	void ReadFile(BioNet& b, string name);
+	GMLHandler(string e = "gml", string p = "") : Reader(e, p), Writer(e, p) {};
+	~GMLHandler();
+	void readFile(BioNet&, string& fname);
+	void writeFile(BioNet&, string& fname);
 };
 

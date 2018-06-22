@@ -5,15 +5,25 @@
 #include <iostream>
 using std::cout;
 
-GMLReader::GMLReader(string filename) {
+//GMLReader::GMLReader(string filename) {
+//	nodes.reserve(20);
+//	infile.open(filename, ios::in);
+//
+//}
+
+GMLHandler::~GMLHandler() {};
+
+void GMLHandler::readFile(BioNet& b, string& fname) {
 	nodes.reserve(20);
-	infile.open(filename, ios::in);
 
-}
+	// check if path
+	// check if ext
 
-GMLReader::~GMLReader() {};
+	string filename = Reader::defaultPath + fname + Reader::defaultExt;
+	infile.open(filename);
 
-void GMLReader::ReadFile(BioNet& b, string name) {
+
+
 	try {
 		string temp;
 		do {
@@ -43,7 +53,7 @@ void GMLReader::ReadFile(BioNet& b, string name) {
 			else continue;
 		} while (!infile.eof());
 
-	for (int i = 0; i < nodes.size(); i++)
+	for (size_t i = 0; i < nodes.size(); i++)
 	{
 		b.setNode(nodes[i].id, nodes[i].label);
 	}
@@ -120,4 +130,10 @@ void GMLReader::ReadFile(BioNet& b, string name) {
 
 	}
 
+}
+
+
+void GMLHandler::writeFile(BioNet&, string& fname)
+{
+	return;
 }
