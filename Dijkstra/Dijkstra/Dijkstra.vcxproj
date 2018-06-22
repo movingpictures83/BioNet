@@ -155,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\BioAdj.cpp" />
+    <ClCompile Include="..\..\BioAdjList.cpp" />
+    <ClCompile Include="..\..\BioAdjMat.cpp" />
+    <ClCompile Include="..\..\BioList.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
     <ClCompile Include="..\..\BioNetException.cpp" />
     <ClCompile Include="Dijkstra.cpp" />

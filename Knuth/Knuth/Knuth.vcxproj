@@ -150,6 +150,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\BioList.h" />
     <ClInclude Include="..\..\BioNet.h" />
+    <ClInclude Include="..\..\Reader.h" />
+    <ClInclude Include="..\..\Writer.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GMLReader.h" />
     <ClInclude Include="Header.h" />

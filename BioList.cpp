@@ -93,3 +93,21 @@ float BioList::getWeight(string name)
 string BioList::getName() {
 	return name;
 }
+
+void BioList::setName(string n)
+{
+	name = n;
+}
+
+void BioList::setEdgeName(string oldName, string newName)
+{
+	auto* node = head;
+	while (node)
+	{
+		if (node->getName() == oldName)
+		{
+			node->setName(newName);
+			break;
+		}
+	}
+}

@@ -17,7 +17,7 @@ public:
 	virtual string getNode(int) = 0;
 	virtual int size() = 0;
 	virtual float degree(int) = 0;
-	virtual int numberOfEdges() = 0;
+	virtual int numberOfEdges(bool) = 0;
 	virtual void resize(int) = 0;
 
 	virtual int findNodeIndex(const string&) =0;

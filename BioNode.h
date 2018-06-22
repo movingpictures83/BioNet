@@ -12,7 +12,7 @@ private:
 public:
 	BioNode(float f, string i, BioNode* n) { weight = f; name = i; next = n; }
 	string getName() { return name; }
-	void getName(string n) { name = n; }
+	void setName(string n) { name = n; }
 	BioNode* getNext() { return next; }
 	void setWeight(float f) { weight = f; }
 	float getWeight() { return weight; }

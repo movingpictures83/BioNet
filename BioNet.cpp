@@ -41,7 +41,7 @@ BioNet::BioNet(float min, float max, bool isDir /*, bool isList*/) {
 	if (isList)
 		network = new BioAdjList();
 	else*/
-		network = new BioAdjMat();
+		//network = new BioAdjMat();
 	// Converting network/names to vectors, no initialization needed
 }
 
