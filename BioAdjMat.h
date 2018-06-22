@@ -14,7 +14,12 @@ private:
 	vector<string> names;
 
 public:
-	BioAdjMat() {}
+	BioAdjMat(int size) {
+		names.resize(size);
+		matrix.resize(size);
+		for (auto n : matrix)
+			n.resize(size);
+	}
 	~BioAdjMat() {}
 
 	virtual void setEdge(int, int, float);
