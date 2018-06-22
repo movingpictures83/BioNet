@@ -93,3 +93,8 @@ float BioList::getWeight(string name)
 string BioList::getName() {
 	return name;
 }
+
+void BioList::setName(string)
+{
+	
+}

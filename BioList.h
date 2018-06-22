@@ -17,6 +17,8 @@ public:
 	bool search(string name) { doSearch(name, head); }
 	bool setWeight(string name, float weight);
 	string getName();
+	void setName(string);
+	void setEdgeName(string, string);
 	float getWeight(string name);
 	BioNode* insertFront(float weight, string name);
 	void deleteNode(string name);
