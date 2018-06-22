@@ -25,6 +25,11 @@ void BioList::clear() {
 	clear();
 }
 
+string BioList::getName()
+{
+	return name;
+}
+
 bool BioList::doSearch(string name, BioNode* start) {
 	if (start == NULL) return false;
 	else if (start->getName() == name) return true;

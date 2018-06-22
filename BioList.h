@@ -19,6 +19,6 @@ public:
 	BioNode* insertFront(float weight, string name);
 	void deleteNode(string name);
 	void clear();
-
+	string getName();
 
 };
