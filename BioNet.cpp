@@ -157,7 +157,7 @@ size_t BioNet::size()
 float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
 	if (index < 0 || index >= network->size())
 		throw BioNetException("Index out of bounds!");
-	network->degree(index);
+	return network->degree(index);
 }
 
 
