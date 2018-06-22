@@ -9,10 +9,10 @@ using std::ios;
 using std::stringstream;
 
 
-CSVReader::CSVReader(const string &fname)
+/*CSVReader::CSVReader(const string &fname)
 {
 	this->_filename = fname;
-}
+}*/
 
 
 CSVReader::~CSVReader()
@@ -32,7 +32,7 @@ vector <string> CSVReader::split(const string &s, char delim) {
 void CSVReader::readFile(BioNet &bionet, const string & fname)
 {
 	//string filename;
-	ifstream inputFile(_filename, ios::in);
+	ifstream inputFile(fname/*_filename*/, ios::in);
 	if (inputFile.fail())
 		throw BioNetException("Unable to open given file");
 
