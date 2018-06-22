@@ -4,15 +4,15 @@
 #include <string>
 using std::string;
 class IO {
-private:
+protected:
 	string defaultPath;
-	string defaultExt;
+	static string defaultExt;
 public:
-	IO(string e, string p="") : defaultPath(p), defaultExt(e) {}
+	IO(string e, string p = "") : defaultPath(p) { setDefaultExt(e); };
 
 	//Accessor
 	string getDefaultExt() { return defaultExt; }
-	void setDefaultExt(string e) { defaultExt = e; }
+	static void setDefaultExt(string e) { defaultExt = e; }
 	string getDefaultPath() { return defaultPath;  }
 	void setDefaultPath(string p) { defaultPath = p; }
 };
