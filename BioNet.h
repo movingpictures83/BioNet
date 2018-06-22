@@ -4,8 +4,6 @@
 #include <vector>
 #include <typeinfo>
 #include "BioAdj.h"
-#include "BioAdjList.h"
-#include "BioAdjMat.h"
 using std::string;
 using std::pair;
 using std::vector;

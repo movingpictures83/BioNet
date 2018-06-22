@@ -13,4 +13,5 @@ public:
 	BioNode(float f, string i, BioNode* n) { weight = f; name = i; next = n; }
 	string getName() { return name; }
 	BioNode* getNext() { return next; }
+	void setNext(BioNode* n) { next->next = n; }
 };
