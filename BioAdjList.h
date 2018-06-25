@@ -26,11 +26,11 @@ public:
 	float degree(const int) const;
 	int numberOfEdges() const;
 	void resize(const int);
-	int findNodeIndex(const string&);
+	int findNodeIndex(const string&) const;
 	void deleteEdge(const string &, const string &);
 	void deleteEdge(int, int);
 	void deleteNode(const string &);
-	void deleteNode(int) = 0;
+	void deleteNode(int);
 	const BioAdjList& operator+=(const string nodename);
 	BioAdjList operator+(const string nodename);
 	BioAdjList operator=(const BioAdjList &rhs);
