@@ -107,3 +107,36 @@ void BioList::setEdgeName(const string& oldName, const string& newName)
 		}
 	}
 }
+
+BioList::BioList(const BioList& copy) {
+	for (auto node = copy.head; node != nullptr; node = node->getNext())
+		insertFront(node->getWeight(), node->getName());
+}
+
+BioList BioList::operator*(const float weight) {
+	BioList list(*this);
+	for (auto node = list.head; node != nullptr; node = node->getNext())
+		node->setWeight(node->getWeight() * weight);
+	return list;
+}
+
+const BioList & BioList::operator*=(const float weight)
+{
+	for (auto node = head; node != nullptr; node = node->getNext())
+		node->setWeight(node->getWeight() * weight);
+	return *this;
+}
+
+BioList BioList::operator/(const float weight) {
+	BioList list(*this);
+	for (auto node = list.head; node != nullptr; node = node->getNext())
+		node->setWeight(node->getWeight() / weight);
+	return list;
+}
+
+const BioList & BioList::operator/=(const float weight)
+{
+	for (auto node = head; node != nullptr; node = node->getNext())
+		node->setWeight(node->getWeight() / weight);
+	return *this;
+}
