@@ -6,7 +6,6 @@
 using std::vector;
 using std::string;
 
-
 class BioAdjMat : public BioAdj
 {
 private:
@@ -14,6 +13,12 @@ private:
 	vector<string> names;
 
 public:
+	static const string& NetworkType()
+	{
+		static const string network = "BioAdjMat";
+		return network;
+	}
+
 	BioAdjMat(int size = 5) {
 		names.resize(size);
 		matrix.resize(size);
