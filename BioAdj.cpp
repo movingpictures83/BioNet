@@ -2,11 +2,4 @@
 
 
 
-BioAdj::BioAdj()
-{
-}
 
-
-BioAdj::~BioAdj()
-{
-}

@@ -158,7 +158,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\BioAdj.cpp" />
     <ClCompile Include="..\..\BioAdjMat.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
     <ClCompile Include="..\..\BioNetException.cpp" />

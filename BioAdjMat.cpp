@@ -136,13 +136,13 @@ int BioAdjMat::size() const {
 	return names.size();
 }
 
-float BioAdjMat::degree(const int index) {
+float BioAdjMat::degree(const int index) const{
 	if (index < 0 || index >= matrix.size())
 		throw BioNetException("Index out of bounds!");
 	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
 }
 
-int BioAdjMat::numberOfEdges() const {  //converting network to vectors - EINSTEIN 
+int BioAdjMat::numberOfEdges() const{  //converting network to vectors - EINSTEIN 
 	int edges = 0;
 	
 	for (int i = 0; i < matrix.size(); i++)

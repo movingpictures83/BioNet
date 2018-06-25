@@ -30,12 +30,12 @@ public:
 	string getNode(const int) const;
 	int size() const;
 	void resize(const int);
-	float degree(const int);
+	float degree(const int) const;
 	int numberOfEdges() const;
 	int findNodeIndex(const string&) const;
 	void deleteEdge(const string &, const string &);
 	void deleteEdge(int, int);
 	void deleteNode(const string &);
 	void deleteNode(const int);
-	int numberOfEdges(bool) const;
+	//int numberOfEdges(bool) ;
 };

@@ -17,10 +17,10 @@ public:
 	virtual string getNode(const int) const = 0;
 	virtual int size() const = 0;
 	virtual float degree(const int) const = 0;
-	virtual int numberOfEdges() const  = 0;
+	virtual int numberOfEdges() const = 0;
 	virtual void resize(const int) = 0;
 
-	virtual int findNodeIndex(const string&) =0;
+	virtual int findNodeIndex(const string&) const =0;
 	virtual void deleteEdge(const string &, const string &) =0;
 	virtual void deleteEdge(int, int) = 0;
 	virtual void deleteNode(const string &) = 0;
