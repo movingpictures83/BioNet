@@ -69,3 +69,34 @@ const BioAdjList& BioAdjList::operator+=(const string nodename)
 	
 	return *this;
 }
+
+int BioAdjList::numberOfEdges()
+{
+	auto result = 0;
+	for (size_t i = 0; i < network.size(); i++)
+	{
+		auto node = network[i].front();
+		while (node)
+			result++;
+	}
+	return result;
+}
+
+void BioAdjList::resize(int newSize)
+{
+	auto sizeDifference = newSize - network.size();
+
+	if(sizeDifference < 0) //Last sizeDifference nodes will be destroyed, so the other nodes that have edges to them must be cleaned.
+	{
+		sizeDifference *= -1;
+		auto networkSize = network.size();
+		for (int i = networkSize - sizeDifference; i < networkSize; i++)
+		{
+			auto name = network[i].getName();
+			for (int j = 0; j < networkSize - sizeDifference; j++)
+				network[j].deleteNode(name);
+		}
+	}
+
+	network.resize(newSize);
+}
