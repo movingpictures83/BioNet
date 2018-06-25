@@ -2,6 +2,10 @@
 #include "BioNetException.h"
 #include "BioAdjFactory.h"
 #include <numeric>
+#include <ostream>
+
+using std::ostream;
+using std::endl;
 
 //BioAdjFactory::mFactoryMap["matrix"] = []() {new BioAdjMat()};
 
@@ -129,7 +133,7 @@ void BioAdjMat::resize(const int size) {
 	for (int i = 0; i < matrix.size(); i++) {
 		matrix[i].resize(size);
 	}
-	matrix.resize(size);
+	names.resize(size);
 }
 
 int BioAdjMat::size() const {
@@ -153,6 +157,119 @@ int BioAdjMat::numberOfEdges() const{  //converting network to vectors - EINSTEI
 		}
 	return edges;
 }
+
+BioAdjMat BioAdjMat::operator= (const BioAdjMat & rhs)
+{
+	names.resize(rhs.size());
+	for (int i = 0; i < names.size(); i++)
+	{
+		names[i] = rhs.getNode(i);
+	}
+	matrix.resize(rhs.size());
+	for (int i = 0; i < rhs.size(); i++)
+	{
+		for (int j = 0; j < rhs.size(); j++)
+		{
+			matrix[i][j] = rhs.getEdge(i, j);
+		}
+	}
+	return * this;
+}
+
+const BioAdjMat BioAdjMat::operator+ (const string & aNode)
+{
+	BioAdjMat newAdjMat;
+	newAdjMat.resize((*this).size() + 1);
+	for (int i = 0; i < (*this).size(); i++)
+	{
+		newAdjMat.names[i] = names[i];
+		for (int j = 0; j < (*this).size(); j++)
+		{
+			newAdjMat[i, j] = matrix[i][j];
+		}
+	}
+	newAdjMat.names[(*this).size()] = aNode;
+	return newAdjMat;
+}
+
+const BioAdjMat & BioAdjMat::operator+= (const string & aNode)
+{
+	(*this).resize((*this).size() + 1);
+	(*this).setNode((*this).size(), aNode);
+	return *this;
+}
+
+const BioAdjMat & BioAdjMat::operator/= (const float & factor)
+{
+	if (factor > -FLT_EPSILON && factor < FLT_EPSILON)
+		throw BioNetException("Can't divide 0");
+	for (int i = 0; i < names.size(); i++)
+		for (int j = 0; j < names.size(); j++)
+			matrix[i][j] /= factor;
+	return (*this);
+}
+
+
+const BioAdjMat & BioAdjMat::operator*= (const float & factor)
+{
+	for (int i = 0; i < names.size(); i++)
+		for (int j = 0; j < names.size(); j++)
+			matrix[i][j] *= factor;
+	return (*this);
+
+}
+
+bool BioAdjMat::operator== (const BioAdjMat & rhs)
+{
+	for (int i = 0; i < names.size(); i++)
+	{
+		if (names[i].compare(rhs.names[i]))
+			return false;
+		for (int j = 0; j < names.size(); j++)
+			if (!((matrix[i][j] - rhs.matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs.matrix[i][j]) < FLT_EPSILON))
+				return false;
+	}
+	return true;
+}
+bool BioAdjMat::operator!= (const BioAdjMat & rhs)
+{
+	for (int i = 0; i < names.size(); i++)
+	{
+		if (names[i].compare(rhs.names[i]))
+			return true;
+		for (int j = 0; j < names.size(); j++)
+			if (!((matrix[i][j] - rhs.matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs.matrix[i][j]) < FLT_EPSILON))
+				return true;
+	}
+	return false;
+}
+
+const string & BioAdjMat::operator[] (int i)
+{
+	if (i < 0 || i > names.size())
+		throw BioNetException("Index is out of range");
+	return names[i];
+}
+
+float BioAdjMat::operator() (int i, int j)
+{
+	if (i < 0 || i > names.size() || j < 0 || j > names.size())
+		throw BioNetException("Index is out of range");
+	return matrix[i][j];
+}
+
+ostream & operator<<(ostream & o , const BioAdjMat & rhs)
+{
+	for (int i = 0; i < rhs.size(); i++)
+	{
+		o << rhs.getNode(i) << " ";
+		for (int j = 0; j < rhs.size(); j++)
+			o << rhs.getEdge(i, j) << " ";
+		o << endl;
+	}
+	return o;
+}
+
 /* OLD CODE FROM BIONET, FOR BioAdjMat.  DO NOT DELETE
  *
  *
@@ -279,3 +396,5 @@ void BioNet::clear() {
  *
  *
  */
+
+
