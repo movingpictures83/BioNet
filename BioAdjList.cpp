@@ -51,3 +51,21 @@ float BioAdjList::degree(int x)
 		result += node->getWeight();
 	return result;
 }
+
+BioAdjList BioAdjList::operator+(const string nodename)
+{
+	BioAdjList list = *this;
+	list += nodename;
+	return list;
+}
+
+BioAdjList BioAdjList::operator=(const BioAdjList & rhs)
+{
+	return BioAdjList(rhs);
+}
+
+const BioAdjList& BioAdjList::operator+=(const string nodename)
+{
+	
+	return *this;
+}

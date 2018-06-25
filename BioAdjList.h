@@ -15,6 +15,7 @@ private:
 	vector<BioList> network;
 	map<string, int> names;
 public:
+	BioAdjList(const BioAdjList&);
 	void setEdge(int, int, float);
 	void setEdge(string, string, float);
 	float getEdge(int, int);
@@ -25,4 +26,7 @@ public:
 	float degree(int);
 	int numberOfEdges();
 	void resize(int);
+	const BioAdjList& operator+=(const string nodename);
+	BioAdjList operator+(const string nodename);
+	BioAdjList operator=(const BioAdjList &rhs);
 };
