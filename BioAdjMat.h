@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vector>
 #include <string>
 #include "BioAdj.h"
@@ -31,6 +30,7 @@ public:
 	int size();
 	void resize(int);
 	float degree(int);
+	int numberOfEdges();
 	int findNodeIndex(const string&);
 	void deleteEdge(const string &, const string &);
 	void deleteEdge(int, int);

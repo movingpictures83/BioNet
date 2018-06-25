@@ -6,13 +6,14 @@ using std::string;
 class IO {
 protected:
 	string defaultPath;
-	static string defaultExt;
+	//static string defaultExt ;
 public:
-	IO(string e, string p = "") : defaultPath(p) { setDefaultExt(e); };
+	IO(string path = "") : defaultPath(path) { };
 
 	//Accessor
-	string getDefaultExt() { return defaultExt; }
-	static void setDefaultExt(string e) { defaultExt = e; }
+	virtual string getDefaultExt() = 0;
+	//virtual void setDefaultExt(string e) = 0;
 	string getDefaultPath() { return defaultPath;  }
 	void setDefaultPath(string p) { defaultPath = p; }
+	
 };

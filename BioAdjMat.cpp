@@ -1,7 +1,9 @@
 #include "BioAdjMat.h"
 #include "BioNetException.h"
+#include "BioAdjFactory.h"
 #include <numeric>
 
+//BioAdjFactory::mFactoryMap["matrix"] = []() {new BioAdjMat()};
 
 void BioAdjMat::setEdge(int i, int j, float w)
 {
@@ -140,11 +142,11 @@ float BioAdjMat::degree(int index) {
 	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
 }
 
-int BioAdjMat::numberOfEdges(bool directed) {  //converting network to vectors - EINSTEIN 
+int BioAdjMat::numberOfEdges() {  //converting network to vectors - EINSTEIN 
 	int edges = 0;
 	
 	for (int i = 0; i < matrix.size(); i++)
-		for (int j = directed ? 0 : i; j < matrix[i].size(); j++)
+		for (int j = 0; j < matrix[i].size(); j++)
 		{
 			if (matrix[i][j] < -FLT_EPSILON || matrix[i][j] > FLT_EPSILON)
 				edges++;

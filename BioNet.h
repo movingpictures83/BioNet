@@ -24,7 +24,7 @@ private:
 
 public:
 	BioNet();
-	BioNet(float, float, bool=false, type_index=typeid(BioAdjMat));
+	BioNet(float, float, bool=false, string = "matrix");
 	~BioNet();
 
 	void setRange(float, float);
@@ -59,7 +59,7 @@ public:
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // AFTERNOON COHORT DIJKSTRA
    //
-	void convertToType(type_index);
+	void convertToType(string);
 	float degree(int);
 	//void reserve(size_t);
 	size_t size();

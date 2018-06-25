@@ -32,7 +32,7 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 }
 
 
-BioNet::BioNet(float min, float max, bool isDir, type_index ti) {
+BioNet::BioNet(float min, float max, bool isDir, string ti) {
 
 	setRange(min, max);
 	directed = isDir;
@@ -140,7 +140,7 @@ void BioNet::clear() {
 // AFTERNOON COHORT DIJKSKTRA
 //
 
-void BioNet::convertToType(type_index ti)
+void BioNet::convertToType(string ti)
 {
 	auto old = network;
 	network = BioAdjFactory::create(ti);
@@ -243,7 +243,10 @@ float BioNet::shortestPath(int start, int end) {  //converting network to vector
 
 
 int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
-	return network->numberOfEdges();
+	int x = network->numberOfEdges();
+	if (!directed)
+		x = x / 2;
+	return x;
 }
 
 void BioNet::deleteEdge(int lval, int rval) {

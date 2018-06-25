@@ -7,8 +7,8 @@ class BioAdj
 protected:
 	string keyword;
 public:
-     BioAdj();
-	~BioAdj();
+    // BioAdj();
+	//~BioAdj();
 	virtual void setEdge(int, int, float) = 0;
 	virtual void setEdge(string, string, float) = 0;
 	virtual float getEdge(int, int) = 0;
@@ -17,7 +17,7 @@ public:
 	virtual string getNode(int) = 0;
 	virtual int size() = 0;
 	virtual float degree(int) = 0;
-	virtual int numberOfEdges(bool) = 0;
+	virtual int numberOfEdges() = 0;
 	virtual void resize(int) = 0;
 
 	virtual int findNodeIndex(const string&) =0;

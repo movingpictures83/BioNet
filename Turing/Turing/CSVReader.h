@@ -19,7 +19,7 @@ public:
 	~CSVReader();
 	void readFile(BioNet &file, const string & fname);
 	void writeFile(BioNet& file, const string& fname) {}
-
+	string getDefaultExt() { return "csv"; }
 //private:
 	//string _filename;
 private :

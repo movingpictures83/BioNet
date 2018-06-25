@@ -33,6 +33,12 @@
     <ClInclude Include="..\..\BioAdjMat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\BioAdjFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\IO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
