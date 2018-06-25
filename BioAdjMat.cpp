@@ -176,7 +176,7 @@ BioAdjMat BioAdjMat::operator= (const BioAdjMat & rhs)
 	return * this;
 }
 
-const BioAdjMat BioAdjMat::operator+ (const string & aNode)
+BioAdjMat BioAdjMat::operator+ (const string & aNode)
 {
 	BioAdjMat newAdjMat;
 	newAdjMat.resize((*this).size() + 1);
@@ -185,7 +185,7 @@ const BioAdjMat BioAdjMat::operator+ (const string & aNode)
 		newAdjMat.names[i] = names[i];
 		for (int j = 0; j < (*this).size(); j++)
 		{
-			newAdjMat[i, j] = matrix[i][j];
+			newAdjMat.matrix[i][j] = matrix[i][j];
 		}
 	}
 	newAdjMat.names[(*this).size()] = aNode;
