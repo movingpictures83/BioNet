@@ -7,6 +7,7 @@
 using std::vector;
 using std::string;
 
+
 class BioAdjMat : public BioAdj
 {
 private:
