@@ -37,4 +37,5 @@ public:
 	void deleteEdge(int, int);
 	void deleteNode(const string &);
 	void deleteNode(int);
+	int numberOfEdges(bool);
 };

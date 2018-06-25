@@ -13,9 +13,11 @@ using std::function;
 
 namespace BioAdjFactory {
 	using BioAdjFactMap = unordered_map<string, function<BioAdj*(void)>>;
-	const static BioAdjFactMap mFactoryMap =
-	{
-		{ "list", []() {return new BioAdjList(); } },
+	const static BioAdjFactMap mFactoryMap = {
+		// Only included temporarily to allow full Build without errors
+		//{ "list", []() {return nullptr; } },
+		//{ "matrix", []() {return nullptr; } }
+		//{ "list", []() {return new BioAdjList(); } },
 		{ "matrix", []() {return new BioAdjMat(); } }
 	};
 	
