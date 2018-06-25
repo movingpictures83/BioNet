@@ -43,6 +43,11 @@ string BioAdjList::getNode(const int i) const
 	return network[i].getName();
 }
 
+int BioAdjList::size() const
+{
+	return 0;
+}
+
 float BioAdjList::degree(const int x) const
 {
 	auto node = network[x].front();
@@ -95,13 +100,34 @@ void BioAdjList::resize(int newSize)
 	{
 		sizeDifference *= -1;
 		auto networkSize = network.size();
-		for (int i = networkSize - sizeDifference; i < networkSize; i++)
+		for (size_t i = networkSize - sizeDifference; i < networkSize; i++)
 		{
 			auto name = network[i].getName();
-			for (int j = 0; j < networkSize - sizeDifference; j++)
+			for (size_t j = 0; j < networkSize - sizeDifference; j++)
 				network[j].deleteNode(name);
 		}
 	}
 
 	network.resize(newSize);
+}
+
+int BioAdjList::findNodeIndex(const string &) const
+{
+	return 0;
+}
+
+void BioAdjList::deleteEdge(const string &, const string &)
+{
+}
+
+void BioAdjList::deleteEdge(int, int)
+{
+}
+
+void BioAdjList::deleteNode(const string &)
+{
+}
+
+void BioAdjList::deleteNode(int i) {
+
 }

@@ -12,6 +12,7 @@ private:
 	BioNode * head;
 	bool doSearch(string name, BioNode* start);
 public:
+	BioList() {}
 	BioList(const float weight, const string& name);
 	~BioList();
 	bool search(const string& name) { doSearch(name, head); }
