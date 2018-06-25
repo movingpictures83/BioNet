@@ -1,7 +1,7 @@
 #include "BioNetException.h"
 // exception::what
 
-BioNetException::BioNetException(std::string m)
+BioNetException::BioNetException(const std::string &m)
 {
 	message = "[BIONET EXCEPTION] " + m;
 }

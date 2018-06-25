@@ -6,7 +6,7 @@ class BioNetException : public std::exception
 private:
 	std::string message;
 public:
-	BioNetException(std::string m);
+	BioNetException(const std::string &m);
 	const char * what() const throw();
 	~BioNetException();
 };

@@ -31,8 +31,7 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 	// BioNet(-1.0, 1.0);
 }
 
-
-BioNet::BioNet(float min, float max, bool isDir, string ti) {
+BioNet::BioNet(const float min, const float max, const bool isDir, const string &ti) {
 
 	setRange(min, max);
 	directed = isDir;
@@ -51,10 +50,7 @@ BioNet::~BioNet() {
 	delete network;
 }
 
-std::pair<int, int> getPair() { return {1, 1 }; }
-
-
-void BioNet::setRange(float min, float max) {
+void BioNet::setRange(const float min, const float max) {
 	if (min > max)
 	{
 		throw BioNetException("mininum value is larger than maximum value");
@@ -64,7 +60,7 @@ void BioNet::setRange(float min, float max) {
 }
 
 
-void BioNet::setEdge(int i, int j, float w) {
+void BioNet::setEdge(const int i, const int j, const float w) {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
 		throw BioNetException("Node is not in the matrix range");
@@ -82,7 +78,7 @@ void BioNet::setEdge(int i, int j, float w) {
 }
 
 	
-void BioNet::setNode(int i, string n) {
+void BioNet::setNode(const int i, const string &n) {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
 		throw BioNetException("Node is not in the matrix range");
@@ -91,7 +87,7 @@ void BioNet::setNode(int i, string n) {
 }
 // Accessors
 
-float BioNet::getEdge(int i, int j) { 
+const float BioNet::getEdge(const int i, const int j) {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
 		throw BioNetException("Node is not in the matrix range");
@@ -102,7 +98,7 @@ float BioNet::getEdge(int i, int j) {
 }
 
 
-string BioNet::getNode(int i) {
+const string BioNet::getNode(const int i) {
 	if (i < 0 || i > network->size())  // corrected from network.size()
 		throw BioNetException("Node is not in the matrix range");
 
@@ -110,7 +106,7 @@ string BioNet::getNode(int i) {
 }
 
 
-void BioNet::resize(int size) {
+void BioNet::resize(const int size) {
 
 	if (size <= 0)
 		throw BioNetException("resize value is invalid");
@@ -140,7 +136,7 @@ void BioNet::clear() {
 // AFTERNOON COHORT DIJKSKTRA
 //
 
-void BioNet::convertToType(string ti)
+void BioNet::convertToType(const string &ti)
 {
 	auto old = network;
 	network = BioAdjFactory::create(ti);
@@ -153,7 +149,7 @@ void BioNet::convertToType(string ti)
 	delete old;	
 }
 
-size_t BioNet::size()
+const size_t BioNet::size()
 {
 	return network->size();
 }
@@ -167,14 +163,14 @@ size_t BioNet::size()
 }*/
 
 
-float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
+const float BioNet::degree(const int index) {  //converting network to vectors - EINSTEIN
 	if (index < 0 || index >= network->size())
 		throw BioNetException("Index out of bounds!");
 	return network->degree(index);
 }
 
 
-float BioNet::shortestPath(int start, int end) {  //converting network to vectors - EINSTEIN
+const float BioNet::shortestPath(const int start, const int end) {  //converting network to vectors - EINSTEIN
 
 	if (start < 0 || start > network->size())
 		throw BioNetException("Start node is not in the matrix range");
@@ -242,19 +238,19 @@ float BioNet::shortestPath(int start, int end) {  //converting network to vector
 
 
 
-int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
+const int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 	int x = network->numberOfEdges();
 	if (!directed)
 		x = x / 2;
 	return x;
 }
 
-void BioNet::deleteEdge(int lval, int rval) {
+void BioNet::deleteEdge(const int lval, const int rval) {
 	// not implemented
 	//network->deleteEdge(lval, rval);
 }
 
-void BioNet::deleteEdge(string lstr, string rstr) {
+void BioNet::deleteEdge(const string &lstr, const string &rstr) {
 	// not implemented
 	//network->deleteEdge(lstr, rstr);
 }

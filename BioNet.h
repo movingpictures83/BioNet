@@ -24,23 +24,23 @@ private:
 
 public:
 	BioNet();
-	BioNet(float, float, bool=false, string = "matrix");
+	BioNet(const float, const float, const bool=false, const string &ti = "matrix");
 	~BioNet();
 
-	void setRange(float, float);
-	void setEdge(int, int, float);
-	void setNode(int, string);
-	void deleteEdge(int, int);
-	void deleteEdge(string, string);
+	void setRange(const float, const float);
+	void setEdge(const int, const int, const float);
+	void setNode(const int, const string &n);
+	void deleteEdge(const int, const int);
+	void deleteEdge(const string &l, const string &r);
 
-	float shortestPath(int, int);
-	void resize(int size);
+	const float shortestPath(const int, const int);
+	void resize(const int size);
 	void clear();
 	// Accessors
-	float getEdge(int, int);
-	string getNode(int);
-	float getMinWeight() { return minweight; }
-	float getMaxWeight() { return maxweight; }
+	const float getEdge(const int, const int);
+	const string getNode(const int);
+	const float getMinWeight() { return minweight; }
+	const float getMaxWeight() { return maxweight; }
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,11 +59,11 @@ public:
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // AFTERNOON COHORT DIJKSTRA
    //
-	void convertToType(string);
-	float degree(int);
+	void convertToType(const string &t);
+	const float degree(const int);
 	//void reserve(size_t);
-	size_t size();
-	int numberOfEdges();
+	const size_t size();
+	const int numberOfEdges();
 
    //
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
