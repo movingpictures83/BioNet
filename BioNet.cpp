@@ -317,3 +317,9 @@ const BioNet& BioNet::operator+=(const string& rhs) const
 	network->setNode(network->size() - 1, rhs);
 	return *this;
 }
+
+ostream & BioNet::operator<<(ostream& os) const
+{
+	os << network;
+	return os;
+}

@@ -2,14 +2,14 @@
 #define BIONET_H
 #include <string>
 #include <vector>
-#include <typeindex>
+#include <iostream>
 #include "BioAdj.h"
 #include "BioAdjMat.h"
 #include "BioAdjList.h"
 using std::string;
 using std::pair;
 using std::vector;
-using std::type_index;
+using std::ostream;
 
 
 #define NETWORK_SIZE 5  //converting network/names to vectors - EINSTEIN
@@ -57,6 +57,8 @@ public:
 	const BioNet& operator +=(const string&) const;
 
 	const BioNet& operator=(const BioNet& rhs);
+
+	ostream & operator<<(ostream &) const;
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
