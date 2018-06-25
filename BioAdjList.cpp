@@ -42,3 +42,12 @@ string BioAdjList::getNode(int i)
 {
 	return network[i].getName();
 }
+
+float BioAdjList::degree(int x)
+{
+	auto node = network[x].front();
+	auto result = 0.0f;
+	while (node)
+		result += node->getWeight();
+	return result;
+}
