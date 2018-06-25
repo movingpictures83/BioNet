@@ -1,10 +1,12 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <ostream>
 #include "BioAdj.h"
 
 using std::vector;
 using std::string;
+using std::ostream;
 
 
 class BioAdjMat : public BioAdj
@@ -37,5 +39,14 @@ public:
 	void deleteEdge(int, int);
 	void deleteNode(const string &);
 	void deleteNode(const int);
-	//int numberOfEdges(bool) ;
+	BioAdjMat operator= (const BioAdjMat &);
+	BioAdjMat operator+ (const string &);
+	const BioAdjMat & operator+= (const string &);
+	const BioAdjMat & operator/= (const float &);
+	const BioAdjMat & operator*= (const float &);
+	bool operator== (const BioAdjMat &);
+	bool operator!= (const BioAdjMat &);
+	const string & operator[] (int);
+	float operator() (int, int);
+	friend ostream & operator<< (const ostream &, const BioAdjMat &);
 };
