@@ -86,7 +86,6 @@ float BioList::getWeight(const string& name) const
 	return 0;
 }
 
-
 string BioList::getName() const {
 	return name;
 }
