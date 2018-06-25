@@ -22,7 +22,7 @@ namespace BioAdjFactory {
 	};
 	
 	static BioAdj* create(const string& t) {
-		auto it = mFactoryMap.find(t);
+		// auto it = mFactoryMap.find(t); // 'it' not used at all
 		if (mFactoryMap.find(t) != mFactoryMap.end())
 			return mFactoryMap.at(t)();
 		else
