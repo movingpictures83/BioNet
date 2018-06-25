@@ -15,14 +15,19 @@ private:
 	vector<BioList> network;
 	map<string, int> names;
 public:
-	void setEdge(int, int, float);
-	void setEdge(string, string, float);
-	float getEdge(int, int);
-	float getEdge(string, string);
-	void setNode(int, string);
-	string getNode(int);
-	int size() { return network.size(); };
-	float degree(int);
+	BioAdjList(int i = 5){
+		network.resize(i);
+	}
+	~BioAdjList() {}
+
+	void setEdge(const int,const int, float);
+	void setEdge(const string, const string, float);
+	const float getEdge(const int, const int);
+	const float getEdge(const string, const string);
+	void setNode(const int, const string);
+	const string getNode(const int);
+	int size() { return network.size(); }
+	float degree(const int);
 	int numberOfEdges();
-	void resize(int);
+	void resize(const int);
 };
