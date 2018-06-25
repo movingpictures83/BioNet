@@ -6,6 +6,7 @@
 using std::vector;
 using std::string;
 
+
 class BioAdjMat : public BioAdj
 {
 private:
@@ -36,4 +37,5 @@ public:
 	void deleteEdge(int, int);
 	void deleteNode(const string &);
 	void deleteNode(int);
+	int numberOfEdges(bool);
 };

@@ -2,29 +2,26 @@
 #include <string>
 #include <unordered_map>
 #include <functional>
-#include <typeindex>
 #include "BioAdj.h"
-#include "BioAdjList.h"
 #include "BioAdjMat.h"
+#include "BioAdjList.h"
 
 using std::string;
 using std::unordered_map;
 using std::function;
-using std::type_index;
-using BioAdjFactMap = unordered_map<string, function<BioAdj*(void)>>;
-
 
 
 namespace BioAdjFactory {
-
-	static BioAdjFactMap mFactoryMap;
-	
-	/*{
-		{ "list", []() {return new BioAdjList(); } },
+	using BioAdjFactMap = unordered_map<string, function<BioAdj*(void)>>;
+	const static BioAdjFactMap mFactoryMap = {
+		// Only included temporarily to allow full Build without errors
+		//{ "list", []() {return nullptr; } },
+		//{ "matrix", []() {return nullptr; } }
+		//{ "list", []() {return new BioAdjList(); } },
 		{ "matrix", []() {return new BioAdjMat(); } }
-	};*/
+	};
 	
-	static BioAdj* create(string& t) {
+	static BioAdj* create(const string& t) {
 		auto it = mFactoryMap.find(t);
 		if (mFactoryMap.find(t) != mFactoryMap.end())
 			return mFactoryMap.at(t)();
