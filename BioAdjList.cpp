@@ -129,10 +129,20 @@ void BioAdjList::deleteEdge(int x, int y)
 	network[x].deleteEdge(network[y].getName());
 }
 
-void BioAdjList::deleteNode(const string &)
+void BioAdjList::deleteNode(const string & name)
 {
+	auto index = findNodeIndex(name);
+	for (size_t i = 0; i < network.size(); i++)
+		if(i != index)
+			network[i].deleteEdge(name);
+	network.erase(network.begin() + index);
 }
 
-void BioAdjList::deleteNode(int i) {
+void BioAdjList::deleteNode(int index) {
 
+	auto name = network[index].getName();
+	for (size_t i = 0; i < network.size(); i++)
+		if (i != index)
+			network[i].deleteEdge(name);
+	network.erase(network.begin() + index);
 }
