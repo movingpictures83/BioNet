@@ -1,11 +1,11 @@
 #include "BioAdjList.h"
 
-void BioAdjList::setEdge(int x, int y, float w)
+void BioAdjList::setEdge(const int x, const int y, const float w)
 {
 	network[x].setWeight(network[y].getName(), w);
 }
 
-void BioAdjList::setEdge(string x, string y, float w)
+void BioAdjList::setEdge(const string& x, const string& y, const float w)
 {
 	int i = 0;
 	while (network[i].getName() != x)
@@ -14,12 +14,12 @@ void BioAdjList::setEdge(string x, string y, float w)
 }
 
 
-float BioAdjList::getEdge(int x, int y)
+float BioAdjList::getEdge(int x, int y) const
 {
 	return network[x].getWeight(network[y].getName());
 }
 
-float BioAdjList::getEdge(string a , string b)
+float BioAdjList::getEdge(const string& a , const string& b) const
 {
 	for (int i = 0; i < network.size(); i++) {
 		if (strcmp(network[i].getName().c_str(), a.c_str()) == 0)
@@ -28,7 +28,7 @@ float BioAdjList::getEdge(string a , string b)
 	return 0.0f;
 }
 
-void BioAdjList::setNode(int i , string s)
+void BioAdjList::setNode(const int i , const string& s)
 {
 	auto oldName = network[i].getName();
 	network[i].setName(s);
@@ -38,12 +38,12 @@ void BioAdjList::setNode(int i , string s)
 	}
 }
 
-string BioAdjList::getNode(int i)
+string BioAdjList::getNode(const int i) const
 {
 	return network[i].getName();
 }
 
-float BioAdjList::degree(int x)
+float BioAdjList::degree(const int x) const
 {
 	auto node = network[x].front();
 	auto result = 0.0f;
@@ -64,13 +64,18 @@ BioAdjList BioAdjList::operator=(const BioAdjList & rhs)
 	return BioAdjList(rhs);
 }
 
+BioAdjList::BioAdjList(const BioAdjList& copy) {
+
+}
+
+
 const BioAdjList& BioAdjList::operator+=(const string nodename)
 {
 	
 	return *this;
 }
 
-int BioAdjList::numberOfEdges()
+int BioAdjList::numberOfEdges() const
 {
 	auto result = 0;
 	for (size_t i = 0; i < network.size(); i++)
