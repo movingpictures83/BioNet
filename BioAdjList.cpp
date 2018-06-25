@@ -84,7 +84,7 @@ BioAdjList BioAdjList::operator=(const BioAdjList & rhs)
 
 BioAdjList::BioAdjList(const BioAdjList& copy) {
 	network = vector<BioList>(copy.network.size());
-	for (int i = 0; i < copy.network.size; i++)
+	for (size_t i = 0; i < copy.network.size(); i++)
 		network[i] = BioList(copy.network[i]);
 }
 
@@ -128,7 +128,7 @@ void BioAdjList::resize(int newSize)
 
 int BioAdjList::findNodeIndex(const string & name) const
 {
-	for (size_t i = 0; i < network.size(); i++)
+	for (int i = 0; i < network.size(); i++)
 		if (network[i].getName() == name)
 			return i;
 	throw BioNetException("Node not found.");
