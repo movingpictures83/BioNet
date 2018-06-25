@@ -168,9 +168,24 @@ void BioNet::clear() {
 
 void BioNet::convertToType(const string &type)
 {
-	if (!BioAdjFactory::swap(type, &network))
-		throw BioNetException("Error converting network to type " + type + ".\n");
-	networkType = type;
+	try {
+		auto old = network;
+		network = BioAdjFactory::create(type);
+		network->resize(old->size());
+		for (int i{ 0 }; i < network->size(); i++)
+		{
+			network->setNode(i, old->getNode(i));
+			for (int j{ 0 }; j < network->size(); j++)
+				network->setEdge(i, j, old->getEdge(i, j));
+		}
+		networkType = type; 
+		delete old;
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << "Error converting network to type " + type + ".\n" << endl;
+	}
+	
 }
 
 const size_t BioNet::size() const
