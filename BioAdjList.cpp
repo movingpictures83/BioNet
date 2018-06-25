@@ -64,19 +64,34 @@ BioAdjList BioAdjList::operator+(const string nodename)
 	return list;
 }
 
+const BioAdjList & BioAdjList::operator-=(const string nodename)
+{
+	deleteNode(nodename);
+	return *this;
+}
+
+BioAdjList BioAdjList::operator-(const string nodename)
+{
+	BioAdjList list = *this;
+	list -= nodename;
+	return list;
+}
+
 BioAdjList BioAdjList::operator=(const BioAdjList & rhs)
 {
 	return BioAdjList(rhs);
 }
 
 BioAdjList::BioAdjList(const BioAdjList& copy) {
-
+	network = vector<BioList>(copy.network.size());
+	for (int i = 0; i < copy.network.size; i++)
+		network[i] = BioList(copy.network[i]);
 }
 
 
 const BioAdjList& BioAdjList::operator+=(const string nodename)
 {
-	
+	network.push_back(BioList(0, nodename));
 	return *this;
 }
 
@@ -145,4 +160,34 @@ void BioAdjList::deleteNode(int index) {
 		if (i != index)
 			network[i].deleteEdge(name);
 	network.erase(network.begin() + index);
+}
+
+BioAdjList BioAdjList::operator*(const float weight) {
+	BioAdjList list = *this;
+	for (int i = 0; i <  list.network.size(); i++) {
+		list.network[i] *= weight;
+	}
+	return list;
+}
+
+const BioAdjList& BioAdjList::operator*=(const float weight) {
+	for (int i = 0; i < network.size(); i++) {
+		network[i] *= weight;
+	}
+	return *this;
+}
+
+BioAdjList BioAdjList::operator/(const float weight) {
+	BioAdjList list = *this;
+	for (int i = 0; i < list.network.size(); i++) {
+		list.network[i] /= weight;
+	}
+	return list;
+}
+
+const BioAdjList& BioAdjList::operator/=(const float weight) {
+	for (int i = 0; i < network.size(); i++) {
+		network[i] /= weight;
+	}
+	return *this;
 }

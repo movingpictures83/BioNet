@@ -16,7 +16,6 @@ class BioAdjList : public BioAdj
 {
 private:
 	vector<BioList> network;
-	map<string, int> names;
 public:
 	static const string& NetworkType()
 	{
@@ -42,5 +41,11 @@ public:
 	void deleteNode(int);
 	const BioAdjList& operator+=(const string nodename);
 	BioAdjList operator+(const string nodename);
+	const BioAdjList& operator-=(const string nodename);
+	BioAdjList operator-(const string nodename);
 	BioAdjList operator=(const BioAdjList &rhs);
+	BioAdjList operator*(const float weight);
+	BioAdjList operator/(const float weight);
+	const BioAdjList& operator*=(const float weight);
+	const BioAdjList& operator/=(const float weight);
 };

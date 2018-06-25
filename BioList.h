@@ -15,6 +15,7 @@ private:
 public:
 	BioList() {}
 	BioList(const float weight, const string& name);
+	BioList(const BioList&);
 	~BioList();
 	bool search(const string& name) { doSearch(name, head); }
 	bool setWeight(const string& name, const float weight);
@@ -25,5 +26,9 @@ public:
 	BioNode* insertFront(const float weight, const string& name);
 	void deleteEdge(const string& name);
 	void clear();
-	BioNode* front() const { return head; } ;
+	BioNode* front() const { return head; }
+	BioList operator*(const float weight);
+	const BioList& operator*=(const float weight);
+	BioList operator/(const float weight);
+	const BioList& operator/=(const float weight);
 };
