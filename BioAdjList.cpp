@@ -104,24 +104,29 @@ void BioAdjList::resize(int newSize)
 		{
 			auto name = network[i].getName();
 			for (size_t j = 0; j < networkSize - sizeDifference; j++)
-				network[j].deleteNode(name);
+				network[j].deleteEdge(name);
 		}
 	}
 
 	network.resize(newSize);
 }
 
-int BioAdjList::findNodeIndex(const string &) const
+int BioAdjList::findNodeIndex(const string & name) const
 {
-	return 0;
+	for (size_t i = 0; i < network.size(); i++)
+		if (network[i].getName() == name)
+			return i;
+	throw BioNetException("Node not found.");
 }
 
-void BioAdjList::deleteEdge(const string &, const string &)
+void BioAdjList::deleteEdge(const string & x, const string & y)
 {
+	network[findNodeIndex(x)].deleteEdge(y);
 }
 
-void BioAdjList::deleteEdge(int, int)
+void BioAdjList::deleteEdge(int x, int y)
 {
+	network[x].deleteEdge(network[y].getName());
 }
 
 void BioAdjList::deleteNode(const string &)

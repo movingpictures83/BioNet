@@ -1,12 +1,15 @@
 #pragma once
 #include "BioAdj.h"
 #include "BioList.h"
+#include "BioNetException.h"
 #include <vector>
 #include <string>
 #include <map>
+#include <algorithm>
 using std::vector;
 using std::string;
 using std::map;
+using std::find_if;
 
 
 class BioAdjList : public BioAdj

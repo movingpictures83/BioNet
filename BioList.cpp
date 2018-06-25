@@ -31,34 +31,31 @@ bool BioList::doSearch(const string name, BioNode* start) {
 	else return doSearch(name, start->getNext());
 }
 
+BioNode* BioList::recursiveDeleteEdge(BioNode * node, const string& name)
+{
+	if (node == nullptr)
+		return nullptr;
+
+	if (node->getName() == name)
+	{
+		auto temp = node->getNext();
+		delete node;
+		return temp;
+	}
+
+	node->setNext(recursiveDeleteEdge(node->getNext(), name));
+	return node;
+}
+
 BioNode* BioList::insertFront(const float weight, const string& name) {
 	BioNode* newHead = new BioNode(weight, name, head);
 	head = newHead;
 	return head;
 }
 
-void BioList::deleteNode(const string& name) {
-	BioNode* temp = head;
-	if (temp->getName() == name)
-	{
-		BioNode* tempNext = temp->getNext();
-		delete temp->getNext();
-		temp->setNext(tempNext);
+void BioList::deleteEdge(const string& name) {
 
-		return;
-	}
-	while (temp->getNext()->getNext() != nullptr && temp->getNext()->getName() != name)
-	{
-		temp = temp->getNext(); 
-	}
-	if (temp->getNext()->getNext() == nullptr && temp->getNext()->getName() != name)
-		cout << "Node " << name << " is not in the list" << endl;
-	else
-	{
-		BioNode* tempNext = temp->getNext();
-		delete temp->getNext();
-		temp->setNext(tempNext);
-	}
+	head = recursiveDeleteEdge(head, name);
 
 }
 

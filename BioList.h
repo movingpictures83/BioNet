@@ -11,6 +11,7 @@ private:
 	string name;
 	BioNode * head;
 	bool doSearch(string name, BioNode* start);
+	BioNode* recursiveDeleteEdge(BioNode*, const string&);
 public:
 	BioList() {}
 	BioList(const float weight, const string& name);
@@ -22,7 +23,7 @@ public:
 	void setEdgeName(const string&, const string&);
 	float getWeight(const string& name) const;
 	BioNode* insertFront(const float weight, const string& name);
-	void deleteNode(const string& name);
+	void deleteEdge(const string& name);
 	void clear();
 	BioNode* front() const { return head; } ;
 };
