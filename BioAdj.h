@@ -2,6 +2,9 @@
 #include <string>
 using std::string;
 
+#define ADJ_MAT_KEY "BioAdjMat"
+#define ADJ_LST_KEY "BioAdjList"
+
 class BioAdj
 {
 protected:

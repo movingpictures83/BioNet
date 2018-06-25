@@ -20,11 +20,12 @@ private:
 	float minweight;
 	float maxweight;
 	BioAdj* network;
-	bool directed;//
+	bool directed;
+	string networkType;
 
 public:
 	BioNet();
-	BioNet(const float, const float, const bool=false, const string &ti = "matrix");
+	BioNet(const float, const float, const bool=false, const string& = ADJ_MAT_KEY);
 	~BioNet();
 
 	void setRange(const float, const float);
@@ -41,6 +42,7 @@ public:
 	const string getNode(const int);
 	const float getMinWeight() { return minweight; }
 	const float getMaxWeight() { return maxweight; }
+	const std::string & getNetworkType() { return networkType; }
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,7 +61,7 @@ public:
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // AFTERNOON COHORT DIJKSTRA
    //
-	void convertToType(const string &t);
+	void convertToType(const string &);
 	const float degree(const int);
 	//void reserve(size_t);
 	const size_t size();

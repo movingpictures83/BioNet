@@ -31,18 +31,12 @@ BioNet::BioNet() : BioNet(-1.0, 1.0){
 	// BioNet(-1.0, 1.0);
 }
 
-BioNet::BioNet(const float min, const float max, const bool isDir, const string &ti) {
+BioNet::BioNet(const float min, const float max, const bool isDir, const string &type) {
 
 	setRange(min, max);
 	directed = isDir;
-
-	network = BioAdjFactory::create(ti);
-	/* BioAdjList not implemented yet
-	if (isList)
-		network = new BioAdjList();
-	else*/
-		//network = new BioAdjMat();
-	// Converting network/names to vectors, no initialization needed
+	networkType = type;
+	network = BioAdjFactory::create(networkType);
 }
 
 
@@ -136,17 +130,11 @@ void BioNet::clear() {
 // AFTERNOON COHORT DIJKSKTRA
 //
 
-void BioNet::convertToType(const string &ti)
+void BioNet::convertToType(const string &type)
 {
-	auto old = network;
-	network = BioAdjFactory::create(ti);
-	for (int i{ 0 }; i < network->size(); i++)
-	{
-		network->setNode(i, old->getNode(i));
-		for (int j{ 0 }; j < network->size(); j++)
-			network->setEdge(i, j, old->getEdge(i, j));
-	}
-	delete old;	
+	if (!BioAdjFactory::swap(type, &network))
+		throw BioNetException("Error converting network to type " + type + ".\n");
+	networkType = type;
 }
 
 const size_t BioNet::size()
