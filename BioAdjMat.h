@@ -22,20 +22,20 @@ public:
 	}
 	~BioAdjMat() {}
 
-	void setEdge(int, int, float);
-	void setEdge(string, string, float);
-	float getEdge(int, int);
-	float getEdge(string, string);
-	void setNode(int, string);
-	string getNode(int);
-	int size();
-	void resize(int);
-	float degree(int);
-	int numberOfEdges();
-	int findNodeIndex(const string&);
+	void setEdge(const int, const int, const float);
+	void setEdge(const string&, const string&, const float);
+	float getEdge(const int, const int) const;
+	float getEdge(const string&, const string&) const;
+	void setNode(const int, const string&);
+	string getNode(const int) const;
+	int size() const;
+	void resize(const int);
+	float degree(const int);
+	int numberOfEdges() const;
+	int findNodeIndex(const string&) const;
 	void deleteEdge(const string &, const string &);
 	void deleteEdge(int, int);
 	void deleteNode(const string &);
-	void deleteNode(int);
-	int numberOfEdges(bool);
+	void deleteNode(const int);
+	int numberOfEdges(bool) const;
 };

@@ -15,7 +15,7 @@ using std::vector;
 class CSVReader : public Reader, public Writer
 {
 public:
-	CSVReader(/*const string &filename,*/ string e, string p="") : Reader(/*filename,*/ e, p), Writer(/*filename,*/ e, p) {}
+	CSVReader(/*const string &filename,*/string p="") : Reader(/*filename,*/p), Writer(/*filename,*/ p) {}
 	~CSVReader();
 	void readFile(BioNet &file, const string & fname);
 	void writeFile(BioNet& file, const string& fname) {}

@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\BioAdj.h" />
     <ClInclude Include="..\..\BioAdjFactory.h" />
     <ClInclude Include="..\..\BioAdjMat.h" />
     <ClInclude Include="..\..\BioNet.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\BioAdj.cpp" />
     <ClCompile Include="..\..\BioAdjMat.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
     <ClCompile Include="..\..\BioNetException.cpp" />
