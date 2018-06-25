@@ -15,15 +15,15 @@ namespace BioAdjFactory {
 	using BioAdjFactMap = unordered_map<string, function<BioAdj*(void)>>;
 	const static BioAdjFactMap mFactoryMap = {
 		// Only included temporarily to allow full Build without errors
-		//{ ADJ_LST_KEY, []() {return new BioAdjList(); } },
-		{ ADJ_MAT_KEY, []() {return new BioAdjMat(); } }
+		//{ BioAdjList::NetworkType(), []() {return new BioAdjList(); } },
+		{ BioAdjMat::NetworkType(), []() {return new BioAdjMat(); } }
 	};
 	
 	static BioAdj* create(const string& type) {
 		if (mFactoryMap.find(type) != mFactoryMap.end())
 			return mFactoryMap.at(type)();
 		else
-			return nullptr;
+			throw BioNetException("Error Creating network of type " + type + ".\n");
 	}
 
 	static bool swap(const string& type, BioAdj** target)

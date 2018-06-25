@@ -4,6 +4,8 @@
 #include <vector>
 #include <typeindex>
 #include "BioAdj.h"
+#include "BioAdjMat.h"
+#include "BioAdjList.h"
 using std::string;
 using std::pair;
 using std::vector;
@@ -25,7 +27,9 @@ private:
 
 public:
 	BioNet();
-	BioNet(const float, const float, const bool=false, const string& = ADJ_MAT_KEY);
+	BioNet(const float, const float, const bool=false, const string& = BioAdjMat::NetworkType());
+	BioNet(BioNet&);
+	BioNet(BioNet&&);
 	~BioNet();
 
 	void setRange(const float, const float);
@@ -34,15 +38,20 @@ public:
 	void deleteEdge(const int, const int);
 	void deleteEdge(const string &l, const string &r);
 
-	const float shortestPath(const int, const int);
+	const float shortestPath(const int, const int) const;
 	void resize(const int size);
 	void clear();
 	// Accessors
-	const float getEdge(const int, const int);
-	const string getNode(const int);
-	const float getMinWeight() { return minweight; }
-	const float getMaxWeight() { return maxweight; }
-	const std::string & getNetworkType() { return networkType; }
+	const float getEdge(const int, const int) const;
+	const string getNode(const int) const;
+	const float getMinWeight() const { return minweight; }
+	const float getMaxWeight() const { return maxweight; }
+	const std::string & getNetworkType() const { return networkType; }
+
+	//Operators
+	const string & operator[](size_t index) const { return network->getNode(index); };
+	const float operator()(size_t lhs, size_t rhs) const { return network->getEdge(lhs, rhs); };
+	const float operator()(const string & lhs, const string & rhs) const { return network->getEdge(lhs, rhs); };
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -62,10 +71,10 @@ public:
    // AFTERNOON COHORT DIJKSTRA
    //
 	void convertToType(const string &);
-	const float degree(const int);
+	const float degree(const int) const;
 	//void reserve(size_t);
-	const size_t size();
-	const int numberOfEdges();
+	const size_t size() const;
+	const int numberOfEdges() const;
 
    //
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////

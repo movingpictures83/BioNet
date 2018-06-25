@@ -18,6 +18,12 @@ private:
 	vector<BioList> network;
 	map<string, int> names;
 public:
+	static const string& NetworkType()
+	{
+		static const string network = "BioAdjLst";
+		return network;
+	}
+
 	BioAdjList(const BioAdjList&);
 	void setEdge(const int, const int, const float);
 	void setEdge(const string&, const string&, const float);

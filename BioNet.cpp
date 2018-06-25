@@ -1,5 +1,6 @@
 #include "BioNet.h"
 #include "BioNetException.h"
+#include <iostream>
 #include <string>
 #include <numeric>
 #include <algorithm>
@@ -19,6 +20,9 @@ using std::bind;
 using std::placeholders::_1;
 using std::placeholders::_2;
 using std::set;
+using std::exception;
+using std::cerr;
+using std::endl;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MORNING COHORT EINSTEIN
@@ -36,12 +40,44 @@ BioNet::BioNet(const float min, const float max, const bool isDir, const string 
 	setRange(min, max);
 	directed = isDir;
 	networkType = type;
+	try {
+		network = BioAdjFactory::create(networkType);
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		network = BioAdjFactory::create(BioAdjMat::NetworkType());
+	}
 	network = BioAdjFactory::create(networkType);
 }
 
+BioNet::BioNet(BioNet& rhs){
+	setRange(rhs.minweight, rhs.maxweight);
+	directed = rhs.directed;
+	networkType = rhs.networkType;
+	try {
+		network = BioAdjFactory::create(networkType);
+		*network = *rhs.network;
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+		BioAdjFactory::create(BioAdjMat::NetworkType());
+		*network = *rhs.network;
+	}
+}
+
+BioNet::BioNet(BioNet&& rhs) {
+	setRange(rhs.minweight, rhs.maxweight);
+	directed = rhs.directed;
+	std::swap(networkType, rhs.networkType);
+	network = std::move(rhs.network);
+	rhs.~BioNet();
+}
 
 BioNet::~BioNet() {
-	delete network;
+	if(network != nullptr)
+		delete network;
 }
 
 void BioNet::setRange(const float min, const float max) {
@@ -81,7 +117,7 @@ void BioNet::setNode(const int i, const string &n) {
 }
 // Accessors
 
-const float BioNet::getEdge(const int i, const int j) {
+const float BioNet::getEdge(const int i, const int j) const {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
 		throw BioNetException("Node is not in the matrix range");
@@ -92,7 +128,7 @@ const float BioNet::getEdge(const int i, const int j) {
 }
 
 
-const string BioNet::getNode(const int i) {
+const string BioNet::getNode(const int i) const {
 	if (i < 0 || i > network->size())  // corrected from network.size()
 		throw BioNetException("Node is not in the matrix range");
 
@@ -137,7 +173,7 @@ void BioNet::convertToType(const string &type)
 	networkType = type;
 }
 
-const size_t BioNet::size()
+const size_t BioNet::size() const
 {
 	return network->size();
 }
@@ -151,14 +187,14 @@ const size_t BioNet::size()
 }*/
 
 
-const float BioNet::degree(const int index) {  //converting network to vectors - EINSTEIN
+const float BioNet::degree(const int index) const {  //converting network to vectors - EINSTEIN
 	if (index < 0 || index >= network->size())
 		throw BioNetException("Index out of bounds!");
 	return network->degree(index);
 }
 
 
-const float BioNet::shortestPath(const int start, const int end) {  //converting network to vectors - EINSTEIN
+const float BioNet::shortestPath(const int start, const int end) const {  //converting network to vectors - EINSTEIN
 
 	if (start < 0 || start > network->size())
 		throw BioNetException("Start node is not in the matrix range");
@@ -226,7 +262,7 @@ const float BioNet::shortestPath(const int start, const int end) {  //converting
 
 
 
-const int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
+const int BioNet::numberOfEdges() const {  //converting network to vectors - EINSTEIN
 	int x = network->numberOfEdges();
 	if (!directed)
 		x = x / 2;
@@ -245,5 +281,11 @@ void BioNet::deleteEdge(const string &lstr, const string &rstr) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+/*const string & BioNet::operator[](size_t index) const
+{
+	
+}
+const float BioNet::operator()(size_t, size_t) const
+{
+	return
+}*/
