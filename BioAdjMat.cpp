@@ -5,13 +5,13 @@
 
 //BioAdjFactory::mFactoryMap["matrix"] = []() {new BioAdjMat()};
 
-void BioAdjMat::setEdge(int i, int j, float w)
+void BioAdjMat::setEdge(const int i, const int j, const float w)
 {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
 		throw BioNetException("setEdge() has wrong range");
 	matrix[i][j] = w;
 }
-void BioAdjMat::setEdge(string n1, string n2, float w)
+void BioAdjMat::setEdge(const string &n1, const string &n2, const float w)
 {
 	int i = -1;
 	int j = -1;
@@ -33,13 +33,13 @@ void BioAdjMat::setEdge(string n1, string n2, float w)
 
 	setEdge(i, j, w);
 }
-float BioAdjMat::getEdge(int i, int j) {
+float BioAdjMat::getEdge(const int i, const int j) const {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
 		throw BioNetException("setEdge() has wrong range");
 
 	return matrix[i][j];
 }
-float BioAdjMat::getEdge(string n1, string n2)
+float BioAdjMat::getEdge(const string &n1, const string &n2) const
 {
 	int i = -1;
 	int j = -1;
@@ -62,7 +62,7 @@ float BioAdjMat::getEdge(string n1, string n2)
 	return getEdge(i, j);
 }
 
-int BioAdjMat::findNodeIndex(const string & lookup)
+int BioAdjMat::findNodeIndex(const string & lookup) const
 {
 	int index = 0;
 	for (auto node : names)
@@ -74,7 +74,7 @@ int BioAdjMat::findNodeIndex(const string & lookup)
 	}
 	return -1;
 }
-void BioAdjMat::setNode(int index, string name)
+void BioAdjMat::setNode(const int index, const string &name)
 {
 	if (index < 0 || index >= names.size())
 		throw BioNetException("Trying to add name out of range");
@@ -82,7 +82,7 @@ void BioAdjMat::setNode(int index, string name)
 	names[index] = name;
 }
 
-string BioAdjMat::getNode(int index)
+string BioAdjMat::getNode(const int index) const
 {
 	if (index < 0 || index >= names.size())
 		throw BioNetException("Trying to add name out of range");
@@ -98,7 +98,7 @@ void BioAdjMat::deleteEdge(const string & istr, const string & jstr)
 	int j = findNodeIndex(jstr);
 	deleteEdge(i, j);
 }
-void BioAdjMat::deleteEdge(int i, int j)
+void BioAdjMat::deleteEdge(const int i, const int j)
 {
 	auto size = names.size();
 	if (i < 0 || j < 0 || i >= size || j >= size)
@@ -111,7 +111,7 @@ void BioAdjMat::deleteNode(const string & nodeName)
 	auto node = findNodeIndex(nodeName);
 	deleteNode(node);
 }
-void BioAdjMat::deleteNode(int nodeIndex)
+void BioAdjMat::deleteNode(const int nodeIndex)
 {
 	auto size = matrix.size();
 	if (nodeIndex < 0 || nodeIndex >= size )
@@ -122,7 +122,7 @@ void BioAdjMat::deleteNode(int nodeIndex)
 		node.erase(node.begin() + nodeIndex);
 }
 
-void BioAdjMat::resize(int size) {
+void BioAdjMat::resize(const int size) {
 	if (size <= 0)
 		throw BioNetException("resize value is invalid");
 	matrix.resize(size);
@@ -132,17 +132,17 @@ void BioAdjMat::resize(int size) {
 	matrix.resize(size);
 }
 
-int BioAdjMat::size() {
+int BioAdjMat::size() const {
 	return names.size();
 }
 
-float BioAdjMat::degree(int index) {
+float BioAdjMat::degree(const int index) {
 	if (index < 0 || index >= matrix.size())
 		throw BioNetException("Index out of bounds!");
 	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
 }
 
-int BioAdjMat::numberOfEdges() {  //converting network to vectors - EINSTEIN 
+int BioAdjMat::numberOfEdges() const {  //converting network to vectors - EINSTEIN 
 	int edges = 0;
 	
 	for (int i = 0; i < matrix.size(); i++)
