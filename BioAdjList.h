@@ -1,20 +1,28 @@
 #pragma once
 #include "BioAdj.h"
 #include "BioList.h"
+#include "BioNetException.h"
 #include <vector>
 #include <string>
 #include <map>
+#include <algorithm>
 using std::vector;
 using std::string;
 using std::map;
+using std::find_if;
 
 
 class BioAdjList : public BioAdj
 {
 private:
 	vector<BioList> network;
-	map<string, int> names;
 public:
+	static const string& NetworkType()
+	{
+		static const string network = "BioAdjLst";
+		return network;
+	}
+
 	BioAdjList(const BioAdjList&);
 	BioAdjList(int i = 5){
 		network.resize(i);
@@ -38,7 +46,13 @@ public:
 	void deleteNode(int);
 	const BioAdjList& operator+=(const string nodename);
 	BioAdjList operator+(const string nodename);
+	const BioAdjList& operator-=(const string nodename);
+	BioAdjList operator-(const string nodename);
 	BioAdjList operator=(const BioAdjList &rhs);
+	BioAdjList operator*(const float weight);
+	BioAdjList operator/(const float weight);
+	const BioAdjList& operator*=(const float weight);
+	const BioAdjList& operator/=(const float weight);
 
 	int size() { return network.size(); }
 };
