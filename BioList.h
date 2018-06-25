@@ -12,16 +12,17 @@ private:
 	BioNode * head;
 	bool doSearch(string name, BioNode* start);
 public:
-	BioList(float weight, string name);
+	BioList() {}
+	BioList(const float weight, const string& name);
 	~BioList();
-	bool search(string name) { doSearch(name, head); }
-	bool setWeight(string name, float weight);
-	string getName();
-	void setName(string);
-	void setEdgeName(string, string);
-	float getWeight(string name);
-	BioNode* insertFront(float weight, string name);
-	void deleteNode(string name);
+	bool search(const string& name) { return doSearch(name, head); }
+	bool setWeight(const string& name, const float weight);
+	string getName() const;
+	void setName(const string&);
+	void setEdgeName(const string&, const string&);
+	float getWeight(const string& name) const;
+	BioNode* insertFront(const float weight, const string& name);
+	void deleteNode(const string& name);
 	void clear();
-	BioNode* getHead() { return head; }
+	BioNode* front() const { return head; } ;
 };

@@ -13,25 +13,21 @@ using std::cout;
 
 GMLHandler::~GMLHandler() {};
 
-void GMLHandler::readFile(BioNet& b, string& fname) {
+void GMLHandler::doRead(BioNet& b, const string& fname) {
 	nodes.reserve(20);
 
 	// check if path
 	string filename = "";
 	size_t found = fname.find("/") + fname.find("\\");
-	if (0 == found)
-	{
-		filename += Reader::defaultPath;
-	}
-
+	
 	filename += fname;
 
 	// check if ext missing
-	found = fname.find('.gml');
-	if (0 == found)
-	{
-		filename += defaultExt;
-	}
+	//found = fname.find('.gml');
+	//if (0 == found)
+	//{
+	//	filename += defaultExt;
+	//}
 
 	try {
 		infile.open(filename);
@@ -152,7 +148,7 @@ void GMLHandler::readFile(BioNet& b, string& fname) {
 }
 
 
-void GMLHandler::writeFile(BioNet&, string& fname)
+void GMLHandler::doWrite(BioNet&, const string& fname)
 {
 	return;
 }

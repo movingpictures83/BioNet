@@ -1,12 +1,12 @@
 #include "BioAdjList.h"
 #include "BioNetException.h"
 
-void BioAdjList::setEdge(const int x,const int y, float w)
+void BioAdjList::setEdge(const int x, const int y, const float w)
 {
 	network[x].setWeight(network[y].getName(), w);
 }
 
-void BioAdjList::setEdge(const string x, const  string y, float w)
+void BioAdjList::setEdge(const string& x, const string& y, const float w)
 {
 	int i = 0;
 	while (network[i].getName() != x)
@@ -15,12 +15,12 @@ void BioAdjList::setEdge(const string x, const  string y, float w)
 }
 
 
-const float BioAdjList::getEdge(const int x, const int y)
+float BioAdjList::getEdge(int x, int y) const
 {
 	return network[x].getWeight(network[y].getName());
 }
 
-const float BioAdjList::getEdge(const string a , const string b)
+float BioAdjList::getEdge(const string& a , const string& b) const
 {
 	for (int i = 0; i < network.size(); i++) {
 		if (strcmp(network[i].getName().c_str(), a.c_str()) == 0)
@@ -29,7 +29,7 @@ const float BioAdjList::getEdge(const string a , const string b)
 	return 0.0f;
 }
 
-void BioAdjList::setNode(const int i , const string s)
+void BioAdjList::setNode(const int i , const string& s)
 {
 	auto oldName = network[i].getName();
 	network[i].setName(s);
@@ -39,39 +39,96 @@ void BioAdjList::setNode(const int i , const string s)
 	}
 }
 
-const string BioAdjList::getNode(const int i)
+string BioAdjList::getNode(const int i) const
 {
 	return network[i].getName();
 }
 
-float BioAdjList::degree(const int i)
+int BioAdjList::size() const
 {
-	if (i < 0 || i >= network.size())
-		throw BioNetException("Index out of bounds!");
-	
-	float degree = 0.0f;
-	BioNode* temp = network[i].getHead();
-	while (temp != nullptr)
-		degree += temp->getWeight();
-	return degree;
+	return 0;
 }
-int BioAdjList::numberOfEdges()
+
+float BioAdjList::degree(const int x) const
 {
-	int edge = 0;
-	for (int i = 0; i < network.size(); i++)
+	auto node = network[x].front();
+	auto result = 0.0f;
+	while (node)
+		result += node->getWeight();
+	return result;
+}
+
+BioAdjList BioAdjList::operator+(const string nodename)
+{
+	BioAdjList list = *this;
+	list += nodename;
+	return list;
+}
+
+BioAdjList BioAdjList::operator=(const BioAdjList & rhs)
+{
+	return BioAdjList(rhs);
+}
+
+BioAdjList::BioAdjList(const BioAdjList& copy) {
+
+}
+
+
+const BioAdjList& BioAdjList::operator+=(const string nodename)
+{
+	
+	return *this;
+}
+
+int BioAdjList::numberOfEdges() const
+{
+	auto result = 0;
+	for (size_t i = 0; i < network.size(); i++)
 	{
-		BioNode* temp = network[i].getHead();
-		while (temp != nullptr)
+		auto node = network[i].front();
+		while (node)
+			result++;
+	}
+	return result;
+}
+
+void BioAdjList::resize(int newSize)
+{
+	auto sizeDifference = newSize - network.size();
+
+	if(sizeDifference < 0) //Last sizeDifference nodes will be destroyed, so the other nodes that have edges to them must be cleaned.
+	{
+		sizeDifference *= -1;
+		auto networkSize = network.size();
+		for (size_t i = networkSize - sizeDifference; i < networkSize; i++)
 		{
-			if (temp->getWeight < -FLT_EPSILON || temp->getWeight > FLT_EPSILON)
-				edge++;
+			auto name = network[i].getName();
+			for (size_t j = 0; j < networkSize - sizeDifference; j++)
+				network[j].deleteNode(name);
 		}
 	}
-	return edge;
+
+	network.resize(newSize);
 }
-void BioAdjList::resize(const int size)
+
+int BioAdjList::findNodeIndex(const string &) const
 {
-	if (size <= 0)
-		throw BioNetException("resize value is invalid");
-	network.resize(size);
+	return 0;
+}
+
+void BioAdjList::deleteEdge(const string &, const string &)
+{
+}
+
+void BioAdjList::deleteEdge(int, int)
+{
+}
+
+void BioAdjList::deleteNode(const string &)
+{
+}
+
+void BioAdjList::deleteNode(int i) {
+
 }

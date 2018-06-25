@@ -34,11 +34,12 @@ private:
 	ifstream infile;
 	vector<Node> nodes;
 	vector<Edge> edges;
+	void doRead(BioNet&, const string& fname);
+	void doWrite(BioNet&, const string& fname);
 
 public:
 	GMLHandler(string p = "") : Reader("gml", p), Writer("gml", p) {};
 	~GMLHandler();
-	void readFile(BioNet&, string& fname);
-	void writeFile(BioNet&, string& fname);
+	string getDefaultExt() { return ".gml"; }
 };
 
