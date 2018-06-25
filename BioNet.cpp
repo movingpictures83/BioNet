@@ -51,7 +51,7 @@ BioNet::BioNet(const float min, const float max, const bool isDir, const string 
 	network = BioAdjFactory::create(networkType);
 }
 
-BioNet::BioNet(BioNet& rhs){
+BioNet::BioNet(const BioNet& rhs){
 	setRange(rhs.minweight, rhs.maxweight);
 	directed = rhs.directed;
 	networkType = rhs.networkType;
@@ -281,11 +281,24 @@ void BioNet::deleteEdge(const string &lstr, const string &rstr) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*const string & BioNet::operator[](size_t index) const
+const BioNet& BioNet::operator=(const BioNet & rhs)
 {
-	
+	BioNet copy(rhs);
+	std::swap(copy, *this);
+	return *this;
 }
-const float BioNet::operator()(size_t, size_t) const
+
+BioNet BioNet::operator+(const string& rhs) const
 {
-	return
-}*/
+	BioNet retVal(*this);
+	retVal.resize(network->size() + 1);
+	retVal.setNode(network->size() - 1, rhs);
+	return retVal;
+}
+
+const BioNet& BioNet::operator+=(const string& rhs) const
+{
+	network->resize(network->size() + 1);
+	network->setNode(network->size() - 1, rhs);
+	return *this;
+}

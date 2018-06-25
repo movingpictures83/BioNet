@@ -28,7 +28,7 @@ private:
 public:
 	BioNet();
 	BioNet(const float, const float, const bool=false, const string& = BioAdjMat::NetworkType());
-	BioNet(BioNet&);
+	BioNet(const BioNet&);
 	BioNet(BioNet&&);
 	~BioNet();
 
@@ -52,6 +52,11 @@ public:
 	const string & operator[](size_t index) const { return network->getNode(index); };
 	const float operator()(size_t lhs, size_t rhs) const { return network->getEdge(lhs, rhs); };
 	const float operator()(const string & lhs, const string & rhs) const { return network->getEdge(lhs, rhs); };
+
+	BioNet operator+(const string&)const;
+	const BioNet& operator +=(const string&) const;
+
+	const BioNet& operator=(const BioNet& rhs);
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
