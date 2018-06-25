@@ -25,21 +25,4 @@ namespace BioAdjFactory {
 		else
 			throw BioNetException("Error Creating network of type " + type + ".\n");
 	}
-
-	static bool swap(const string& type, BioAdj** target)
-	{
-		auto network = BioAdjFactory::create(type);
-		if (!network)
-			return false;
-		network->resize((*target)->size());
-		for (int i{ 0 }; i < network->size(); i++)
-		{
-			network->setNode(i, (*target)->getNode(i));
-			for (int j{ 0 }; j < network->size(); j++)
-				network->setEdge(i, j, (*target)->getEdge(i, j));
-		}
-		std::swap(network, *target);
-		delete network;
-		return true;
-	}
 }
