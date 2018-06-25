@@ -8,7 +8,7 @@ protected:
 	string defaultPath;
 	//static string defaultExt ;
 public:
-	IO(string path = "") : defaultPath(path) { };
+	IO(string path = "C:\\Users\\student\\Desktop\\BioNet\\data\\Basic\\three_triads\\") : defaultPath(path) { };
 
 	//Accessor
 	virtual string getDefaultExt() = 0;
