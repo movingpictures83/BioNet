@@ -17,15 +17,11 @@ protected:  // Accessible in Reader and classes that inherit from Reader
 public:
 	Writer(/*const string& fname,*/ string e, string p = "") : /*_filename(fname),*/ IO(p) {}
 	
-	template <typename T>
+	template <typename R, typename T>
 	void writeFile(BioNet<T>& bn, string& fname) 
 	{
-			fname = defaultPath + fname;
-			doWrite<T>(bn, fname);
+		R r;
+		fname = defaultPath + fname;
+		r.doWrite<T>(bn, fname);
 	}; 
-	virtual void f() { cout << "F OF WRITER" << endl; }//{ cout << "BLANK READFILE FOR NOW" << endl; }
-
-private:
-	template <typename T>
-	virtual void doWrite(BioNet<T>& bn, const string& fname) = 0; // Abstract virtual functions
 };

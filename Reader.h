@@ -16,16 +16,15 @@ protected:  // Accessible in Reader and classes that inherit from Reader
 public:
 	Reader(/*const string& fname ,*/ string e, string p= IO::getDefaultPath()) : /*_filename(fname),*/ IO(p) {}
 	
-	template <typename T>
-	void readFile(BioNet<T>& bn, string& fname)
+	//generic for BioNet primitive and reader type
+	template <class R, class T>
+	static void readFile(BioNet<T>& bn, string& fname)
 	{
+		R r;
 		fname = IO::getDefaultPath() + fname;
-		doRead<T>(bn, fname);
+		r.doRead<T>(bn, fname);
 	}
 
 	virtual void f() { cout << "F OF READER" << endl; }
 	//{ cout << "BLANK READFILE FOR NOW" << endl; }
-private:
-	template <typename T>
-	virtual void doRead(BioNet<T> &, const string&) = 0; //Abstract virtual function to read file
 };
