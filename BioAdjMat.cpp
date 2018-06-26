@@ -1,6 +1,6 @@
 #include "BioAdjMat.h"
 #include "BioNetException.h"
-#include "BioAdjFactory.h"
+//#include "BioAdjFactory.h"
 #include <numeric>
 #include <ostream>
 

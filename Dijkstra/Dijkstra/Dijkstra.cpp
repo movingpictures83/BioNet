@@ -4,7 +4,9 @@
 #include <iostream>
 #include <algorithm>
 #include "../../BioNet.h"
+#include "../../BioList.h"
 #include "../../BioNetException.h"
+#include "../../BioAdjList.h"
 
 using std::string;
 using std::to_string;
@@ -17,19 +19,29 @@ bool ShortestPathUnitTest();
 bool UnitTest();
 void ExceptionTest();
 bool UndirectedTest();
+bool BioListTest();
+bool BioAdjListTest();
+
+bool fequal(float a, float b) {
+	return fabs(b - a) < FLT_EPSILON;
+}
 
 int main()
 {
-	cout << "======UNIT TEST======" << endl;
-	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "======BIOLIST TEST======" << endl;
+	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "======BIOADJLIST TEST======" << endl;
+	BioAdjListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	//cout << "======UNIT TEST======" << endl;
+	//UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
-	cout << "======SHORTEST PATH UNIT TEST======" << endl;
+	//cout << "======SHORTEST PATH UNIT TEST======" << endl;
 
-	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
-	
-	cout << "======Exception UNIT TEST======" << endl;
-	ExceptionTest();
-	UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	//ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
+	//
+	//cout << "======Exception UNIT TEST======" << endl;
+	//ExceptionTest();
+	//UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	return 0;
 }
 
@@ -45,6 +57,38 @@ bool ShortestPathUnitTest()
 	net.setEdge(1, 2, 1);
 	net.setEdge(0, 2, 1);
 	return net.shortestPath(0, 2) == 1;
+}
+
+bool BioAdjListTest() {
+	BioAdjList<float> list;
+	if (list.size() != 5) return false;
+	list.setNode(0, "A");
+	list.setNode(1, "B");
+	list.setNode(2, "C");
+	list.setNode(3, "D");
+	list.setNode(4, "E");
+	if (list.degree(0) != 0 && list.degree(1) != 0 && list.degree(2) != 0 && list.degree(3) != 0 && list.degree(4) != 0) return false;
+	return true;
+}
+
+
+bool BioListTest() {
+	BioList<float> list(0.5f, "Sodium");
+	if (list.getName() != "Sodium") return false;
+	if (!fequal(list.getWeight("Sodium"),0.5f)) return false;
+	list.insertFront(0.2f, "Carbon Dioxide");;
+	list.insertFront(0.3f, "Sodium Chloride");
+	if (!list.search("Sodium")) return false;
+	if (!fequal(list.getWeight("Carbon Dioxide"), 0.2f)) return false;
+	list *= 10;
+	if (!fequal(list.getWeight("Sodium"), 5)) return false;
+	if (!fequal(list.getWeight("Carbon Dioxide"), 2)) return false;
+	list /= 10;
+	if (!fequal(list.getWeight("Sodium"), 0.5f)) return false;
+	if (!fequal(list.getWeight("Carbon Dioxide"), 0.2f)) return false;
+	list.setWeight("Sodium", 1.5f);
+	if (!fequal(list.getWeight("Sodium"), 1.5f)) return false;
+	return true;
 }
 
 bool UndirectedTest()

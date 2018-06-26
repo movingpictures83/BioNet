@@ -19,7 +19,7 @@ using std::ostream;
 #include <limits>
 #include <set>
 #include <functional>
-#include "BioAdjFactory.h"
+//#include "BioAdjFactory.h"
 #include "BioNetException.h"
 
 using std::to_string;
@@ -132,14 +132,14 @@ BioNet<T>::BioNet(const T min, const T max, const bool isDir, const string& type
 	directed = isDir;
 	networkType = type;
 	try {
-		network = BioAdjFactory::create<T>(networkType);
+		network = 0; //BioAdjFactory::create(networkType);
 	}
 	catch (exception e)
 	{
 		cerr << e.what() << endl;
-		cout << "Defaulting underlying network to " << BioAdjMat<T>::NetworkType() << endl;
-		network = BioAdjFactory::create<T>(BioAdjMat<T>::NetworkType());
+		network = 0; // BioAdjFactory::create(BioAdjMat::NetworkType());
 	}
+	network = 0; //BioAdjFactory::create(networkType);
 }
 
 template<class T>
@@ -148,13 +148,13 @@ BioNet<T>::BioNet(const BioNet<T>& rhs) {
 	directed = rhs.directed;
 	networkType = rhs.networkType;
 	try {
-		network = BioAdjFactory::create<T>(networkType);
+		network = BioAdjFactory::create(networkType);
 		*network = *rhs.network;
 	}
 	catch (exception e)
 	{
 		cerr << e.what() << endl;
-		BioAdjFactory::create<T>(BioAdjMat::NetworkType());
+		BioAdjFactory::create(BioAdjMat::NetworkType());
 		*network = *rhs.network;
 	}
 }
@@ -268,7 +268,7 @@ void BioNet<T>::convertToType(const string& type)
 {
 	try {
 		auto old = network;
-		network = BioAdjFactory::create<T>(type);
+		network = BioAdjFactory::create(type);
 		network->resize(old->size());
 		for (int i{ 0 }; i < network->size(); i++)
 		{

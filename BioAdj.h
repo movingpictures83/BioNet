@@ -5,7 +5,7 @@ using std::string;
 class Adj {};
 
 template <typename T=float>
-class BioAdj : Adj
+class BioAdj : public Adj
 {
 protected:
 	string keyword;
@@ -29,6 +29,6 @@ public:
 	virtual void deleteNode(const string &) = 0;
 	virtual void deleteNode(int) = 0;
 
-	virtual Adj* make() = 0;
+	static Adj* make();
 };
 
