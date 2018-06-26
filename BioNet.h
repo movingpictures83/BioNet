@@ -6,7 +6,7 @@
 #include <iostream>
 #include "BioAdj.h"
 #include "BioAdjMat.h"
-#include "BioAdjList.h"
+//#include "BioAdjList.h"
 using std::string;
 using std::pair;
 using std::vector;
