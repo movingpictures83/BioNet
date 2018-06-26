@@ -148,13 +148,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\BioAdjFactory.h" />
     <ClInclude Include="..\..\BioList.h" />
     <ClInclude Include="..\..\BioNet.h" />
     <ClInclude Include="..\..\Reader.h" />
     <ClInclude Include="..\..\Writer.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="GMLReader.h" />
-    <ClInclude Include="Header.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
