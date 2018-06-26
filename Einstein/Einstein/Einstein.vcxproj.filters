@@ -53,9 +53,6 @@
     <ClCompile Include="Einstein.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BioNet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BioNetTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
