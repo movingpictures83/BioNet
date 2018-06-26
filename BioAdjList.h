@@ -6,17 +6,24 @@
 #include <string>
 #include <map>
 #include <algorithm>
+#include "Register.h"
 using std::vector;
 using std::string;
 using std::map;
 using std::find_if;
 
 template <typename T>
-class BioAdjList : public BioAdj<>
+class BioAdjList : public BioAdj<T>
 {
 private:
 	vector<BioList> network;
+	static Register reg;
 public:
+	static Adj* make() 
+	{
+		return new BioAdjList<T>();
+	}
+
 	static const string& NetworkType()
 	{
 		static const string network = "BioAdjLst";
@@ -219,3 +226,10 @@ public:
 		return *this;
 	}
 };
+
+template<>
+Register BioAdjList<int>::reg = Register("BioAdjListInt", &BioAdjList::make); 
+template<>
+Register BioAdjList<float>::reg = Register("BioAdjListFloat", &BioAdjList::make); 
+template<>
+Register BioAdjList<double>::reg = Register("BioAdjListDouble", &BioAdjList::make);
