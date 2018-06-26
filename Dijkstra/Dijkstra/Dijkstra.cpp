@@ -6,6 +6,7 @@
 #include "../../BioNet.h"
 #include "../../BioList.h"
 #include "../../BioNetException.h"
+#include "../../BioAdjFactory.h";
 #include "../../BioAdjList.h"
 
 using std::string;
@@ -19,6 +20,7 @@ bool ShortestPathUnitTest();
 bool UnitTest();
 void ExceptionTest();
 bool UndirectedTest();
+void UnitTestRegister();
 bool BioListTest();
 bool BioAdjListTest();
 
@@ -42,6 +44,7 @@ int main()
 	//cout << "======Exception UNIT TEST======" << endl;
 	//ExceptionTest();
 	//UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+
 	return 0;
 }
 
@@ -172,6 +175,22 @@ void ExceptionTest()
 	catch (BioNetException & e)
 	{
 		cout << "Parameter of getNode() -" << e.what() << endl;
+	}
+	
+}
+
+void UnitTestRegister()
+{
+	try {
+		BioAdj<int> * e = BioAdjFactory::create<int>(BioAdjMat<int>::NetworkType());
+		e->resize(10);
+		auto const val = e->getEdge(0, 0);
+		if (typeid(decltype(val)) == typeid(int))
+			cout << "Correct Type";
+	}
+	catch (exception e)
+	{
+		cout << e.what();
 	}
 
 }
