@@ -6,29 +6,119 @@
 #include <string>
 using std::string;
 
+template<class T>
 class BioList {
 private:
 	string name;
-	BioNode * head;
-	bool doSearch(string name, BioNode* start);
-	BioNode* recursiveDeleteEdge(BioNode*, const string&);
+	BioNode<T> * head;
+	bool doSearch(string name, BioNode<T>* start) {
+		if (start == NULL) return false;
+		else if (start->getName() == name) return true;
+		else return doSearch(name, start->getNext());
+	}
+	BioNode<T>* recursiveDeleteEdge(BioNode<T>* node, const string& name) {
+		if (node == nullptr)
+			return nullptr;
+
+		if (node->getName() == name)
+		{
+			auto temp = node->getNext();
+			delete node;
+			return temp;
+		}
+
+		node->setNext(recursiveDeleteEdge(node->getNext(), name));
+		return node;
+	}
 public:
 	BioList() {}
-	BioList(const float weight, const string& name);
-	BioList(const BioList&);
-	~BioList();
+	BioList(const T weight, const string& name) {
+		head = new BioNode<T>(weight, index, NULL);
+	}
+	BioList(const BioList<T>& copy) {
+		for (auto node = copy.head; node != nullptr; node = node->getNext())
+			insertFront(node->getWeight(), node->getName());
+	}
+	~BioList() {
+		clear();
+	}
 	bool search(const string& name) { return doSearch(name, head); }
-	bool setWeight(const string& name, const float weight);
-	string getName() const;
-	void setName(const string&);
-	void setEdgeName(const string&, const string&);
-	float getWeight(const string& name) const;
-	BioNode* insertFront(const float weight, const string& name);
-	void deleteEdge(const string& name);
-	void clear();
-	BioNode* front() const { return head; }
-	BioList operator*(const float weight);
-	const BioList& operator*=(const float weight);
-	BioList operator/(const float weight);
-	const BioList& operator/=(const float weight);
+	bool setWeight(const string& name, const T weight) {
+		auto * current = head;
+		while (current)
+		{
+			if (current->getName() == name)
+			{
+				current->setWeight(weight);
+				return true;
+			}
+			current = current->getNext();
+		}
+		return false;
+	}
+	string getName() const { return name; }
+	void setName(const string& s) { name = s; }
+	void setEdgeName(const string&, const string&) {
+		auto* node = head;
+		while (node)
+		{
+			if (node->getName() == oldName)
+			{
+				node->setName(newName);
+				break;
+			}
+		}
+	}
+	T getWeight(const string& name) const {
+		auto * current = head;
+		while (current)
+		{
+			if (current->getName() == name)
+				return current->getWeight();
+			current = current->getNext();
+		}
+		return 0;
+	}
+	BioNode<T>* insertFront(const T weight, const string& name) {
+		BioNode* newHead = new BioNode(weight, name, head);
+		head = newHead;
+		return head;
+	}
+	void deleteEdge(const string& name) {
+		head = recursiveDeleteEdge(head, name);
+	}
+	void clear() {
+		if (head->getNext() == NULL)
+		{
+			delete head;
+			return;
+		}
+		BioNode* temp = head;
+		head = temp->getNext();
+		delete temp;
+		clear();
+	}
+	BioNode<T>* front() const { return head; }
+	BioList<T> operator*(const T weight) {
+		BioList list(*this);
+		for (auto node = list.head; node != nullptr; node = node->getNext())
+			node->setWeight(node->getWeight() * weight);
+		return list;
+	}
+	const BioList<T>& operator*=(const T weight) {
+		for (auto node = head; node != nullptr; node = node->getNext())
+			node->setWeight(node->getWeight() * weight);
+		return *this;
+	}
+	BioList<T> operator/(const T weight) {
+		BioList list(*this);
+		for (auto node = list.head; node != nullptr; node = node->getNext())
+			node->setWeight(node->getWeight() / weight);
+		return list;
+	}
+	const BioList<T>& operator/=(const T weight) {
+		for (auto node = head; node != nullptr; node = node->getNext())
+			node->setWeight(node->getWeight() / weight);
+		return *this;
+	}
 };

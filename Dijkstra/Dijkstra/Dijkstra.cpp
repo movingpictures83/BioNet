@@ -36,7 +36,7 @@ int main()
 bool ShortestPathUnitTest()
 {
 	//Test for BioNet shortest path WIP
-	BioNet net; // Default min -1 max 1
+	BioNet<float> net; // Default min -1 max 1
 	net.resize(3);
 	net.setNode(0, "A");
 	net.setNode(1, "B");
@@ -51,7 +51,7 @@ bool UndirectedTest()
 {
 	try
 	{
-		BioNet net;
+		BioNet<float> net;
 		net.resize(2);
 		net.setNode(0, "A");
 		net.setNode(1, "B");
@@ -67,8 +67,8 @@ bool UndirectedTest()
 
 bool UnitTest()
 {
-	BioNet TestBio(-1, 1, true);
-	TestBio.resize(NETWORK_SIZE);
+	BioNet<float> TestBio(-1, 1, true);
+	TestBio.resize(5);
 	char posNeg = 1;
 	//Random Values
 	cout << '\t';
@@ -103,8 +103,8 @@ bool UnitTest()
 
 void ExceptionTest()
 {
-	BioNet TestBio;
-	TestBio.resize(NETWORK_SIZE);
+	BioNet<float> TestBio;
+	TestBio.resize(5);
 
 	try {
 		TestBio.getEdge(10, 3);

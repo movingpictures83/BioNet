@@ -3,18 +3,19 @@
 #include <string>
 using std::string;
 
+template<class T>
 class BioNode {
 private:
-	float weight;
+	T weight;
 	string name;
-	BioNode* next;
+	BioNode<T>* next;
 
 public:
-	BioNode(const float f, const string &i, BioNode* n) { weight = f; name = i; next = n; }
+	BioNode(const T w, const string &i, BioNode<T>* n) { weight = w; name = i; next = n; }
 	string getName() { return name; }
 	void setName(const string &n) { name = n; }
 	BioNode* getNext() { return next; }
-	void setWeight(const float f) { weight = f; }
-	float getWeight() { return weight; }
-	void setNext(BioNode* n) { next->next = n; }
+	void setWeight(const float w) { weight = w; }
+	T getWeight() { return weight; }
+	void setNext(BioNode<T>* n) { next->next = n; }
 };
