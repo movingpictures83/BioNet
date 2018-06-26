@@ -29,13 +29,15 @@ using std::endl;
 //
 //
 
-BioNet::BioNet() : BioNet(-1.0, 1.0){
+template<class T>
+BioNet<T>::BioNet() : BioNet(-1.0, 1.0){
 	// for now start a default unconnected network with default range
 	// The following code only creates a local version variable - Corrected by Dijkstra Team
 	// BioNet(-1.0, 1.0);
 }
 
-BioNet::BioNet(const float min, const float max, const bool isDir, const string &type) {
+template<class T>
+BioNet<T>::BioNet(const T min, const T max, const bool isDir, const string &type) {
 
 	setRange(min, max);
 	directed = isDir;
@@ -51,7 +53,8 @@ BioNet::BioNet(const float min, const float max, const bool isDir, const string 
 	network = BioAdjFactory::create(networkType);
 }
 
-BioNet::BioNet(const BioNet& rhs){
+template<class T>
+BioNet<T>::BioNet(const BioNet<T>& rhs){
 	setRange(rhs.minweight, rhs.maxweight);
 	directed = rhs.directed;
 	networkType = rhs.networkType;
@@ -67,7 +70,8 @@ BioNet::BioNet(const BioNet& rhs){
 	}
 }
 
-BioNet::BioNet(BioNet&& rhs) {
+template<class T>
+BioNet<T>::BioNet(BioNet<T>&& rhs) {
 	setRange(rhs.minweight, rhs.maxweight);
 	directed = rhs.directed;
 	std::swap(networkType, rhs.networkType);
@@ -75,12 +79,14 @@ BioNet::BioNet(BioNet&& rhs) {
 	rhs.~BioNet();
 }
 
-BioNet::~BioNet() {
+template<class T>
+BioNet<T>::~BioNet() {
 	if(network != nullptr)
 		delete network;
 }
 
-void BioNet::setRange(const float min, const float max) {
+template<class T>
+void BioNet<T>::setRange(const T min, const T max) {
 	if (min > max)
 	{
 		throw BioNetException("mininum value is larger than maximum value");
@@ -90,7 +96,8 @@ void BioNet::setRange(const float min, const float max) {
 }
 
 
-void BioNet::setEdge(const int i, const int j, const float w) {
+template<class T>
+void BioNet<T>::setEdge(const int i, const int j, const T w) {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
 		throw BioNetException("Node is not in the matrix range");
@@ -107,17 +114,18 @@ void BioNet::setEdge(const int i, const int j, const float w) {
 	}
 }
 
-	
-void BioNet::setNode(const int i, const string &n) {
+template<class T>
+void BioNet<T>::setNode(const int i, const string &n) {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
 		throw BioNetException("Node is not in the matrix range");
 	
 	network->setNode(i, n);
 }
-// Accessors
 
-const float BioNet::getEdge(const int i, const int j) const {
+// Accessors
+template<class T>
+const T BioNet<T>::getEdge(const int i, const int j) const {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
 		throw BioNetException("Node is not in the matrix range");
@@ -127,16 +135,16 @@ const float BioNet::getEdge(const int i, const int j) const {
 	return network->getEdge(i, j);
 }
 
-
-const string BioNet::getNode(const int i) const {
+template<class T>
+const string BioNet<T>::getNode(const int i) const {
 	if (i < 0 || i > network->size())  // corrected from network.size()
 		throw BioNetException("Node is not in the matrix range");
 
 	return network->getNode(i);
 }
 
-
-void BioNet::resize(const int size) {
+template<class T>
+void BioNet<T>::resize(const int size) {
 
 	if (size <= 0)
 		throw BioNetException("resize value is invalid");
@@ -144,7 +152,8 @@ void BioNet::resize(const int size) {
 }
 
 
-void BioNet::clear() {
+template<class T>
+void BioNet<T>::clear() {
 	//network->clear();
 }
 
@@ -166,7 +175,8 @@ void BioNet::clear() {
 // AFTERNOON COHORT DIJKSKTRA
 //
 
-void BioNet::convertToType(const string &type)
+template<class T>
+void BioNet<T>::convertToType(const string &type)
 {
 	try {
 		auto old = network;
@@ -188,28 +198,31 @@ void BioNet::convertToType(const string &type)
 	
 }
 
-const size_t BioNet::size() const
+template<class T>
+const size_t BioNet<T>::size() const
 {
 	return network->size();
 }
 
 
-/*void BioNet::reserve(size_t size)
+/*
+template<class T>
+void BioNet<T>::reserve(size_t size)
 {
 	if (size < 0)
 		throw BioNetException("Size is negative!");
 	network->reserve(size);
 }*/
 
-
-const float BioNet::degree(const int index) const {  //converting network to vectors - EINSTEIN
+template<class T>
+const T BioNet<T>::degree(const int index) const {  //converting network to vectors - EINSTEIN
 	if (index < 0 || index >= network->size())
 		throw BioNetException("Index out of bounds!");
 	return network->degree(index);
 }
 
-
-const float BioNet::shortestPath(const int start, const int end) const {  //converting network to vectors - EINSTEIN
+template<class T>
+const T BioNet<T>::shortestPath(const int start, const int end) const {  //converting network to vectors - EINSTEIN
 
 	if (start < 0 || start > network->size())
 		throw BioNetException("Start node is not in the matrix range");
@@ -275,35 +288,38 @@ const float BioNet::shortestPath(const int start, const int end) const {  //conv
 	return result;
 }
 
-
-
-const int BioNet::numberOfEdges() const {  //converting network to vectors - EINSTEIN
+template<class T>
+const int BioNet<T>::numberOfEdges() const {  //converting network to vectors - EINSTEIN
 	int x = network->numberOfEdges();
 	if (!directed)
 		x = x / 2;
 	return x;
 }
 
-void BioNet::deleteEdge(const int lval, const int rval) {
+template<class T>
+void BioNet<T>::deleteEdge(const int lval, const int rval) {
 	// not implemented
 	//network->deleteEdge(lval, rval);
 }
 
-void BioNet::deleteEdge(const string &lstr, const string &rstr) {
+template<class T>
+void BioNet<T>::deleteEdge(const string &lstr, const string &rstr) {
 	// not implemented
 	//network->deleteEdge(lstr, rstr);
 }
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const BioNet& BioNet::operator=(const BioNet & rhs)
+template<class T>
+const BioNet<T>& BioNet<T>::operator=(const BioNet<T>& rhs)
 {
 	BioNet copy(rhs);
 	std::swap(copy, *this);
 	return *this;
 }
 
-BioNet BioNet::operator+(const string& rhs) const
+template<class T>
+BioNet<T> BioNet<T>::operator+(const string& rhs) const
 {
 	BioNet retVal(*this);
 	retVal.resize(network->size() + 1);
@@ -311,14 +327,16 @@ BioNet BioNet::operator+(const string& rhs) const
 	return retVal;
 }
 
-const BioNet& BioNet::operator+=(const string& rhs) const
+template<class T>
+const BioNet<T>& BioNet<T>::operator+=(const string& rhs) const
 {
 	network->resize(network->size() + 1);
 	network->setNode(network->size() - 1, rhs);
 	return *this;
 }
 
-ostream & BioNet::operator<<(ostream& os) const
+template<class T>
+ostream& BioNet<T>::operator<<(ostream& os) const
 {
 	os << network;
 	return os;
