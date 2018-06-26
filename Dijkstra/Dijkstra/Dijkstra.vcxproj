@@ -148,18 +148,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\BioAdj.h" />
+    <ClInclude Include="..\..\BioAdjFactory.h" />
+    <ClInclude Include="..\..\BioAdjList.h" />
+    <ClInclude Include="..\..\BioAdjMat.h" />
+    <ClInclude Include="..\..\BioList.h" />
     <ClInclude Include="..\..\BioNet.h" />
     <ClInclude Include="..\..\BioNetException.h" />
+    <ClInclude Include="..\..\BioNode.h" />
+    <ClInclude Include="..\..\Register.h" />
+    <ClInclude Include="..\..\IO.h" />
+    <ClInclude Include="..\..\Reader.h" />
+    <ClInclude Include="..\..\Writer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\BioAdj.cpp" />
-    <ClCompile Include="..\..\BioAdjList.cpp" />
     <ClCompile Include="..\..\BioAdjMat.cpp" />
-    <ClCompile Include="..\..\BioList.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
     <ClCompile Include="..\..\BioNetException.cpp" />
+    <ClCompile Include="..\..\IO.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
