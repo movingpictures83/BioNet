@@ -11,8 +11,8 @@ using std::string;
 using std::map;
 using std::find_if;
 
-
-class BioAdjList : public BioAdj
+template <typename T>
+class BioAdjList : public BioAdj<T>
 {
 private:
 	vector<BioList> network;

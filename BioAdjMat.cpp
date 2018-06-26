@@ -296,7 +296,7 @@ const string & BioAdjMat<T>::operator[] (int i)
 }
 
 template <typename T>
-float BioAdjMat<T>::operator() (int i, int j)
+T BioAdjMat<T>::operator() (int i, int j)
 {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
 		throw BioNetException("Index is out of range");
