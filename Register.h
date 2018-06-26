@@ -9,7 +9,7 @@ using std::function;
 struct Register
 {
 	// name="B"  checkType= address of B::checkType
-	Register(string name, function<Adj*(void)> func)
+	Register(string name, Adj * (*func)())
 	{
 		BioAdjFactory::RegisterType(name, func);
 	}

@@ -15,7 +15,13 @@ using std::function;
 namespace BioAdjFactory {
 	static unordered_map<string, function<Adj*(void)>>mFactoryMap;
 
-	static void RegisterType(const string & id, function<Adj*(void)> func) { mFactoryMap[id] = func; }
+	static void RegisterType(const string & id, function<Adj*(void)> func)
+	{
+		if(mFactoryMap.find(id) != mFactoryMap.end())
+			mFactoryMap[id] = func;
+		else
+			throw BioNetException("Error Creating network of type " + id + ".\n");
+	}
 
 	template<typename T>
 	static BioAdj<T>* create(const string& type) {

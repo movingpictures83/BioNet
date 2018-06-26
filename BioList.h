@@ -33,8 +33,8 @@ private:
 public:
 	BioList() {}
 	BioList(const T weight, const string& name) {
-		head = new BioEdge<T>(weight, index, NULL);
-	}
+		this->name = name;
+		head = new BioEdge<T>(weight, name, NULL);	}
 	BioList(const BioList<T>& copy) {
 		for (auto node = copy.head; node != nullptr; node = node->getNext())
 			insertFront(node->getWeight(), node->getName());
@@ -58,7 +58,7 @@ public:
 	}
 	string getName() const { return name; }
 	void setName(const string& s) { name = s; }
-	void setEdgeName(const string&, const string&) {
+	void setEdgeName(const string& oldName, const string& newName) {
 		auto* node = head;
 		while (node)
 		{
@@ -80,7 +80,7 @@ public:
 		return 0;
 	}
 	BioEdge<T>* insertFront(const T weight, const string& name) {
-		BioNode* newHead = new BioNode(weight, name, head);
+		BioEdge<T>* newHead = new BioEdge<T>(weight, name, head);
 		head = newHead;
 		return head;
 	}
@@ -93,7 +93,7 @@ public:
 			delete head;
 			return;
 		}
-		BioNode* temp = head;
+		BioEdge<T>* temp = head;
 		head = temp->getNext();
 		delete temp;
 		clear();

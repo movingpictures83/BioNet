@@ -6,17 +6,24 @@
 #include <string>
 #include <map>
 #include <algorithm>
+#include "Register.h"
 using std::vector;
 using std::string;
 using std::map;
 using std::find_if;
 
 template <typename T>
-class BioAdjList : public BioAdj<>
+class BioAdjList : public BioAdj<T>
 {
 private:
-	vector<BioList> network;
+	vector<BioList<T>> network;
+	static Register reg;
 public:
+	static Adj* make() 
+	{
+		return new BioAdjList<T>();
+	}
+
 	static const string& NetworkType()
 	{
 		static const string network = "BioAdjLst";
@@ -25,9 +32,9 @@ public:
 
 	BioAdjList(const BioAdjList& copy)
 	{
-		network = vector<BioList>(copy.network.size());
+		network = vector<BioList<T>>(copy.network.size());
 		for (size_t i = 0; i < copy.network.size(); i++)
-			network[i] = BioList(copy.network[i]);
+			network[i] = BioList<T>(copy.network[i]);
 	}
 
 	BioAdjList(int i = 5){
@@ -59,7 +66,7 @@ public:
 			if (strcmp(network[i].getName().c_str(), a.c_str()) == 0)
 				return network[i].getWeight(b);
 		}
-		return default(T);
+		return T();
 	}
 	
 	void setNode(const int i, const string& s)
@@ -160,7 +167,7 @@ public:
 
 	const BioAdjList& operator+=(const string nodename)
 	{
-		network.push_back(BioList(0, nodename));
+		network.push_back(BioList<T>(0, nodename));
 		return *this;
 	}
 
@@ -219,3 +226,10 @@ public:
 		return *this;
 	}
 };
+
+template<>
+Register BioAdjList<int>::reg = Register("BioAdjListInt", &BioAdjList::make); 
+template<>
+Register BioAdjList<float>::reg = Register("BioAdjListFloat", &BioAdjList::make); 
+template<>
+Register BioAdjList<double>::reg = Register("BioAdjListDouble", &BioAdjList::make);
