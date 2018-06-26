@@ -14,9 +14,10 @@ namespace UnitTest
 		TEST_METHOD(TestMethod1)
 		{
 			BioNet<float> b = BioNet<float>();
-			for (int i = 0; i < NETWORK_SIZE; ++i)
+			b.resize(NETWORK_SIZE);
+			for (int i = 0; i < b.size(); ++i)
 			{
-				for (int j = 0; j < NETWORK_SIZE; ++j)
+				for (int j = 0; j < b.size(); ++j)
 				{
 					float min = b.getMinWeight();
 					float max = b.getMaxWeight();

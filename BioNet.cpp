@@ -1,3 +1,5 @@
+/* Moving all templated implementation to the Header file so it works as expected - EINSTEIN
+
 #include "BioNet.h"
 #include "BioNetException.h"
 #include <iostream>
@@ -37,7 +39,7 @@ BioNet<T>::BioNet() : BioNet(-1.0, 1.0){
 }
 
 template<class T>
-BioNet<T>::BioNet(const T min, const T max, const bool isDir, const string &type) {
+BioNet<T>::BioNet(const T min, const T max, const bool isDir, const string& type) {
 
 	setRange(min, max);
 	directed = isDir;
@@ -205,14 +207,14 @@ const size_t BioNet<T>::size() const
 }
 
 
-/*
-template<class T>
-void BioNet<T>::reserve(size_t size)
-{
-	if (size < 0)
-		throw BioNetException("Size is negative!");
-	network->reserve(size);
-}*/
+
+//template<class T>
+//void BioNet<T>::reserve(size_t size)
+//{
+//	if (size < 0)
+//		throw BioNetException("Size is negative!");
+//	network->reserve(size);
+//}
 
 template<class T>
 const T BioNet<T>::degree(const int index) const {  //converting network to vectors - EINSTEIN
@@ -340,4 +342,5 @@ ostream& BioNet<T>::operator<<(ostream& os) const
 {
 	os << network;
 	return os;
-}
+} 
+*/
