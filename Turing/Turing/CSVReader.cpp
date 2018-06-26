@@ -29,7 +29,8 @@ vector <string> CSVReader::split(const string &s, char delim) {
 	return result;
 }
 
-void CSVReader::readFile(BioNet &bionet, const string & fname)
+template <typename T>
+void CSVReader::doRead(BioNet<T> &bionet, const string & fname)
 {
 	//string filename;
 	ifstream inputFile(fname/*_filename*/, ios::in);
@@ -66,9 +67,8 @@ void CSVReader::readFile(BioNet &bionet, const string & fname)
 		//Moving through every row, and setting the col value.
 		for (int i = 1; i < cols; i++)
 		{
-			bionet.setEdge(row_count, i-1, stof(col_Values[i]));
+			bionet.setEdge(row_count, i-1, (T)stod(col_Values[i]));
 		}
 		row_count++;
 	}
-
 }

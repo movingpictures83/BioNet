@@ -2,6 +2,7 @@
 #include <string>
 using std::string;
 
+template <typename T>
 class BioAdj
 {
 protected:
@@ -9,14 +10,14 @@ protected:
 public:
     // BioAdj();
 	//~BioAdj();
-	virtual void setEdge(const int, const int, const float) = 0;
-	virtual void setEdge(const string&, const string&, const float) = 0;
-	virtual float getEdge(const int, const int) const = 0;
-	virtual float getEdge(const string&, const string&) const = 0;
+	virtual void setEdge(const int, const int, const T) = 0;
+	virtual void setEdge(const string&, const string&, const T) = 0;
+	virtual T getEdge(const int, const int) const = 0;
+	virtual T getEdge(const string&, const string&) const = 0;
 	virtual void setNode(const int, const string&) = 0;
 	virtual string getNode(const int) const = 0;
 	virtual int size() const = 0;
-	virtual float degree(const int) const = 0;
+	virtual T degree(const int) const = 0;
 	virtual int numberOfEdges() const = 0;
 	virtual void resize(const int) = 0;
 

@@ -9,13 +9,16 @@ using std::endl;
 
 //BioAdjFactory::mFactoryMap["matrix"] = []() {new BioAdjMat()};
 
-void BioAdjMat::setEdge(const int i, const int j, const float w)
+template <typename T>
+void BioAdjMat<T>::setEdge(const int i, const int j, const T w)
 {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
 		throw BioNetException("setEdge() has wrong range");
 	matrix[i][j] = w;
 }
-void BioAdjMat::setEdge(const string &n1, const string &n2, const float w)
+
+template <typename T>
+void BioAdjMat<T>::setEdge(const string &n1, const string &n2, const T w)
 {
 	int i = -1;
 	int j = -1;
@@ -37,13 +40,17 @@ void BioAdjMat::setEdge(const string &n1, const string &n2, const float w)
 
 	setEdge(i, j, w);
 }
-float BioAdjMat::getEdge(const int i, const int j) const {
+
+template <typename T>
+T BioAdjMat<T>::getEdge(const int i, const int j) const {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
 		throw BioNetException("setEdge() has wrong range");
 
 	return matrix[i][j];
 }
-float BioAdjMat::getEdge(const string &n1, const string &n2) const
+
+template <typename T>
+T BioAdjMat<T>::getEdge(const string &n1, const string &n2) const
 {
 	int i = -1;
 	int j = -1;
@@ -66,7 +73,9 @@ float BioAdjMat::getEdge(const string &n1, const string &n2) const
 	return getEdge(i, j);
 }
 
-int BioAdjMat::findNodeIndex(const string & lookup) const
+
+template <typename T>
+int BioAdjMat<T>::findNodeIndex(const string & lookup) const
 {
 	int index = 0;
 	for (auto node : names)
@@ -78,7 +87,9 @@ int BioAdjMat::findNodeIndex(const string & lookup) const
 	}
 	return -1;
 }
-void BioAdjMat::setNode(const int index, const string &name)
+
+template <typename T>
+void BioAdjMat<T>::setNode(const int index, const string &name)
 {
 	if (index < 0 || index >= names.size())
 		throw BioNetException("Trying to add name out of range");
@@ -86,7 +97,9 @@ void BioAdjMat::setNode(const int index, const string &name)
 	names[index] = name;
 }
 
-string BioAdjMat::getNode(const int index) const
+
+template <typename T>
+string BioAdjMat<T>::getNode(const int index) const
 {
 	if (index < 0 || index >= names.size())
 		throw BioNetException("Trying to add name out of range");
@@ -95,14 +108,17 @@ string BioAdjMat::getNode(const int index) const
 }
 
 
-void BioAdjMat::deleteEdge(const string & istr, const string & jstr)
+template <typename T>
+void BioAdjMat<T>::deleteEdge(const string & istr, const string & jstr)
 {
 
 	int i = findNodeIndex(istr);
 	int j = findNodeIndex(jstr);
 	deleteEdge(i, j);
 }
-void BioAdjMat::deleteEdge(const int i, const int j)
+
+template <typename T>
+void BioAdjMat<T>::deleteEdge(const int i, const int j)
 {
 	auto size = names.size();
 	if (i < 0 || j < 0 || i >= size || j >= size)
@@ -110,12 +126,16 @@ void BioAdjMat::deleteEdge(const int i, const int j)
 	matrix[i][j] = 0;
 }
 
-void BioAdjMat::deleteNode(const string & nodeName)
+template <typename T>
+void BioAdjMat<T>::deleteNode(const string & nodeName)
 {
 	auto node = findNodeIndex(nodeName);
 	deleteNode(node);
 }
-void BioAdjMat::deleteNode(const int nodeIndex)
+
+
+template <typename T>
+void BioAdjMat<T>::deleteNode(const int nodeIndex)
 {
 	auto size = matrix.size();
 	if (nodeIndex < 0 || nodeIndex >= size )
@@ -126,7 +146,9 @@ void BioAdjMat::deleteNode(const int nodeIndex)
 		node.erase(node.begin() + nodeIndex);
 }
 
-void BioAdjMat::resize(const int size) {
+
+template <typename T>
+void BioAdjMat<T>::resize(const int size) {
 	if (size <= 0)
 		throw BioNetException("resize value is invalid");
 	matrix.resize(size);
@@ -136,17 +158,23 @@ void BioAdjMat::resize(const int size) {
 	names.resize(size);
 }
 
-int BioAdjMat::size() const {
+
+template <typename T>
+int BioAdjMat<T>::size() const {
 	return names.size();
 }
 
-float BioAdjMat::degree(const int index) const{
+
+template <typename T>
+float BioAdjMat<T>::degree(const int index) const{
 	if (index < 0 || index >= matrix.size())
 		throw BioNetException("Index out of bounds!");
 	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
 }
 
-int BioAdjMat::numberOfEdges() const{  //converting network to vectors - EINSTEIN 
+
+template <typename T>
+int BioAdjMat<T>::numberOfEdges() const{  //converting network to vectors - EINSTEIN 
 	int edges = 0;
 	
 	for (int i = 0; i < matrix.size(); i++)
@@ -158,7 +186,9 @@ int BioAdjMat::numberOfEdges() const{  //converting network to vectors - EINSTEI
 	return edges;
 }
 
-BioAdjMat BioAdjMat::operator= (const BioAdjMat & rhs)
+
+template <typename T>
+BioAdjMat<T> BioAdjMat<T>::operator= (const BioAdjMat<T> & rhs)
 {
 	names.resize(rhs.size());
 	for (int i = 0; i < names.size(); i++)
@@ -176,7 +206,9 @@ BioAdjMat BioAdjMat::operator= (const BioAdjMat & rhs)
 	return * this;
 }
 
-BioAdjMat BioAdjMat::operator+ (const string & aNode)
+
+template <typename T>
+BioAdjMat<T> BioAdjMat<T>::operator+ (const string & aNode)
 {
 	BioAdjMat newAdjMat;
 	newAdjMat.resize((*this).size() + 1);
@@ -192,14 +224,18 @@ BioAdjMat BioAdjMat::operator+ (const string & aNode)
 	return newAdjMat;
 }
 
-const BioAdjMat & BioAdjMat::operator+= (const string & aNode)
+
+template <typename T>
+const BioAdjMat<T> & BioAdjMat<T>::operator+= (const string & aNode)
 {
 	(*this).resize((*this).size() + 1);
 	(*this).setNode((*this).size(), aNode);
 	return *this;
 }
 
-const BioAdjMat & BioAdjMat::operator/= (const float & factor)
+
+template <typename T>
+const BioAdjMat<T> & BioAdjMat<T>::operator/= (const T & factor)
 {
 	if (factor > -FLT_EPSILON && factor < FLT_EPSILON)
 		throw BioNetException("Can't divide 0");
@@ -210,7 +246,8 @@ const BioAdjMat & BioAdjMat::operator/= (const float & factor)
 }
 
 
-const BioAdjMat & BioAdjMat::operator*= (const float & factor)
+template <typename T>
+const BioAdjMat<T> & BioAdjMat<T>::operator*= (const T & factor)
 {
 	for (int i = 0; i < names.size(); i++)
 		for (int j = 0; j < names.size(); j++)
@@ -219,7 +256,9 @@ const BioAdjMat & BioAdjMat::operator*= (const float & factor)
 
 }
 
-bool BioAdjMat::operator== (const BioAdjMat & rhs)
+
+template <typename T>
+bool BioAdjMat<T>::operator== (const BioAdjMat & rhs)
 {
 	for (int i = 0; i < names.size(); i++)
 	{
@@ -231,7 +270,10 @@ bool BioAdjMat::operator== (const BioAdjMat & rhs)
 	}
 	return true;
 }
-bool BioAdjMat::operator!= (const BioAdjMat & rhs)
+
+
+template <typename T>
+bool BioAdjMat<T>::operator!= (const BioAdjMat & rhs)
 {
 	for (int i = 0; i < names.size(); i++)
 	{
@@ -244,21 +286,25 @@ bool BioAdjMat::operator!= (const BioAdjMat & rhs)
 	return false;
 }
 
-const string & BioAdjMat::operator[] (int i)
+
+template <typename T>
+const string & BioAdjMat<T>::operator[] (int i)
 {
 	if (i < 0 || i > names.size())
 		throw BioNetException("Index is out of range");
 	return names[i];
 }
 
-float BioAdjMat::operator() (int i, int j)
+template <typename T>
+float BioAdjMat<T>::operator() (int i, int j)
 {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
 		throw BioNetException("Index is out of range");
 	return matrix[i][j];
 }
 
-ostream & operator<<(ostream & o , const BioAdjMat & rhs)
+template <typename T>
+ostream & operator<<(ostream & o , const BioAdjMat<T> & rhs)
 {
 	for (int i = 0; i < rhs.size(); i++)
 	{

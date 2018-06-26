@@ -161,6 +161,7 @@
     <ClCompile Include="..\..\BioAdjMat.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
     <ClCompile Include="..\..\BioNetException.cpp" />
+    <ClCompile Include="..\..\IO.cpp" />
     <ClCompile Include="CSVReader.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

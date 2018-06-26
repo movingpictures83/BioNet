@@ -8,10 +8,11 @@ using std::vector;
 using std::string;
 using std::ostream;
 
-class BioAdjMat : public BioAdj
+template <typename T>
+class BioAdjMat : public BioAdj<T>
 {
 private:
-	vector<vector<float>> matrix;
+	vector<vector<T>> matrix;
 	vector<string> names;
 
 public:
@@ -29,10 +30,10 @@ public:
 	}
 	~BioAdjMat() {}
 
-	void setEdge(const int, const int, const float);
-	void setEdge(const string&, const string&, const float);
-	float getEdge(const int, const int) const;
-	float getEdge(const string&, const string&) const;
+	void setEdge(const int, const int, const T);
+	void setEdge(const string&, const string&, const T);
+	T getEdge(const int, const int) const;
+	T getEdge(const string&, const string&) const;
 	void setNode(const int, const string&);
 	string getNode(const int) const;
 	int size() const;
@@ -47,11 +48,11 @@ public:
 	BioAdjMat operator= (const BioAdjMat &);
 	BioAdjMat operator+ (const string &);
 	const BioAdjMat & operator+= (const string &);
-	const BioAdjMat & operator/= (const float &);
-	const BioAdjMat & operator*= (const float &);
+	const BioAdjMat & operator/= (const T &);
+	const BioAdjMat & operator*= (const T &);
 	bool operator== (const BioAdjMat &);
 	bool operator!= (const BioAdjMat &);
 	const string & operator[] (int);
-	float operator() (int, int);
+	T operator() (int, int);
 	friend ostream & operator<< (const ostream &, const BioAdjMat &);
 };
