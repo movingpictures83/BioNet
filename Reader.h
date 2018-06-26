@@ -18,10 +18,10 @@ public:
 	
 	//generic for BioNet primitive and reader type
 	template <class R, class T>
-	static void readFile<R>(BioNet<T>& bn, string& fname)
+	static void readFile(BioNet<T>& bn, string& fname)
 	{
 		fname = IO::getDefaultPath() + fname;
-		R::doRead<T>(bn, fname);
+		R::doRead(bn, fname);
 	}
 
 	virtual void f() { cout << "F OF READER" << endl; }
