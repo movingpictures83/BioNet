@@ -24,7 +24,7 @@ public:
 	BioAdjMat(int size = 5) {
 		names.resize(size);
 		matrix.resize(size);
-		for (auto n : matrix)
+		for (auto& n : matrix)
 			n.resize(size);
 	}
 	~BioAdjMat() {}
