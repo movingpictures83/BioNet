@@ -10,13 +10,13 @@ template<class T>
 class BioList {
 private:
 	string name;
-	BioNode<T> * head;
-	bool doSearch(string name, BioNode<T>* start) {
+	BioEdge<T> * head;
+	bool doSearch(string name, BioEdge<T>* start) {
 		if (start == NULL) return false;
 		else if (start->getName() == name) return true;
 		else return doSearch(name, start->getNext());
 	}
-	BioNode<T>* recursiveDeleteEdge(BioNode<T>* node, const string& name) {
+	BioEdge<T>* recursiveDeleteEdge(BioEdge<T>* node, const string& name) {
 		if (node == nullptr)
 			return nullptr;
 
@@ -33,7 +33,7 @@ private:
 public:
 	BioList() {}
 	BioList(const T weight, const string& name) {
-		head = new BioNode<T>(weight, index, NULL);
+		head = new BioEdge<T>(weight, index, NULL);
 	}
 	BioList(const BioList<T>& copy) {
 		for (auto node = copy.head; node != nullptr; node = node->getNext())
@@ -79,7 +79,7 @@ public:
 		}
 		return 0;
 	}
-	BioNode<T>* insertFront(const T weight, const string& name) {
+	BioEdge<T>* insertFront(const T weight, const string& name) {
 		BioNode* newHead = new BioNode(weight, name, head);
 		head = newHead;
 		return head;
@@ -98,7 +98,7 @@ public:
 		delete temp;
 		clear();
 	}
-	BioNode<T>* front() const { return head; }
+	BioEdge<T>* front() const { return head; }
 	BioList<T> operator*(const T weight) {
 		BioList list(*this);
 		for (auto node = list.head; node != nullptr; node = node->getNext())
