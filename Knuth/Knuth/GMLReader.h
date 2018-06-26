@@ -34,8 +34,10 @@ private:
 	ifstream infile;
 	vector<Node> nodes;
 	vector<Edge> edges;
-	void doRead(BioNet&, const string& fname);
-	void doWrite(BioNet&, const string& fname);
+	template<class T>
+	void doRead<GMLHandler>(BioNet<T>&, const string& fname);
+	template<class T>
+	void doWrite<GMLHandler>(BioNet<T>&, const string& fname);
 
 public:
 	GMLHandler(string p = "") : Reader("gml", p), Writer("gml", p) {};
