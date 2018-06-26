@@ -2,25 +2,30 @@
 #include <vector>
 #include <string>
 #include <ostream>
+#include <typeinfo>
 #include "BioAdj.h"
+#include "Register.h"
 
 using std::vector;
 using std::string;
 using std::ostream;
+using std::type_info;
 
-template <typename T>
+template<class T>
 class BioAdjMat : public BioAdj<T>
 {
 private:
 	vector<vector<T>> matrix;
 	vector<string> names;
-
+	static Register reg;
 public:
 	static const string& NetworkType()
 	{
-		static const string network = "BioAdjMat";
-		return network;
+		const type_info& keyword = typeid(BioAdjMat<T>);
+		return keyword.name();
 	}
+
+	static Adj* make() { return new BioAdjMat<T>; }
 
 	BioAdjMat(int size = 5) {
 		names.resize(size);
@@ -38,7 +43,7 @@ public:
 	string getNode(const int) const;
 	int size() const;
 	void resize(const int);
-	float degree(const int) const;
+	T degree(const int) const;
 	int numberOfEdges() const;
 	int findNodeIndex(const string&) const;
 	void deleteEdge(const string &, const string &);

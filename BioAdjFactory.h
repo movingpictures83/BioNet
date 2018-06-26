@@ -2,27 +2,27 @@
 #include <string>
 #include <unordered_map>
 #include <functional>
+#include <typeinfo>
 #include "BioAdj.h"
 #include "BioAdjMat.h"
-#include "BioAdjList.h"
+#include "BioNetException.h"
+//#include "BioAdjList.h"
 
 using std::string;
 using std::unordered_map;
 using std::function;
-using std::swap;
 
 namespace BioAdjFactory {
-	using BioAdjFactMap = unordered_map<string, function<BioAdj*(void)>>;
-	const static BioAdjFactMap mFactoryMap = {
-		// Only included temporarily to allow full Build without errors
-		//{ BioAdjList::NetworkType(), []() {return new BioAdjList(); } },
-		{ BioAdjMat::NetworkType(), []() {return new BioAdjMat(); } }
-	};
-	
-	static BioAdj* create(const string& type) {
-		if (mFactoryMap.find(type) != mFactoryMap.end())
-			return mFactoryMap.at(type)();
+	static unordered_map<string, function<Adj*(void)>>mFactoryMap;
+
+	static void RegisterType(const string & id, function<Adj*(void)> func) { mFactoryMap[id] = func; }
+
+	template<typename T>
+	static BioAdj<T>* create(const string& type) {
+		auto keyPair = mFactoryMap.find(type);
+		if (keyPair != mFactoryMap.end())
+			return static_cast<BioAdj<T> *>(keyPair->second());
 		else
 			throw BioNetException("Error Creating network of type " + type + ".\n");
 	}
-}
+};

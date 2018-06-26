@@ -9,6 +9,11 @@ using std::endl;
 
 //BioAdjFactory::mFactoryMap["matrix"] = []() {new BioAdjMat()};
 
+template<typename T>
+Register BioAdjMat<T>::reg = Register(BioAdjMat<T>::NetworkType() + type_info(typeid(T)).raw_name, []() {return new decltype(BioAdjMat<T>); });
+
+
+
 template <typename T>
 void BioAdjMat<T>::setEdge(const int i, const int j, const T w)
 {
@@ -166,7 +171,7 @@ int BioAdjMat<T>::size() const {
 
 
 template <typename T>
-float BioAdjMat<T>::degree(const int index) const{
+T BioAdjMat<T>::degree(const int index) const{
 	if (index < 0 || index >= matrix.size())
 		throw BioNetException("Index out of bounds!");
 	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);

@@ -12,7 +12,7 @@ using std::map;
 using std::find_if;
 
 template <typename T>
-class BioAdjList : public BioAdj<T>
+class BioAdjList : public BioAdj<>
 {
 private:
 	vector<BioList> network;

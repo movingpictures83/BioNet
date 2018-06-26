@@ -2,8 +2,10 @@
 #include <string>
 using std::string;
 
-template <typename T>
-class BioAdj
+class Adj {};
+
+template <typename T=float>
+class BioAdj : Adj
 {
 protected:
 	string keyword;
@@ -26,5 +28,7 @@ public:
 	virtual void deleteEdge(int, int) = 0;
 	virtual void deleteNode(const string &) = 0;
 	virtual void deleteNode(int) = 0;
+
+	virtual Adj* make() = 0;
 };
 

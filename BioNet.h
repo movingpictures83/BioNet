@@ -42,13 +42,13 @@ class BioNet {
 private:
 	T minweight;
 	T maxweight;
-	BioAdj* network;
+	BioAdj<T>* network;
 	bool directed;
 	string networkType;
 
 public:
 	BioNet();
-	BioNet(const T, const T, const bool=false, const string& = BioAdjMat::NetworkType());
+	BioNet(const T, const T, const bool=false, const string& = BioAdjMat<T>::NetworkType());
 	BioNet(const BioNet<T>&);
 	BioNet(BioNet<T>&&);
 	~BioNet();
@@ -132,14 +132,14 @@ BioNet<T>::BioNet(const T min, const T max, const bool isDir, const string& type
 	directed = isDir;
 	networkType = type;
 	try {
-		network = BioAdjFactory::create(networkType);
+		network = BioAdjFactory::create<T>(networkType);
 	}
 	catch (exception e)
 	{
 		cerr << e.what() << endl;
-		network = BioAdjFactory::create(BioAdjMat::NetworkType());
+		cout << "Defaulting underlying network to " << BioAdjMat<T>::NetworkType() << endl;
+		network = BioAdjFactory::create<T>(BioAdjMat<T>::NetworkType());
 	}
-	network = BioAdjFactory::create(networkType);
 }
 
 template<class T>
@@ -148,13 +148,13 @@ BioNet<T>::BioNet(const BioNet<T>& rhs) {
 	directed = rhs.directed;
 	networkType = rhs.networkType;
 	try {
-		network = BioAdjFactory::create(networkType);
+		network = BioAdjFactory::create<T>(networkType);
 		*network = *rhs.network;
 	}
 	catch (exception e)
 	{
 		cerr << e.what() << endl;
-		BioAdjFactory::create(BioAdjMat::NetworkType());
+		BioAdjFactory::create<T>(BioAdjMat::NetworkType());
 		*network = *rhs.network;
 	}
 }
@@ -268,7 +268,7 @@ void BioNet<T>::convertToType(const string& type)
 {
 	try {
 		auto old = network;
-		network = BioAdjFactory::create(type);
+		network = BioAdjFactory::create<T>(type);
 		network->resize(old->size());
 		for (int i{ 0 }; i < network->size(); i++)
 		{
