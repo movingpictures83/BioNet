@@ -29,8 +29,6 @@ struct Edge {
 class GMLHandler : public Reader, public Writer
 {
 private:
-	Node node;
-	Edge edge;
 	ifstream infile;
 	vector<Node> nodes;
 	vector<Edge> edges;

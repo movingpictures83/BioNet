@@ -12,8 +12,8 @@ using std::cout;
 //}
 
 GMLHandler::~GMLHandler() {};
-
-void GMLHandler::doRead(BioNet& b, const string& fname) {
+template <typename T>
+void GMLHandler::doRead(BioNet<T>& b, const string& fname) {
 	nodes.reserve(20);
 
 	// check if path
@@ -38,6 +38,8 @@ void GMLHandler::doRead(BioNet& b, const string& fname) {
 		exit(1);
 	}
 
+	Node node;
+	Edge edge;
 
 	try {
 		string temp;
@@ -147,8 +149,8 @@ void GMLHandler::doRead(BioNet& b, const string& fname) {
 
 }
 
-
-void GMLHandler::doWrite(BioNet&, const string& fname)
+template <typename T>
+void GMLHandler::doWrite(BioNet<T>&, const string& fname)
 {
 	return;
 }
