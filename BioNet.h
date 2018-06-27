@@ -68,8 +68,8 @@ public:
 	const T operator()(size_t lhs, size_t rhs) const { return network->getEdge(lhs, rhs); }
 	const T operator()(const string & lhs, const string & rhs) const { return network->getEdge(lhs, rhs); }
 
-	BioNet<T> operator+(const string&)const;
-	const BioNet<T>& operator +=(const string&) const;
+	BioNet<T> operator+(const string& rhs)const;
+	const BioNet<T>& operator +=(const string&);
 
 	const BioNet<T>& operator=(const BioNet& rhs);
 	const bool operator==(const BioNet& rhs) const { return this->isEqual(rhs); }
@@ -89,7 +89,20 @@ public:
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	////ADD TEAM
+	template<class T>
+	const BioNet<T>& operator +=(const string& rhs)
+	{
+		network->addNode(rhs);
+		return this;
+	}
 
+	template<class T>
+	BioNet<T> operator+(const string& rhs)const
+	{
+		BioNet<T> bionet = *this;
+		bionet.network->addNode(rhs);
+		return bionet;
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
