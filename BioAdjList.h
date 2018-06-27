@@ -167,9 +167,10 @@ public:
 
 	
 	void copy(const BioAdj<T>* rhs) {
-		network = vector<BioList<T>>(rhs.network.size());
-		for (size_t i = 0; i < rhs.network.size(); i++)
-			network[i] = BioList<T>(rhs.network[i]);
+		auto _rhs = static_cast<BioAdjList<T>*>(rhs);
+		network = vector<BioList<T>>(_rhs->network.size());
+		for (size_t i = 0; i < _rhs->network.size(); i++)
+			network[i] = BioList<T>(_rhs->network[i]);
 	}
 
 	/*const BioAdjList& operator+=(const string nodename)
