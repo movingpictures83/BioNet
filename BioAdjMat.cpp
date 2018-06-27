@@ -1,3 +1,5 @@
+/* moving code to BioAdjMat.h ot make it work as expected after being templated
+
 #include "BioAdjMat.h"
 #include "BioNetException.h"
 //#include "BioAdjFactory.h"
@@ -320,6 +322,8 @@ ostream & operator<<(ostream & o , const BioAdjMat<T> & rhs)
 	}
 	return o;
 }
+
+*/
 
 /* OLD CODE FROM BIONET, FOR BioAdjMat.  DO NOT DELETE
  *
