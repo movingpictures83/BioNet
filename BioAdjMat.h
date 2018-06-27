@@ -67,8 +67,7 @@ public:
 	//friend ostream & operator<< (const ostream &, const BioAdjMat<T> &);
 
 	// moving operators to BioNet Class, this becomes copy
-	template <typename U>
-	void copy(const BioAdj<U>* rhs) {
+	void copy(BioAdj<T> & rhs) {
 		names.resize(rhs->size());
 		for (int i = 0; i < names.size(); i++) {
 			names[i] = rhs->getNode(i);
@@ -93,13 +92,12 @@ public:
 				matrix[i][j] *= factor;
 	}
 
-	template <typename U>
-	bool isEqual (const BioAdjMat<U>* rhs) {
+	bool isEqual (const BioAdjMat<T>* rhs) {
 		for (int i = 0; i < names.size(); i++) {
 			if (names[i].compare(rhs->names[i]))
 				return false;
 			for (int j = 0; j < names.size(); j++)
-				if (!((matrix[i][j] - (T) rhs->matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - (T) rhs->matrix[i][j]) < FLT_EPSILON))
+				if (!((matrix[i][j] - rhs->matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs->matrix[i][j]) < FLT_EPSILON))
 					return false;
 		}
 		return true;
@@ -284,6 +282,22 @@ int BioAdjMat<T>::numberOfEdges() const {
 		}
 	return edges;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+////ADD TEAM
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+////EQUALS TEAM
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+////SCALE TEAM
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // removing thisoperator overload in favorof having them only in BioNet
 //template <typename T>
