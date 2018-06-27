@@ -33,7 +33,7 @@ using std::cerr;
 using std::endl;
 
 
-template<class T>
+template<typename T>
 class BioNet {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // MORNING COHORT EINSTEIN
@@ -118,14 +118,14 @@ public:
 //
 //
 
-template<class T>
+template<typename T>
 BioNet<T>::BioNet() : BioNet(-1.0, 1.0) {
 	// for now start a default unconnected network with default range
 	// The following code only creates a local version variable - Corrected by Dijkstra Team
 	// BioNet(-1.0, 1.0);
 }
 
-template<class T>
+template<typename T>
 BioNet<T>::BioNet(const T min, const T max, const bool isDir, const string& type) {
 
 	setRange(min, max);
@@ -142,7 +142,7 @@ BioNet<T>::BioNet(const T min, const T max, const bool isDir, const string& type
 	network = 0; //BioAdjFactory::create(networkType);
 }
 
-template<class T>
+template<typename T>
 BioNet<T>::BioNet(const BioNet<T>& rhs) {
 	setRange(rhs.minweight, rhs.maxweight);
 	directed = rhs.directed;
@@ -159,7 +159,7 @@ BioNet<T>::BioNet(const BioNet<T>& rhs) {
 	}
 }
 
-template<class T>
+template<typename T>
 BioNet<T>::BioNet(BioNet<T>&& rhs) {
 	setRange(rhs.minweight, rhs.maxweight);
 	directed = rhs.directed;
@@ -168,13 +168,13 @@ BioNet<T>::BioNet(BioNet<T>&& rhs) {
 	rhs.~BioNet();
 }
 
-template<class T>
+template<typename T>
 BioNet<T>::~BioNet() {
 	if (network != nullptr)
 		delete network;
 }
 
-template<class T>
+template<typename T>
 void BioNet<T>::setRange(const T min, const T max) {
 	if (min > max)
 	{
@@ -184,7 +184,7 @@ void BioNet<T>::setRange(const T min, const T max) {
 	maxweight = max;
 }
 
-template<class T>
+template<typename T>
 void BioNet<T>::setEdge(const int i, const int j, const T w) {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
@@ -202,7 +202,7 @@ void BioNet<T>::setEdge(const int i, const int j, const T w) {
 	}
 }
 
-template<class T>
+template<typename T>
 void BioNet<T>::setNode(const int i, const string& n) {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
@@ -212,7 +212,7 @@ void BioNet<T>::setNode(const int i, const string& n) {
 }
 
 // Accessors
-template<class T>
+template<typename T>
 const T BioNet<T>::getEdge(const int i, const int j) const {
 	//Converting to a Network Class
 	if (i < 0 || i > network->size())
@@ -223,7 +223,7 @@ const T BioNet<T>::getEdge(const int i, const int j) const {
 	return network->getEdge(i, j);
 }
 
-template<class T>
+template<typename T>
 const string BioNet<T>::getNode(const int i) const {
 	if (i < 0 || i > network->size())  // corrected from network.size()
 		throw BioNetException("Node is not in the matrix range");
@@ -231,7 +231,7 @@ const string BioNet<T>::getNode(const int i) const {
 	return network->getNode(i);
 }
 
-template<class T>
+template<typename T>
 void BioNet<T>::resize(const int size) {
 
 	if (size <= 0)
@@ -240,7 +240,7 @@ void BioNet<T>::resize(const int size) {
 }
 
 
-template<class T>
+template<typename T>
 void BioNet<T>::clear() {
 	//network->clear();
 }
@@ -263,7 +263,7 @@ void BioNet<T>::clear() {
 // AFTERNOON COHORT DIJKSKTRA
 //
 
-template<class T>
+template<typename T>
 void BioNet<T>::convertToType(const string& type)
 {
 	try {
@@ -286,7 +286,7 @@ void BioNet<T>::convertToType(const string& type)
 
 }
 
-template<class T>
+template<typename T>
 const size_t BioNet<T>::size() const
 {
 	return network->size();
@@ -294,7 +294,7 @@ const size_t BioNet<T>::size() const
 
 
 /*
-template<class T>
+template<typename T>
 void BioNet<T>::reserve(size_t size)
 {
 if (size < 0)
@@ -302,14 +302,14 @@ throw BioNetException("Size is negative!");
 network->reserve(size);
 }*/
 
-template<class T>
+template<typename T>
 const T BioNet<T>::degree(const int index) const {
 	if (index < 0 || index >= network->size())
 		throw BioNetException("Index out of bounds!");
 	return network->degree(index);
 }
 
-template<class T>
+template<typename T>
 const T BioNet<T>::shortestPath(const int start, const int end) const {
 
 	if (start < 0 || start > network->size())
@@ -376,7 +376,7 @@ const T BioNet<T>::shortestPath(const int start, const int end) const {
 	return result;
 }
 
-template<class T>
+template<typename T>
 const int BioNet<T>::numberOfEdges() const {
 	int x = network->numberOfEdges();
 	if (!directed)
@@ -384,13 +384,13 @@ const int BioNet<T>::numberOfEdges() const {
 	return x;
 }
 
-template<class T>
+template<typename T>
 void BioNet<T>::deleteEdge(const int lval, const int rval) {
 	// not implemented
 	//network->deleteEdge(lval, rval);
 }
 
-template<class T>
+template<typename T>
 void BioNet<T>::deleteEdge(const string& lstr, const string& rstr) {
 	// not implemented
 	//network->deleteEdge(lstr, rstr);
@@ -398,7 +398,7 @@ void BioNet<T>::deleteEdge(const string& lstr, const string& rstr) {
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-template<class T>
+template<typename T>
 const BioNet<T>& BioNet<T>::operator=(const BioNet<T>& rhs)
 {
 	BioNet copy(rhs);
@@ -406,7 +406,7 @@ const BioNet<T>& BioNet<T>::operator=(const BioNet<T>& rhs)
 	return *this;
 }
 
-template<class T>
+template<typename T>
 BioNet<T> BioNet<T>::operator+(const string& rhs) const
 {
 	BioNet retVal(*this);
@@ -415,7 +415,7 @@ BioNet<T> BioNet<T>::operator+(const string& rhs) const
 	return retVal;
 }
 
-template<class T>
+template<typename T>
 const BioNet<T>& BioNet<T>::operator+=(const string& rhs) const
 {
 	network->resize(network->size() + 1);
@@ -423,7 +423,7 @@ const BioNet<T>& BioNet<T>::operator+=(const string& rhs) const
 	return *this;
 }
 
-template<class T>
+template<typename T>
 ostream& BioNet<T>::operator<<(ostream& os) const
 {
 	os << network;
