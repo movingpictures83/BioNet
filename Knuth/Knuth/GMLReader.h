@@ -22,7 +22,7 @@ struct Node {
 struct Edge {
 	int source;
 	int target;
-	float weight;
+	double weight;
 };
 
 
@@ -38,7 +38,7 @@ private:
 	void doWrite(BioNet<T>&, const string& fname);
 
 public:
-	GMLHandler(string p = "") : Reader("gml", p), Writer("gml", p) {};
+	GMLHandler(string p = "") : Reader(p), Writer(p) {};
 	~GMLHandler();
 	string getDefaultExt() { return ".gml"; }
 };
