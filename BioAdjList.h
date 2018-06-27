@@ -171,7 +171,7 @@ public:
 		return *this;
 	}
 
-	BioAdjList operator+(const string nodename)
+	/*BioAdjList operator+(const string nodename)
 	{
 		BioAdjList list = *this;
 		list += nodename;
@@ -224,6 +224,11 @@ public:
 		for (int i = 0; i < network.size(); i++)
 			network[i] /= weight;
 		return *this;
+	}*/
+
+	void scale(T weight) {
+		for (int i = 0; i < network.size(); i++)
+			network[i] *= weight;
 	}
 };
 
