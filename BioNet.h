@@ -80,6 +80,9 @@ public:
 
 	const BioNet<T>& operator=(const BioNet& rhs);
 
+	template<class R>
+	const BioNet<T>& operator=(const BioNet<R>& rhs);
+
 	ostream& operator<<(ostream&) const;
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -400,9 +403,21 @@ void BioNet<T>::deleteEdge(const string& lstr, const string& rstr) {
 template<typename T>
 const BioNet<T>& BioNet<T>::operator=(const BioNet<T>& rhs)
 {
-	BioNet copy(rhs);
-	std::swap(copy, *this);
-	return *this;
+	minweight = rhs->minweight;
+	maxweight = rhs->maxWeight;
+	directed = rhs->directed;
+	networkType = networkType;
+	network->copy(rhs);
+}
+
+template<typename T, typename R>
+const BioNet<T>& BioNet<T>::operator=(const BioNet<R>& rhs)
+{
+	minweight = rhs->minweight;
+	maxweight = rhs->maxWeight;
+	directed = rhs->directed;
+	networkType = networkType;
+	network->copy(rhs);
 }
 
 template<typename T>
