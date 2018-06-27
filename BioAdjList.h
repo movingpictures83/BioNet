@@ -165,11 +165,11 @@ public:
 		network.erase(network.begin() + index);
 	}
 
-	template<typename U>
-	void copy(const BioAdj<U>* rhs) {
-		network = vector<BioList<U>>(rhs.network.size());
+	
+	void copy(const BioAdj<T>* rhs) {
+		network = vector<BioList<T>>(rhs.network.size());
 		for (size_t i = 0; i < rhs.network.size(); i++)
-			network[i] = BioList<U>(rhs.network[i]);
+			network[i] = BioList<T>(rhs.network[i]);
 	}
 
 	/*const BioAdjList& operator+=(const string nodename)

@@ -1,27 +1,21 @@
-#ifndef BIONET_H
-#define BIONET_H
+#pragma once
 
+#include "BioAdj.h"
+#include "BioAdjMat.h"
+#include "BioNetException.h"
 #include <string>
 #include <vector>
 #include <iostream>
-#include "BioAdj.h"
-#include "BioAdjMat.h"
-//#include "BioAdjList.h"
-using std::string;
-using std::pair;
-using std::vector;
-using std::ostream;
-
-// Code comming from BioNet.cpp
-#include "BioNetException.h"
 #include <numeric>
 #include <algorithm>
 #include <limits>
 #include <set>
 #include <functional>
-//#include "BioAdjFactory.h"
-#include "BioNetException.h"
 
+using std::string;
+using std::pair;
+using std::vector;
+using std::ostream;
 using std::to_string;
 using std::accumulate;
 using std::bind;
@@ -31,7 +25,6 @@ using std::set;
 using std::exception;
 using std::cerr;
 using std::endl;
-
 
 template<typename T>
 class BioNet {
@@ -71,14 +64,16 @@ public:
 	const std::string & getNetworkType() const { return networkType; }
 
 	//Operators
-	const string & operator[](size_t index) const { return network->getNode(index); };
-	const T operator()(size_t lhs, size_t rhs) const { return network->getEdge(lhs, rhs); };
-	const T operator()(const string & lhs, const string & rhs) const { return network->getEdge(lhs, rhs); };
+	const string & operator[](size_t index) const { return network->getNode(index); }
+	const T operator()(size_t lhs, size_t rhs) const { return network->getEdge(lhs, rhs); }
+	const T operator()(const string & lhs, const string & rhs) const { return network->getEdge(lhs, rhs); }
 
 	BioNet<T> operator+(const string&)const;
 	const BioNet<T>& operator +=(const string&) const;
 
 	const BioNet<T>& operator=(const BioNet& rhs);
+	const bool operator==(const BioNet& rhs) const { return this->isEqual(rhs); }
+	const bool operator!=(const BioNet& rhs) const { return !this->isEqual(rhs); }
 
 	template<class R>
 	const BioNet<T>& operator=(const BioNet<R>& rhs)
@@ -491,9 +486,5 @@ const BioNet<T>& BioNet<T>::operator/=(const T i) const
 	network->scaleDown(i);
 	return this;
 }
-
-
-#endif
-
 
 
