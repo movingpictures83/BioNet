@@ -33,13 +33,13 @@ private:
 	ifstream infile;
 	vector<Node> nodes;
 	vector<Edge> edges;
-	template <typename T>
-	void doRead(BioNet<T>&, const string& fname);
-	template <typename T>
-	void doWrite(BioNet<T>&, const string& fname);
 
 public:
 	GMLHandler() { extension = "gml"; }
+	template <typename T>
+	static void doRead(BioNet<T>&, const string& fname);
+	template <typename T>
+	static void doWrite(BioNet<T>&, const string& fname);
 //	GMLHandler(string p = "") : Reader(p), Writer(p) {};
 //	~GMLHandler();
 //	string getDefaultExt() { return ".gml"; }
