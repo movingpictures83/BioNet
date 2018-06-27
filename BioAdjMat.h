@@ -296,6 +296,20 @@ int BioAdjMat<T>::numberOfEdges() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 ////SCALE TEAM
 
+template <typename T>
+void scaleUp(const T factor) {
+	for (int i = 0; i < names.size(); i++)
+		for (int j = 0; j < names.size(); j++)
+			matrix[i][j] *= factor;
+}
+
+template <typename T>
+void scaleDown(const T factor) {
+	for (int i = 0; i < names.size(); i++)
+		for (int j = 0; j < names.size(); j++)
+			matrix[i][j] *= factor;
+}
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
