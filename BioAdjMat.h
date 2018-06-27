@@ -86,12 +86,6 @@ public:
 		setNode( sz, aNode);
 	}
 
-	void scaleWeights (const T& factor) {
-		for (int i = 0; i < names.size(); i++)
-			for (int j = 0; j < names.size(); j++)
-				matrix[i][j] *= factor;
-	}
-
 	bool isEqual (const BioAdjMat<T>* rhs) {
 		for (int i = 0; i < names.size(); i++) {
 			if (names[i].compare(rhs->names[i]))
