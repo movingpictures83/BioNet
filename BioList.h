@@ -39,6 +39,11 @@ public:
 		for (auto node = copy.head; node != nullptr; node = node->getNext())
 			insertFront(node->getWeight(), node->getName());
 	}
+	BioList(const string& name)
+	{
+		this->name = name;
+		head = 0;
+	}
 	~BioList() {
 		clear();
 	}
