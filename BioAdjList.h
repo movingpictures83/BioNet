@@ -233,15 +233,6 @@ public:
 		return *this;
 	}*/
 
-	void scale(T weight) {
-		for (int i = 0; i < network.size(); i++)
-			network[i] *= weight;
-	}
-	void scaleDown(T weight) {
-		for (int i = 0; i < network.size(); i++)
-			network[i] /= weight;
-	}
-
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	////ADD TEAM
 
@@ -255,6 +246,14 @@ public:
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	////SCALE TEAM
 
+	void scaleUp(T weight) {
+		for (int i = 0; i < network.size(); i++)
+			network[i] *= weight;
+	}
+	void scaleDown(T weight) {
+		for (int i = 0; i < network.size(); i++)
+			network[i] /= weight;
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 };
