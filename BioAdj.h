@@ -69,7 +69,7 @@ public:
 		return true;
 	}
 
-	virtual bool isEqual(const BioAdj<T>* == ) = 0;
+	virtual bool isEqual(const BioAdj<T>*  ) = 0;
 
 	const auto& getKeyword() { return keyword; }
 	//static Adj* make();
