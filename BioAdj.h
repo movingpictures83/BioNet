@@ -38,8 +38,8 @@ public:
 	template<typename U>
 	void copy(const BioAdj<U>* rhs)
 	{
-		this->clear()
-			this->resize(rhs->size());
+		this->clear();
+		this->resize(rhs->size());
 		for (int i{ 0 }; i < rhs->size(); i++)
 		{
 			this->setNode(i, rhs->getNode(i));
@@ -63,7 +63,7 @@ public:
 			for (int j{ 0 }; j < this->size(); j++)
 			{
 				if (target->getEdge(i, j) != (T)source->getEdge(i, j))
-					return false
+					return false;
 			}
 		}
 		return true;
