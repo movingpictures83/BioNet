@@ -446,22 +446,22 @@ const BioNet<T>& BioNet<T>::operator=(const BioNet<T>& rhs)
 	network->copy(rhs);
 }
 
-template<typename T>
-BioNet<T> BioNet<T>::operator+(const string& rhs) const
-{
-	BioNet retVal(*this);
-	retVal.resize(network->size() + 1);
-	retVal.setNode(network->size() - 1, rhs);
-	return retVal;
-}
-
-template<typename T>
-const BioNet<T>& BioNet<T>::operator+=(const string& rhs) const
-{
-	network->resize(network->size() + 1);
-	network->setNode(network->size() - 1, rhs);
-	return *this;
-}
+//template<typename T>
+//BioNet<T> BioNet<T>::operator+(const string& rhs) const
+//{
+//	BioNet retVal(*this);
+//	retVal.resize(network->size() + 1);
+//	retVal.setNode(network->size() - 1, rhs);
+//	return retVal;
+//}
+//
+//template<typename T>
+//const BioNet<T>& BioNet<T>::operator+=(const string& rhs) const
+//{
+//	network->resize(network->size() + 1);
+//	network->setNode(network->size() - 1, rhs);
+//	return *this;
+//}
 
 template<typename T>
 ostream& BioNet<T>::operator<<(ostream& os) const
