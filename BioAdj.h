@@ -26,13 +26,18 @@ public:
 	virtual T degree(const int) const = 0;
 	virtual int numberOfEdges() const = 0;
 	virtual void resize(const int) = 0;
-
 	virtual int findNodeIndex(const string&) const =0;
 	virtual void deleteEdge(const string&, const string&) =0;
 	virtual void deleteEdge(int, int) = 0;
 	virtual void deleteNode(const string&) = 0;
 	virtual void deleteNode(int) = 0;
 	virtual void addNode(const string&) = 0;
+	virtual void copy(const BioAdj<T>* rhs) = 0;
+	virtual bool isEqual(const BioAdj<T>*) = 0;
+	virtual void scaleUp(const T) = 0;
+	virtual void scaleDown(const T) = 0;
+
+	const auto& getKeyword() { return keyword; }
 
 	template<typename U>
 	void copy(const BioAdj<U>* rhs)
@@ -46,9 +51,6 @@ public:
 				this->setEdge((T)rhs->getEdge(i, j));
 		};
 	}
-	virtual void copy(const BioAdj<T>* rhs) = 0;
-
-
 
 	template<typename U>
 	bool isEqual(const BioAdj<U>* rhs)
@@ -67,29 +69,6 @@ public:
 		}
 		return true;
 	}
-
-	virtual bool isEqual(const BioAdj<T>*  ) = 0;
-
-	const auto& getKeyword() { return keyword; }
-	//static Adj* make();
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	////ADD TEAM
-
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	////EQUALS TEAM
-
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	////SCALE TEAM
-
-	virtual void scaleUp(const T) = 0;
-	virtual void scaleDown(const T) = 0;
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
 };
 
 /*template<typename T1, typename T2>
