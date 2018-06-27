@@ -167,12 +167,19 @@ public:
 
 	
 	void copy(const BioAdj<T>* rhs) {
-		auto _rhs = static_cast<BioAdjList<T>*>(rhs);
+		auto _rhs = static_cast<const BioAdjList<T>*>(rhs);
 		network = vector<BioList<T>>(_rhs->network.size());
 		for (size_t i = 0; i < _rhs->network.size(); i++)
 			network[i] = BioList<T>(_rhs->network[i]);
 	}
-
+	void addNode(const string& str)
+	{}
+	void scaleWeights(const T& scale)
+	{}
+	bool isEqual(const BioAdj<T>*)
+	{
+		return true;
+	}
 	/*const BioAdjList& operator+=(const string nodename)
 	{
 		network.push_back(BioList<T>(0, nodename));
