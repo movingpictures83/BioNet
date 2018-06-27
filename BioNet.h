@@ -1,27 +1,21 @@
-#ifndef BIONET_H
-#define BIONET_H
+#pragma once
 
+#include "BioAdj.h"
+#include "BioAdjMat.h"
+#include "BioNetException.h"
 #include <string>
 #include <vector>
 #include <iostream>
-#include "BioAdj.h"
-#include "BioAdjMat.h"
-//#include "BioAdjList.h"
-using std::string;
-using std::pair;
-using std::vector;
-using std::ostream;
-
-// Code comming from BioNet.cpp
-#include "BioNetException.h"
 #include <numeric>
 #include <algorithm>
 #include <limits>
 #include <set>
 #include <functional>
-//#include "BioAdjFactory.h"
-#include "BioNetException.h"
 
+using std::string;
+using std::pair;
+using std::vector;
+using std::ostream;
 using std::to_string;
 using std::accumulate;
 using std::bind;
@@ -31,7 +25,6 @@ using std::set;
 using std::exception;
 using std::cerr;
 using std::endl;
-
 
 template<typename T>
 class BioNet {
@@ -458,9 +451,5 @@ ostream& BioNet<T>::operator<<(ostream& os) const
 	os << network;
 	return os;
 }
-
-
-#endif
-
 
 
