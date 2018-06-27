@@ -113,6 +113,11 @@ public:
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	////SCALE TEAM
 
+	BioNet<T> operator*(const T)const;
+	const BioNet<T>& operator*=(const T) const;
+
+	BioNet<T> operator/(const T)const;
+	const BioNet<T>& operator/=(const T) const;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -463,6 +468,36 @@ ostream& BioNet<T>::operator<<(ostream& os) const
 {
 	os << network;
 	return os;
+}
+
+template<typename T>
+BioNet<T> BioNet<T>::operator*(const T i)const
+{
+	BioNet<T> retVal = this;
+	retVal.network->scaleUp(i);
+	return retVal;
+}
+
+template<typename T>
+const BioNet<T>& BioNet<T>::operator*=(const T i) const
+{
+	network->scaleUp(i);
+	return this;
+}
+
+template<typename T>
+BioNet<T> BioNet<T>::operator/(const T i)const
+{
+	BioNet<T> retVal = this;
+	this->network->scaleDown(i);
+	return retVal;	
+}
+
+template<typename T>
+const BioNet<T>& BioNet<T>::operator/=(const T i) const
+{
+	network->scaleDown(i);
+	return this;
 }
 
 

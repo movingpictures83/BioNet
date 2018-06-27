@@ -33,7 +33,6 @@ public:
 	virtual void deleteNode(const string&) = 0;
 	virtual void deleteNode(int) = 0;
 	virtual void addNode(const string&) = 0;
-	virtual void scaleWeights(const T&) = 0;
 
 	template<typename U>
 	void copy(const BioAdj<U>* rhs)
@@ -87,6 +86,8 @@ public:
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	////SCALE TEAM
 
+	virtual void scaleUp(const T) = 0;
+	virtual void scaleDown(const T) = 0;
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 };

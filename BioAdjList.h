@@ -167,11 +167,19 @@ public:
 
 	
 	void copy(const BioAdj<T>* rhs) {
-		network = vector<BioList<T>>(rhs.network.size());
-		for (size_t i = 0; i < rhs.network.size(); i++)
-			network[i] = BioList<T>(rhs.network[i]);
+		auto _rhs = static_cast<const BioAdjList<T>*>(rhs);
+		network = vector<BioList<T>>(_rhs->network.size());
+		for (size_t i = 0; i < _rhs->network.size(); i++)
+			network[i] = BioList<T>(_rhs->network[i]);
 	}
-
+	void addNode(const string& str)
+	{}
+	void scaleWeights(const T& scale)
+	{}
+	bool isEqual(const BioAdj<T>*)
+	{
+		return true;
+	}
 	/*const BioAdjList& operator+=(const string nodename)
 	{
 		network.push_back(BioList<T>(0, nodename));
@@ -233,15 +241,6 @@ public:
 		return *this;
 	}*/
 
-	void scale(T weight) {
-		for (int i = 0; i < network.size(); i++)
-			network[i] *= weight;
-	}
-	void scaleDown(T weight) {
-		for (int i = 0; i < network.size(); i++)
-			network[i] /= weight;
-	}
-
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	////ADD TEAM
 
@@ -255,6 +254,14 @@ public:
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	////SCALE TEAM
 
+	void scaleUp(T weight) {
+		for (int i = 0; i < network.size(); i++)
+			network[i] *= weight;
+	}
+	void scaleDown(T weight) {
+		for (int i = 0; i < network.size(); i++)
+			network[i] /= weight;
+	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 };
