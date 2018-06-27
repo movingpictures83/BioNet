@@ -1,6 +1,11 @@
 #pragma once
 #include <string>
+#include <exception>
+#include <iostream>
 using std::string;
+using std::exception;
+using std::cerr;
+using std::endl;
 
 class Adj {};
 
@@ -27,14 +32,72 @@ public:
 	virtual void deleteEdge(int, int) = 0;
 	virtual void deleteNode(const string&) = 0;
 	virtual void deleteNode(int) = 0;
-
-	template<typename U>
-	virtual void copy(const BioAdj<U>*) = 0;
 	virtual void addNode(const string&) = 0;
 	virtual void scaleWeights(const T&) = 0;
-	template<typename U>
-	virtual void isEqual(const BioAdj<U>*) = 0;
 
+	template<typename U>
+	void copy(const BioAdj<U>* rhs)
+	{
+		this->clear()
+			this->resize(rhs->size());
+		for (int i{ 0 }; i < rhs->size(); i++)
+		{
+			this->setNode(i, rhs->getNode(i));
+			for (int j{ 0 }; i < rhs->size(); j++)
+				this->setEdge((T)rhs->getEdge(i, j));
+		};
+	}
+	virtual void copy(const BioAdj<T>* rhs) = 0;
+
+
+
+	template<typename U>
+	bool isEqual(const BioAdj<U>* rhs)
+	{
+		if (this->size() != rhs->size())
+			return false;
+		for (int i{ 0 }; i < this->size(); i++)
+		{
+			if (target->getNode(i).compare(rhs->getNode(i)))
+				return false;
+			for (int j{ 0 }; j < this->size(); j++)
+			{
+				if (target->getEdge(i, j) != (T)source->getEdge(i, j))
+					return false
+			}
+		}
+		return true;
+	}
+
+	virtual bool isEqual(const BioAdj<T>* == ) = 0;
+
+	const auto& getKeyword() { return keyword; }
 	//static Adj* make();
 };
 
+/*template<typename T1, typename T2>
+bool copy(BioAdj<T1>* target, BioAdj<T2>* source)
+{
+	try {
+		target->clear;
+		target->resize(source->size());
+		for (int i{ 0 }; i < source->size(); i++)
+		{
+			target->setNode(i, source->getNode(i));
+			for (int j{ 0 }; i < source->size(); j++)
+				target->setEdge((T1)source->getEdge(i, j));
+		}
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << "Failed to copy." << endl;
+		return false;
+	}
+	return true;
+}*/
+/*template<typename T, typename ... args>
+bool func(T&& func, args&&... args)
+{
+	return func(args);
+}
+auto ret = func([](auto num) -> auto {return num != 0; }, 1);*/
