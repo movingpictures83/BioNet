@@ -17,10 +17,10 @@ namespace BioAdjFactory {
 
 	static void RegisterType(const string & id, function<Adj*(void)> func)
 	{
-		if(mFactoryMap.find(id) != mFactoryMap.end())
+	//	if(mFactoryMap.find(id) != mFactoryMap.end())
 			mFactoryMap[id] = func;
-		else
-			throw BioNetException("Error Creating network of type " + id + ".\n");
+	/*	else
+			throw BioNetException("Error Creating network of type " + id + ".\n");*/
 	}
 
 	template<typename T>

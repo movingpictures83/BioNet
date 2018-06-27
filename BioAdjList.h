@@ -15,7 +15,7 @@ using std::find_if;
 template <typename T>
 class BioAdjList : public BioAdj<T>
 {
-private:
+public:
 	vector<BioList<T>> network;
 	static Register reg;
 public:
@@ -228,8 +228,8 @@ public:
 };
 
 template<>
-Register BioAdjList<int>::reg = Register("BioAdjListInt", &BioAdjList::make); 
+Register BioAdjList<int>::reg = Register("BioAdjListInt", &BioAdjList<int>::make); 
 template<>
-Register BioAdjList<float>::reg = Register("BioAdjListFloat", &BioAdjList::make); 
+Register BioAdjList<float>::reg = Register("BioAdjListFloat", &BioAdjList<float>::make); 
 template<>
-Register BioAdjList<double>::reg = Register("BioAdjListDouble", &BioAdjList::make);
+Register BioAdjList<double>::reg = Register("BioAdjListDouble", &BioAdjList<double>::make);

@@ -11,17 +11,14 @@ using std::endl;
 
 
 class Writer : public IO {
-protected:  // Accessible in Reader and classes that inherit from Reader
-	//string _filename;
 
 public:
-	Writer(/*const string& fname,*/ string e, string p = "") : /*_filename(fname),*/ IO(p) {}
+	Writer(string p = IO::getDefaultPath()) : IO(p) {}
 	
 	template <typename R, typename T>
-	void writeFile(BioNet<T>& bn, string& fname) 
+	void writeFile(BioNet<T>& bn, string& fname, bool useDefault = true) 
 	{
-		R r;
-		fname = defaultPath + fname;
-		r.doWrite<T>(bn, fname);
+		fname = (useDefault ? defaultPath : "") + fname;
+		R::doWrite(bn, fname);
 	}; 
 };
