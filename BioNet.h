@@ -71,14 +71,16 @@ public:
 	const std::string & getNetworkType() const { return networkType; }
 
 	//Operators
-	const string & operator[](size_t index) const { return network->getNode(index); };
-	const T operator()(size_t lhs, size_t rhs) const { return network->getEdge(lhs, rhs); };
-	const T operator()(const string & lhs, const string & rhs) const { return network->getEdge(lhs, rhs); };
+	const string & operator[](size_t index) const { return network->getNode(index); }
+	const T operator()(size_t lhs, size_t rhs) const { return network->getEdge(lhs, rhs); }
+	const T operator()(const string & lhs, const string & rhs) const { return network->getEdge(lhs, rhs); }
 
 	BioNet<T> operator+(const string&)const;
 	const BioNet<T>& operator +=(const string&) const;
 
 	const BioNet<T>& operator=(const BioNet& rhs);
+	const bool operator==(const BioNet& rhs) const { return this->isEqual(rhs); }
+	const bool operator!=(const BioNet& rhs) const { return !this->isEqual(rhs); }
 
 	template<class R>
 	const BioNet<T>& operator=(const BioNet<R>& rhs)
