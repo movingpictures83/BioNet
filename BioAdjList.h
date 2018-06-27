@@ -19,7 +19,7 @@ public:
 	vector<BioList<T>> network;
 	static Register reg;
 public:
-	static Adj* make() 
+	static Adj* make()
 	{
 		return new BioAdjList<T>();
 	}
@@ -37,7 +37,7 @@ public:
 			network[i] = BioList<T>(copy.network[i]);
 	}
 
-	BioAdjList(int i = 5){
+	BioAdjList(int i = 5) {
 		network.resize(i);
 	}
 	~BioAdjList() {}
@@ -68,7 +68,7 @@ public:
 		}
 		return T();
 	}
-	
+
 	void setNode(const int i, const string& s)
 	{
 		auto oldName = network[i].getName();
@@ -165,11 +165,18 @@ public:
 		network.erase(network.begin() + index);
 	}
 
-	const BioAdjList& operator+=(const string nodename)
+	template<typename U>
+	void copy(const BioAdj<U>* rhs) {
+		network = vector<BioList<U>>(rhs.network.size());
+		for (size_t i = 0; i < rhs.network.size(); i++)
+			network[i] = BioList<U>(rhs.network[i]);
+	}
+
+	/*const BioAdjList& operator+=(const string nodename)
 	{
 		network.push_back(BioList<T>(0, nodename));
 		return *this;
-	}
+	}*/
 
 	/*BioAdjList operator+(const string nodename)
 	{
@@ -229,6 +236,10 @@ public:
 	void scale(T weight) {
 		for (int i = 0; i < network.size(); i++)
 			network[i] *= weight;
+	}
+	void scaleDown(T weight) {
+		for (int i = 0; i < network.size(); i++)
+			network[i] /= weight;
 	}
 };
 
