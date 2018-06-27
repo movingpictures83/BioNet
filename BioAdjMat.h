@@ -11,7 +11,7 @@ using std::string;
 using std::ostream;
 using std::type_info;
 
-template<class T>
+template<typename T>
 class BioAdjMat : public BioAdj<T>
 {
 private:

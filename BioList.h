@@ -6,7 +6,7 @@
 #include <string>
 using std::string;
 
-template<class T>
+template<typename T>
 class BioList {
 private:
 	string name;
