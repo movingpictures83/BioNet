@@ -5,8 +5,7 @@ using std::string;
 class Adj {};
 
 template <typename T=float>
-class BioAdj : public Adj
-{
+class BioAdj : public Adj {
 protected:
 	string keyword;
 public:

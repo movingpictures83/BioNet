@@ -3,7 +3,7 @@
 #include <string>
 using std::string;
 
-template<class T>
+template<typename T>
 class BioEdge {
 private:
 	T weight;
