@@ -7,7 +7,7 @@ using std::string;
 
 class FileHandler {
 protected:  // Accessible in Reader and classes that inherit from Reader
-	static string extension;
+	string extension;
 
 public:
 	string getDefaultExt()
@@ -16,4 +16,4 @@ public:
 	}
 };
 
-FileHandler::extension = "default";
+//FileHandler::extension = "default";
