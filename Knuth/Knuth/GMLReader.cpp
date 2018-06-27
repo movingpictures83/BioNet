@@ -121,24 +121,6 @@ void GMLHandler::doRead(BioNet<T>& b, const string& fname) {
 			 }
 		} while (!infile.eof());
 
-		do {
-			if (0 == temp.compare("edge"))
-			{
-				infile >> temp >> temp >> temp;
-				edge.source = stoi(temp);
-				infile >> temp >> temp;
-				edge.target = stoi(temp);
-				infile >> temp >> temp;
-				edge.weight = stof(temp);
-				b.setEdge(edge.source, edge.target, edge.weight);
-
-			}
-			else
-			{
-				infile >> temp;
-				continue;
-			}
-		} while (!infile.eof());
 	}
 	catch (IncorrectFileFormatException ex)
 	{

@@ -6,6 +6,7 @@
 #include "../../BioNet.h"
 #include "../../Reader.h"
 #include "../../Writer.h"
+#include "../../File.h"
 #include <vector>
 using std::string;
 using std::ifstream;
@@ -22,11 +23,11 @@ struct Node {
 struct Edge {
 	int source;
 	int target;
-	float weight;
+	double weight;
 };
 
 
-class GMLHandler : public Reader, public Writer
+class GMLHandler : public FileHandler
 {
 private:
 	ifstream infile;
@@ -38,8 +39,9 @@ private:
 	void doWrite(BioNet<T>&, const string& fname);
 
 public:
-	GMLHandler(string p = "") : Reader("gml", p), Writer("gml", p) {};
-	~GMLHandler();
-	string getDefaultExt() { return ".gml"; }
+	GMLHandler() { extension = "gml"; }
+//	GMLHandler(string p = "") : Reader(p), Writer(p) {};
+//	~GMLHandler();
+//	string getDefaultExt() { return ".gml"; }
 };
 

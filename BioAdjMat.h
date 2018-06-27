@@ -62,9 +62,9 @@ public:
 	//const BioAdjMat<T> & operator*= (const T &);
 	//bool operator== (const BioAdjMat<T> &);
 	//bool operator!= (const BioAdjMat<T> &);
-	const string & operator[] (int);
-	T operator() (int, int);
-	friend ostream & operator<< (const ostream &, const BioAdjMat<T> &);
+	//const string & operator[] (int);
+	//T operator() (int, int);
+	//friend ostream & operator<< (const ostream &, const BioAdjMat<T> &);
 
 	// moving operators to BioNet Class, this becomes copy
 	void copy(BioAdj<T> & rhs) {
@@ -350,34 +350,34 @@ int BioAdjMat<T>::numberOfEdges() const {
 //	return false;
 //}
 
-template <typename T>
-const string & BioAdjMat<T>::operator[] (int i)
-{
-	if (i < 0 || i > names.size())
-		throw BioNetException("Index is out of range");
-	return names[i];
-}
-
-template <typename T>
-T BioAdjMat<T>::operator() (int i, int j)
-{
-	if (i < 0 || i > names.size() || j < 0 || j > names.size())
-		throw BioNetException("Index is out of range");
-	return matrix[i][j];
-}
-
-template <typename T>
-ostream & operator<<(ostream & o, const BioAdjMat<T> & rhs)
-{
-	for (int i = 0; i < rhs.size(); i++)
-	{
-		o << rhs.getNode(i) << " ";
-		for (int j = 0; j < rhs.size(); j++)
-			o << rhs.getEdge(i, j) << " ";
-		o << endl;
-	}
-	return o;
-}
+//template <typename T>
+//const string & BioAdjMat<T>::operator[] (int i)
+//{
+//	if (i < 0 || i > names.size())
+//		throw BioNetException("Index is out of range");
+//	return names[i];
+//}
+//
+//template <typename T>
+//T BioAdjMat<T>::operator() (int i, int j)
+//{
+//	if (i < 0 || i > names.size() || j < 0 || j > names.size())
+//		throw BioNetException("Index is out of range");
+//	return matrix[i][j];
+//}
+//
+//template <typename T>
+//ostream & operator<<(ostream & o, const BioAdjMat<T> & rhs)
+//{
+//	for (int i = 0; i < rhs.size(); i++)
+//	{
+//		o << rhs.getNode(i) << " ";
+//		for (int j = 0; j < rhs.size(); j++)
+//			o << rhs.getEdge(i, j) << " ";
+//		o << endl;
+//	}
+//	return o;
+//}
 
 
 /* OLD CODE FROM BIONET, FOR BioAdjMat.  DO NOT DELETE
