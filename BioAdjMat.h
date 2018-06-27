@@ -67,7 +67,7 @@ public:
 	//friend ostream & operator<< (const ostream &, const BioAdjMat<T> &);
 
 	// moving operators to BioNet Class, this becomes copy
-	void copy(BioAdj<T> & rhs) {
+	void copy(const BioAdj<T> * rhs) {
 		names.resize(rhs->size());
 		for (int i = 0; i < names.size(); i++) {
 			names[i] = rhs->getNode(i);
@@ -86,17 +86,29 @@ public:
 		setNode( sz, aNode);
 	}
 
-	bool isEqual (const BioAdjMat<T>* rhs) {
+	bool isEqual (const BioAdj<T>* rhs) {
+		auto _rhs = static_cast<const BioAdjMat<T> *>(rhs);
 		for (int i = 0; i < names.size(); i++) {
-			if (names[i].compare(rhs->names[i]))
+			if (names[i].compare(_rhs->names[i]))
 				return false;
 			for (int j = 0; j < names.size(); j++)
-				if (!((matrix[i][j] - rhs->matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs->matrix[i][j]) < FLT_EPSILON))
+				if (!((matrix[i][j] - _rhs->matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - _rhs->matrix[i][j]) < FLT_EPSILON))
 					return false;
 		}
 		return true;
 	}
 
+	void scaleUp(const T factor) {
+		for (int i = 0; i < names.size(); i++)
+			for (int j = 0; j < names.size(); j++)
+				matrix[i][j] *= factor;
+	}
+
+	void scaleDown(const T factor) {
+		for (int i = 0; i < names.size(); i++)
+			for (int j = 0; j < names.size(); j++)
+				matrix[i][j] *= factor;
+	}
 };
 
 
@@ -290,19 +302,7 @@ int BioAdjMat<T>::numberOfEdges() const {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 ////SCALE TEAM
 
-template <typename T>
-void scaleUp(const T factor) {
-	for (int i = 0; i < names.size(); i++)
-		for (int j = 0; j < names.size(); j++)
-			matrix[i][j] *= factor;
-}
 
-template <typename T>
-void scaleDown(const T factor) {
-	for (int i = 0; i < names.size(); i++)
-		for (int j = 0; j < names.size(); j++)
-			matrix[i][j] *= factor;
-}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
