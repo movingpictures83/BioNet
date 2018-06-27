@@ -2,6 +2,7 @@
 
 
 #include <exception>
+#include "../../BioNetException.h"
 using std::exception;
 
 #include <string>
@@ -10,27 +11,27 @@ using std::string;
 
 //using BioNetException::BioNetException;
 
-class TerminalException : public exception {
-private:
-	string msg;
+//class TerminalException : public exception {
+//private:
+//	string msg;
+//public:
+//	TerminalException(string message) : msg(message) {}
+//	const char* getMsg() const {
+//		return msg.c_str();
+//	}
+//};
+
+class FileNotExistException : public BioNetException {
 public:
-	TerminalException(string message) : msg(message) {}
-	const char* getMsg() const {
-		return msg.c_str();
-	}
+	FileNotExistException(string message) : BioNetException(message) {}
 };
 
-class FileNotExistException : public TerminalException {
+class IncorrectFileFormatException : public BioNetException {
 public:
-	FileNotExistException(string message) : TerminalException(message) {}
+	IncorrectFileFormatException(string message) : BioNetException(message) {}
 };
 
-class IncorrectFileFormatException : public TerminalException {
+class DataInvalidFormatException : public BioNetException {
 public:
-	IncorrectFileFormatException(string message) : TerminalException(message) {}
-};
-
-class DataInvalidFormatException : public TerminalException {
-public:
-	DataInvalidFormatException(string message) : TerminalException(message) {}
+	DataInvalidFormatException(string message) : BioNetException(message) {}
 };
