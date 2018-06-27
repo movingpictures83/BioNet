@@ -23,11 +23,18 @@ public:
 	virtual void resize(const int) = 0;
 
 	virtual int findNodeIndex(const string&) const =0;
-	virtual void deleteEdge(const string &, const string &) =0;
+	virtual void deleteEdge(const string&, const string&) =0;
 	virtual void deleteEdge(int, int) = 0;
-	virtual void deleteNode(const string &) = 0;
+	virtual void deleteNode(const string&) = 0;
 	virtual void deleteNode(int) = 0;
 
-	static Adj* make();
+	template<typename U>
+	virtual void copy(const BioAdj<U>*) = 0;
+	virtual void addNode(const string&) = 0;
+	virtual void scaleWeights(const T&) = 0;
+	template<typename U>
+	virtual void isEqual(const BioAdj<U>*) = 0;
+
+	//static Adj* make();
 };
 

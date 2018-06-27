@@ -56,16 +56,55 @@ public:
 	void deleteEdge(int, int);
 	void deleteNode(const string &);
 	void deleteNode(const int);
-	BioAdjMat<T> operator= (const BioAdjMat<T> &);
-	BioAdjMat<T> operator+ (const string &);
-	const BioAdjMat<T> & operator+= (const string &);
-	const BioAdjMat<T> & operator/= (const T &);
-	const BioAdjMat<T> & operator*= (const T &);
-	bool operator== (const BioAdjMat<T> &);
-	bool operator!= (const BioAdjMat<T> &);
+	//BioAdjMat<T> operator+ (const string &);
+	//const BioAdjMat<T> & operator+= (const string &);
+	//const BioAdjMat<T> & operator/= (const T &);
+	//const BioAdjMat<T> & operator*= (const T &);
+	//bool operator== (const BioAdjMat<T> &);
+	//bool operator!= (const BioAdjMat<T> &);
 	const string & operator[] (int);
 	T operator() (int, int);
 	friend ostream & operator<< (const ostream &, const BioAdjMat<T> &);
+
+	// moving operators to BioNet Class, this becomes copy
+	template <typename U>
+	void copy(const BioAdj<U>* rhs) {
+		names.resize(rhs->size());
+		for (int i = 0; i < names.size(); i++) {
+			names[i] = rhs->getNode(i);
+		}
+		matrix.resize(rhs->size());
+		for (int i = 0; i < rhs->size(); i++) {
+			for (int j = 0; j < rhs->size(); j++) {
+				matrix[i][j] = (T)rhs->getEdge(i, j);
+			}
+		}
+	}
+
+	void addNode (const string& aNode) {
+		int sz = size();
+		resize( sz + 1);
+		setNode( sz, aNode);
+	}
+
+	void scaleWeights (const T& factor) {
+		for (int i = 0; i < names.size(); i++)
+			for (int j = 0; j < names.size(); j++)
+				matrix[i][j] *= factor;
+	}
+
+	template <typename U>
+	bool isEqual (const BioAdjMat<U>* rhs) {
+		for (int i = 0; i < names.size(); i++) {
+			if (names[i].compare(rhs->names[i]))
+				return false;
+			for (int j = 0; j < names.size(); j++)
+				if (!((matrix[i][j] - (T) rhs->matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - (T) rhs->matrix[i][j]) < FLT_EPSILON))
+					return false;
+		}
+		return true;
+	}
+
 };
 
 
@@ -246,98 +285,72 @@ int BioAdjMat<T>::numberOfEdges() const {
 	return edges;
 }
 
-template <typename T>
-BioAdjMat<T> BioAdjMat<T>::operator= (const BioAdjMat<T> & rhs)
-{
-	names.resize(rhs.size());
-	for (int i = 0; i < names.size(); i++)
-	{
-		names[i] = rhs.getNode(i);
-	}
-	matrix.resize(rhs.size());
-	for (int i = 0; i < rhs.size(); i++)
-	{
-		for (int j = 0; j < rhs.size(); j++)
-		{
-			matrix[i][j] = rhs.getEdge(i, j);
-		}
-	}
-	return *this;
-}
+// removing thisoperator overload in favorof having them only in BioNet
+//template <typename T>
+//BioAdjMat<T> BioAdjMat<T>::addNode (const string& aNode)
+//{
+//	BioAdjMat<T> newAdjMat;
+//	newAdjMat.resize((*this).size() + 1);
+//	for (int i = 0; i < (*this).size(); i++)
+//	{
+//		newAdjMat.names[i] = names[i];
+//		for (int j = 0; j < (*this).size(); j++)
+//		{
+//			newAdjMat.matrix[i][j] = matrix[i][j];
+//		}
+//	}
+//	newAdjMat.names[(*this).size()] = aNode;
+//	return newAdjMat;
+//}
 
-template <typename T>
-BioAdjMat<T> BioAdjMat<T>::operator+ (const string & aNode)
-{
-	BioAdjMat<T> newAdjMat;
-	newAdjMat.resize((*this).size() + 1);
-	for (int i = 0; i < (*this).size(); i++)
-	{
-		newAdjMat.names[i] = names[i];
-		for (int j = 0; j < (*this).size(); j++)
-		{
-			newAdjMat.matrix[i][j] = matrix[i][j];
-		}
-	}
-	newAdjMat.names[(*this).size()] = aNode;
-	return newAdjMat;
-}
-
-template <typename T>
-const BioAdjMat<T> & BioAdjMat<T>::operator+= (const string & aNode)
-{
-	(*this).resize((*this).size() + 1);
-	(*this).setNode((*this).size(), aNode);
-	return *this;
-}
-
-template <typename T>
-const BioAdjMat<T> & BioAdjMat<T>::operator/= (const T & factor)
-{
-	if (factor > -FLT_EPSILON && factor < FLT_EPSILON)
-		throw BioNetException("Can't divide 0");
-	for (int i = 0; i < names.size(); i++)
-		for (int j = 0; j < names.size(); j++)
-			matrix[i][j] /= factor;
-	return (*this);
-}
-
-template <typename T>
-const BioAdjMat<T> & BioAdjMat<T>::operator*= (const T & factor)
-{
-	for (int i = 0; i < names.size(); i++)
-		for (int j = 0; j < names.size(); j++)
-			matrix[i][j] *= factor;
-	return (*this);
-
-}
-
-template <typename T>
-bool BioAdjMat<T>::operator== (const BioAdjMat<T>& rhs)
-{
-	for (int i = 0; i < names.size(); i++)
-	{
-		if (names[i].compare(rhs.names[i]))
-			return false;
-		for (int j = 0; j < names.size(); j++)
-			if (!((matrix[i][j] - rhs.matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs.matrix[i][j]) < FLT_EPSILON))
-				return false;
-	}
-	return true;
-}
-
-template <typename T>
-bool BioAdjMat<T>::operator!= (const BioAdjMat<T>& rhs)
-{
-	for (int i = 0; i < names.size(); i++)
-	{
-		if (names[i].compare(rhs.names[i]))
-			return true;
-		for (int j = 0; j < names.size(); j++)
-			if (!((matrix[i][j] - rhs.matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs.matrix[i][j]) < FLT_EPSILON))
-				return true;
-	}
-	return false;
-}
+//template <typename T>
+//const BioAdjMat<T> & BioAdjMat<T>::operator/= (const T & factor)
+//{
+//	if (factor > -FLT_EPSILON && factor < FLT_EPSILON)
+//		throw BioNetException("Can't divide 0");
+//	for (int i = 0; i < names.size(); i++)
+//		for (int j = 0; j < names.size(); j++)
+//			matrix[i][j] /= factor;
+//	return (*this);
+//}
+//
+//template <typename T>
+//const BioAdjMat<T> & BioAdjMat<T>::operator*= (const T & factor)
+//{
+//	for (int i = 0; i < names.size(); i++)
+//		for (int j = 0; j < names.size(); j++)
+//			matrix[i][j] *= factor;
+//	return (*this);
+//
+//}
+//
+//template <typename T>
+//bool BioAdjMat<T>::operator== (const BioAdjMat<T>& rhs)
+//{
+//	for (int i = 0; i < names.size(); i++)
+//	{
+//		if (names[i].compare(rhs.names[i]))
+//			return false;
+//		for (int j = 0; j < names.size(); j++)
+//			if (!((matrix[i][j] - rhs.matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs.matrix[i][j]) < FLT_EPSILON))
+//				return false;
+//	}
+//	return true;
+//}
+//
+//template <typename T>
+//bool BioAdjMat<T>::operator!= (const BioAdjMat<T>& rhs)
+//{
+//	for (int i = 0; i < names.size(); i++)
+//	{
+//		if (names[i].compare(rhs.names[i]))
+//			return true;
+//		for (int j = 0; j < names.size(); j++)
+//			if (!((matrix[i][j] - rhs.matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs.matrix[i][j]) < FLT_EPSILON))
+//				return true;
+//	}
+//	return false;
+//}
 
 template <typename T>
 const string & BioAdjMat<T>::operator[] (int i)
