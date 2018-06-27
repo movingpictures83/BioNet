@@ -11,19 +11,15 @@ using std::endl;
 
 class Reader : public IO {
 protected:  // Accessible in Reader and classes that inherit from Reader
-	//string _filename;
-
+	
 public:
-	Reader(/*const string& fname ,*/ string e, string p= IO::getDefaultPath()) : /*_filename(fname),*/ IO(p) {}
+	Reader(string p= IO::getDefaultPath()) : IO(p) {}
 	
 	//generic for BioNet primitive and reader type
 	template <class R, class T>
-	static void readFile(BioNet<T>& bn, string& fname)
+	static void readFile(BioNet<T>& bn, string& fname, bool useDefault = true)
 	{
-		fname = IO::getDefaultPath() + fname;
+		fname = (useDefault ?  IO::getDefaultPath() : "") + fname;
 		R::doRead(bn, fname);
 	}
-
-	virtual void f() { cout << "F OF READER" << endl; }
-	//{ cout << "BLANK READFILE FOR NOW" << endl; }
 };

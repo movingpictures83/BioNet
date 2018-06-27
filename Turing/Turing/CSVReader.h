@@ -23,7 +23,7 @@ class CSVReader
 public:
 	
 	template <typename T>
-	static void doRead(BioNet<T> &file, const string & fname)
+	static void doRead(BioNet<T> &bionet, const string & fname)
 	{
 		//string filename;
 		ifstream inputFile(fname/*_filename*/, ios::in);

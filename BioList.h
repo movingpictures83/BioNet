@@ -31,7 +31,7 @@ private:
 		return node;
 	}
 public:
-	BioList() {}
+	BioList() : head(nullptr) {}
 	BioList(const T weight, const string& name) {
 		this->name = name;
 		head = new BioEdge<T>(weight, name, NULL);	}

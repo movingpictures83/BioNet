@@ -48,7 +48,7 @@ private:
 
 public:
 	BioNet();
-	BioNet(const T, const T, const bool=false, const string& = BioAdjMat<T>::NetworkType());
+	BioNet(const T, const T, const bool=false, const string& = BioAdjMat<float>::NetworkType());
 	BioNet(const BioNet<T>&);
 	BioNet(BioNet<T>&&);
 	~BioNet();
@@ -132,14 +132,13 @@ BioNet<T>::BioNet(const T min, const T max, const bool isDir, const string& type
 	directed = isDir;
 	networkType = type;
 	try {
-		network = 0; //BioAdjFactory::create(networkType);
+		network = BioAdjFactory::create<T>(networkType);
 	}
-	catch (exception e)
+	catch (const exception & e)
 	{
 		cerr << e.what() << endl;
-		network = 0; // BioAdjFactory::create(BioAdjMat::NetworkType());
+		exit(0);
 	}
-	network = 0; //BioAdjFactory::create(networkType);
 }
 
 template<class T>
