@@ -24,8 +24,6 @@ namespace BioNet {
 	protected:
 		string keyword;
 	public:
-		// BioAdj();
-		//~BioAdj();
 		/// sets an **Edge** given the *indexes* of its neighboring **Nodes**
 		virtual void setEdge(const int, const int, const T) = 0;
 		/// sets an **Edge** given the *names* of its neighboring **Nodes**
@@ -108,32 +106,4 @@ namespace BioNet {
 			return true;
 		}
 	};
-
-	/*template<typename T1, typename T2>
-	bool copy(BioAdj<T1>* target, BioAdj<T2>* source)
-	{
-		try {
-			target->clear;
-			target->resize(source->size());
-			for (int i{ 0 }; i < source->size(); i++)
-			{
-				target->setNode(i, source->getNode(i));
-				for (int j{ 0 }; i < source->size(); j++)
-					target->setEdge((T1)source->getEdge(i, j));
-			}
-		}
-		catch (exception e)
-		{
-			cerr << e.what() << "Failed to copy." << endl;
-			return false;
-		}
-		return true;
-	}*/
-	/*template<typename T, typename ... args>
-	bool func(T&& func, args&&... args)
-	{
-		return func(args);
-	}
-	auto ret = func([](auto num) -> auto {return num != 0; }, 1);*/
-
 }
