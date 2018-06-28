@@ -151,7 +151,7 @@
     <ClInclude Include="..\..\BioAdjFactory.h" />
     <ClInclude Include="..\..\BioAdjMat.h" />
     <ClInclude Include="..\..\BioNet.h" />
-    <ClInclude Include="..\..\BioNetException.h" />
+    <ClInclude Include="..\..\Exception.h" />
     <ClInclude Include="..\..\IO.h" />
     <ClInclude Include="..\..\Knuth\Knuth\Exception.h" />
     <ClInclude Include="CSVReader.h" />
@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\BioAdjMat.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
-    <ClCompile Include="..\..\BioNetException.cpp" />
+    <ClCompile Include="..\..\Exception.cpp" />
     <ClCompile Include="..\..\IO.cpp" />
     <ClCompile Include="CSVReader.cpp" />
     <ClCompile Include="stdafx.cpp">

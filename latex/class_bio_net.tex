@@ -1,0 +1,118 @@
+\hypertarget{class_bio_net}{}\section{Bio\+Net$<$ T $>$ Class Template Reference}
+\label{class_bio_net}\index{Bio\+Net$<$ T $>$@{Bio\+Net$<$ T $>$}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_bio_net_af18d85c34aa8d04e8ddea94c256b2ac6}\label{class_bio_net_af18d85c34aa8d04e8ddea94c256b2ac6}} 
+{\bfseries Bio\+Net} (const T, const T, const bool=false, const string \&=\hyperlink{class_bio_adj_mat}{Bio\+Adj\+Mat}$<$ float $>$\+::Network\+Type())
+\item 
+\mbox{\Hypertarget{class_bio_net_a6ac93ccd7e25a7de6acbfd3af0355a67}\label{class_bio_net_a6ac93ccd7e25a7de6acbfd3af0355a67}} 
+{\bfseries Bio\+Net} (const \hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ \&)
+\item 
+\mbox{\Hypertarget{class_bio_net_a0775e0b7bfa4f50c6ff595f915d00c69}\label{class_bio_net_a0775e0b7bfa4f50c6ff595f915d00c69}} 
+{\bfseries Bio\+Net} (\hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ \&\&)
+\item 
+\mbox{\Hypertarget{class_bio_net_a51934a34817c3dab71e6a796e02f9850}\label{class_bio_net_a51934a34817c3dab71e6a796e02f9850}} 
+void {\bfseries set\+Range} (const T, const T)
+\item 
+\mbox{\Hypertarget{class_bio_net_a255b8c04b7ebb8acf164ecd66cfd2e2c}\label{class_bio_net_a255b8c04b7ebb8acf164ecd66cfd2e2c}} 
+void {\bfseries set\+Edge} (const int, const int, const T)
+\item 
+\mbox{\Hypertarget{class_bio_net_a91d6454117016366898cb40c43cb6fd5}\label{class_bio_net_a91d6454117016366898cb40c43cb6fd5}} 
+void {\bfseries set\+Node} (const int, const string \&n)
+\item 
+\mbox{\Hypertarget{class_bio_net_af3b15d9a7e155670b906dd6cb4c03fc4}\label{class_bio_net_af3b15d9a7e155670b906dd6cb4c03fc4}} 
+void {\bfseries delete\+Edge} (const int, const int)
+\item 
+\mbox{\Hypertarget{class_bio_net_a78d341c6d9fade83aec1bcb569d02909}\label{class_bio_net_a78d341c6d9fade83aec1bcb569d02909}} 
+void {\bfseries delete\+Edge} (const string \&l, const string \&r)
+\item 
+\mbox{\Hypertarget{class_bio_net_a9dc1a7c48aa9078413c96d2f39ef0c0d}\label{class_bio_net_a9dc1a7c48aa9078413c96d2f39ef0c0d}} 
+const T {\bfseries shortest\+Path} (const int, const int) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a77de66d6eb37a030fc4f50670e9cd5f1}\label{class_bio_net_a77de66d6eb37a030fc4f50670e9cd5f1}} 
+void {\bfseries resize} (const int size)
+\item 
+\mbox{\Hypertarget{class_bio_net_a7b85dcaa5264318e144dde4cfe3819af}\label{class_bio_net_a7b85dcaa5264318e144dde4cfe3819af}} 
+void {\bfseries clear} ()
+\item 
+\mbox{\Hypertarget{class_bio_net_a3c6903721152c55f134d15d64868e1d1}\label{class_bio_net_a3c6903721152c55f134d15d64868e1d1}} 
+const T {\bfseries get\+Edge} (const int, const int) const
+\item 
+\mbox{\Hypertarget{class_bio_net_ab174f91c9fb28e5ce0a1c99ab94f3296}\label{class_bio_net_ab174f91c9fb28e5ce0a1c99ab94f3296}} 
+const string {\bfseries get\+Node} (const int) const
+\item 
+\mbox{\Hypertarget{class_bio_net_ad62beca214bbd54dd3f250beb99532f9}\label{class_bio_net_ad62beca214bbd54dd3f250beb99532f9}} 
+const T {\bfseries get\+Min\+Weight} () const
+\item 
+\mbox{\Hypertarget{class_bio_net_a21d1879301feaa1c1a8f2b1d8ed82d6d}\label{class_bio_net_a21d1879301feaa1c1a8f2b1d8ed82d6d}} 
+const T {\bfseries get\+Max\+Weight} () const
+\item 
+\mbox{\Hypertarget{class_bio_net_ac0563308f147e9006f738ec3798e9fa9}\label{class_bio_net_ac0563308f147e9006f738ec3798e9fa9}} 
+const std\+::string \& {\bfseries get\+Network\+Type} () const
+\item 
+\mbox{\Hypertarget{class_bio_net_a281c9319ff7017570be6e2e880af8b43}\label{class_bio_net_a281c9319ff7017570be6e2e880af8b43}} 
+const string \& {\bfseries operator\mbox{[}$\,$\mbox{]}} (size\+\_\+t index) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a14e7e57741f35c5878f2d233e19dab98}\label{class_bio_net_a14e7e57741f35c5878f2d233e19dab98}} 
+const T {\bfseries operator()} (size\+\_\+t lhs, size\+\_\+t rhs) const
+\item 
+\mbox{\Hypertarget{class_bio_net_aad6bff84a85602a8a981e67ce47d73f7}\label{class_bio_net_aad6bff84a85602a8a981e67ce47d73f7}} 
+const T {\bfseries operator()} (const string \&lhs, const string \&rhs) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a710924bcbc04475b16aea6cdd1f11697}\label{class_bio_net_a710924bcbc04475b16aea6cdd1f11697}} 
+\hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ {\bfseries operator+} (const string \&rhs) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a01a34fc724da95f508b1edb1b010545b}\label{class_bio_net_a01a34fc724da95f508b1edb1b010545b}} 
+const \hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ \& {\bfseries operator+=} (const string \&)
+\item 
+\mbox{\Hypertarget{class_bio_net_a59581ba7ddaf2b80a6d2478d71c958d5}\label{class_bio_net_a59581ba7ddaf2b80a6d2478d71c958d5}} 
+const \hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ \& {\bfseries operator=} (const \hyperlink{class_bio_net}{Bio\+Net} \&rhs)
+\item 
+\mbox{\Hypertarget{class_bio_net_a689664558c94713b40f78fa67670f355}\label{class_bio_net_a689664558c94713b40f78fa67670f355}} 
+const bool {\bfseries operator==} (const \hyperlink{class_bio_net}{Bio\+Net} \&rhs) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a62efbcf64a6e7cb1070e3fb7aeb1ff83}\label{class_bio_net_a62efbcf64a6e7cb1070e3fb7aeb1ff83}} 
+const bool {\bfseries operator!=} (const \hyperlink{class_bio_net}{Bio\+Net} \&rhs) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a4062376b7be85486baaaa110c1912423}\label{class_bio_net_a4062376b7be85486baaaa110c1912423}} 
+{\footnotesize template$<$class R $>$ }\\const \hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ \& {\bfseries operator=} (const \hyperlink{class_bio_net}{Bio\+Net}$<$ R $>$ \&rhs)
+\item 
+\mbox{\Hypertarget{class_bio_net_adfebac99ed2809f3d3cf62a5727f0e9a}\label{class_bio_net_adfebac99ed2809f3d3cf62a5727f0e9a}} 
+ostream \& {\bfseries operator$<$$<$} (ostream \&) const
+\item 
+\mbox{\Hypertarget{class_bio_net_ab6d1e15ea52cb798da5d1eefec035e4d}\label{class_bio_net_ab6d1e15ea52cb798da5d1eefec035e4d}} 
+{\footnotesize template$<$class T $>$ }\\const \hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ \& {\bfseries operator+=} (const string \&rhs)
+\item 
+\mbox{\Hypertarget{class_bio_net_af14fa0464ce7943468ff42b48a13807e}\label{class_bio_net_af14fa0464ce7943468ff42b48a13807e}} 
+{\footnotesize template$<$class T $>$ }\\\hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ {\bfseries operator+} (const string \&rhs) const
+\item 
+\mbox{\Hypertarget{class_bio_net_aa4e9fb16fa8b98eaf2ba5731d4437aa7}\label{class_bio_net_aa4e9fb16fa8b98eaf2ba5731d4437aa7}} 
+\hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ {\bfseries operator$\ast$} (const T) const
+\item 
+\mbox{\Hypertarget{class_bio_net_af29d2f7582b887fa98884a0107f7e6b0}\label{class_bio_net_af29d2f7582b887fa98884a0107f7e6b0}} 
+const \hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ \& {\bfseries operator$\ast$=} (const T) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a985192f23c7b5e209d191a47b9aab9e2}\label{class_bio_net_a985192f23c7b5e209d191a47b9aab9e2}} 
+\hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ {\bfseries operator/} (const T) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a2367e25a99097d4704d86ad34a4af8df}\label{class_bio_net_a2367e25a99097d4704d86ad34a4af8df}} 
+const \hyperlink{class_bio_net}{Bio\+Net}$<$ T $>$ \& {\bfseries operator/=} (const T) const
+\item 
+\mbox{\Hypertarget{class_bio_net_a7eb4a3c1731c8883a8f34762f51d4951}\label{class_bio_net_a7eb4a3c1731c8883a8f34762f51d4951}} 
+void {\bfseries convert\+To\+Type} (const string \&)
+\item 
+\mbox{\Hypertarget{class_bio_net_a551ed339a1ee3cf82d39e29db72fbcbe}\label{class_bio_net_a551ed339a1ee3cf82d39e29db72fbcbe}} 
+const T {\bfseries degree} (const int) const
+\item 
+\mbox{\Hypertarget{class_bio_net_ab8b612b8dd76b0e7930ea65aff1726b4}\label{class_bio_net_ab8b612b8dd76b0e7930ea65aff1726b4}} 
+const size\+\_\+t {\bfseries size} () const
+\item 
+\mbox{\Hypertarget{class_bio_net_a91bb601d635f33d199f267f37853e9e5}\label{class_bio_net_a91bb601d635f33d199f267f37853e9e5}} 
+const int {\bfseries number\+Of\+Edges} () const
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Bio\+Net.\+h\end{DoxyCompactItemize}

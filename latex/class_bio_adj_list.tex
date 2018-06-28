@@ -1,0 +1,116 @@
+\hypertarget{class_bio_adj_list}{}\section{Bio\+Adj\+List$<$ T $>$ Class Template Reference}
+\label{class_bio_adj_list}\index{Bio\+Adj\+List$<$ T $>$@{Bio\+Adj\+List$<$ T $>$}}
+Inheritance diagram for Bio\+Adj\+List$<$ T $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_bio_adj_list}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a4597c403282b4db42c5ca993b9bb764a}\label{class_bio_adj_list_a4597c403282b4db42c5ca993b9bb764a}} 
+{\bfseries Bio\+Adj\+List} (const \hyperlink{class_bio_adj_list}{Bio\+Adj\+List} \&copy)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_ad2a8808b11b3dc17553b401ff237dff4}\label{class_bio_adj_list_ad2a8808b11b3dc17553b401ff237dff4}} 
+{\bfseries Bio\+Adj\+List} (int i=5)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a8580717d24e223802bf52c1494691ead}\label{class_bio_adj_list_a8580717d24e223802bf52c1494691ead}} 
+void {\bfseries set\+Edge} (const int x, const int y, const T w)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a7e8398ed791acacc9c529a87596e9bef}\label{class_bio_adj_list_a7e8398ed791acacc9c529a87596e9bef}} 
+void {\bfseries set\+Edge} (const string \&x, const string \&y, const T w)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a3f19ee385ef649b18b587e97b32374fe}\label{class_bio_adj_list_a3f19ee385ef649b18b587e97b32374fe}} 
+T {\bfseries get\+Edge} (const int x, const int y) const
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a79e53adb701489a96d2947ac36c91e75}\label{class_bio_adj_list_a79e53adb701489a96d2947ac36c91e75}} 
+T {\bfseries get\+Edge} (const string \&a, const string \&b) const
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a2128839ac64905df63cc12eac500cbe2}\label{class_bio_adj_list_a2128839ac64905df63cc12eac500cbe2}} 
+void {\bfseries set\+Node} (const int i, const string \&s)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a7b1778b7290eb0b9b0e9184e494d2d47}\label{class_bio_adj_list_a7b1778b7290eb0b9b0e9184e494d2d47}} 
+string {\bfseries get\+Node} (const int i) const
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_ae5adb02ab6f4c17904f5f828b23600e5}\label{class_bio_adj_list_ae5adb02ab6f4c17904f5f828b23600e5}} 
+int {\bfseries size} () const
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a4f7848dee4733e33afde1b31092952cd}\label{class_bio_adj_list_a4f7848dee4733e33afde1b31092952cd}} 
+T {\bfseries degree} (const int x) const
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a2f70bb3a138c17bb8bb7cf02e6dd12f4}\label{class_bio_adj_list_a2f70bb3a138c17bb8bb7cf02e6dd12f4}} 
+int {\bfseries number\+Of\+Edges} () const
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_ac55fcd3f183f786e8352f1f81cfb0056}\label{class_bio_adj_list_ac55fcd3f183f786e8352f1f81cfb0056}} 
+void {\bfseries resize} (const int new\+Size)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a37b6c5c788259af6307a59ba0badb985}\label{class_bio_adj_list_a37b6c5c788259af6307a59ba0badb985}} 
+int {\bfseries find\+Node\+Index} (const string \&name) const
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a55eb65879271ca6722ba19af93a4fd8c}\label{class_bio_adj_list_a55eb65879271ca6722ba19af93a4fd8c}} 
+void {\bfseries delete\+Edge} (const string \&x, const string \&y)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_aa2b060c216162352ac58ec2eddead199}\label{class_bio_adj_list_aa2b060c216162352ac58ec2eddead199}} 
+void {\bfseries delete\+Edge} (int x, int y)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a9e2bc76c559cf676565e930b3f57433a}\label{class_bio_adj_list_a9e2bc76c559cf676565e930b3f57433a}} 
+void {\bfseries delete\+Node} (const string \&name)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a1d22ffb38372caa9922e458f0c587c63}\label{class_bio_adj_list_a1d22ffb38372caa9922e458f0c587c63}} 
+void {\bfseries delete\+Node} (int index)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a5a0d3d456727ffc1728ef6ef1f3356bd}\label{class_bio_adj_list_a5a0d3d456727ffc1728ef6ef1f3356bd}} 
+void {\bfseries copy} (const \hyperlink{class_bio_adj}{Bio\+Adj}$<$ T $>$ $\ast$rhs)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_ac0508b6a85df7fb7965b7e80e1b6a36a}\label{class_bio_adj_list_ac0508b6a85df7fb7965b7e80e1b6a36a}} 
+void {\bfseries scale\+Weights} (const T \&scale)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a3d421395b70321f8ec36ef3ecff565f0}\label{class_bio_adj_list_a3d421395b70321f8ec36ef3ecff565f0}} 
+bool {\bfseries is\+Equal} (const \hyperlink{class_bio_adj}{Bio\+Adj}$<$ T $>$ $\ast$)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_ab2e303f2a71183bacf22fbe615642cc6}\label{class_bio_adj_list_ab2e303f2a71183bacf22fbe615642cc6}} 
+void {\bfseries add\+Node} (const string \&name)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a577d7d2b8ae0a2aff92c3869b1ada7e7}\label{class_bio_adj_list_a577d7d2b8ae0a2aff92c3869b1ada7e7}} 
+void {\bfseries scale\+Up} (T weight)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_ac58f95732c9734d83f96d9991cd9271e}\label{class_bio_adj_list_ac58f95732c9734d83f96d9991cd9271e}} 
+void {\bfseries scale\+Down} (T weight)
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a1eb61b9956cc97c57ee161b5ea0a299b}\label{class_bio_adj_list_a1eb61b9956cc97c57ee161b5ea0a299b}} 
+{\footnotesize template$<$$>$ }\\\hyperlink{struct_register}{Register} {\bfseries reg}
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a54b48c0689bd7e3383da7f623d62b092}\label{class_bio_adj_list_a54b48c0689bd7e3383da7f623d62b092}} 
+{\footnotesize template$<$$>$ }\\\hyperlink{struct_register}{Register} {\bfseries reg}
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a8230cad786e8bff1de69573946f1bcba}\label{class_bio_adj_list_a8230cad786e8bff1de69573946f1bcba}} 
+{\footnotesize template$<$$>$ }\\\hyperlink{struct_register}{Register} {\bfseries reg}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a3e19dd177e321cf1d92d79ca0d6eb803}\label{class_bio_adj_list_a3e19dd177e321cf1d92d79ca0d6eb803}} 
+static \hyperlink{class_adj}{Adj} $\ast$ {\bfseries make} ()
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a21a9052f63e290eb396586119adb3d20}\label{class_bio_adj_list_a21a9052f63e290eb396586119adb3d20}} 
+static const string \& {\bfseries Network\+Type} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_a52c00ae12aa725e4faa43059bb1c4ec7}\label{class_bio_adj_list_a52c00ae12aa725e4faa43059bb1c4ec7}} 
+vector$<$ \hyperlink{class_bio_list}{Bio\+List}$<$ T $>$ $>$ {\bfseries network}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_bio_adj_list_af096b5d46021f7ed9733540d6be91578}\label{class_bio_adj_list_af096b5d46021f7ed9733540d6be91578}} 
+static \hyperlink{struct_register}{Register} {\bfseries reg}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Bio\+Adj\+List.\+h\end{DoxyCompactItemize}
