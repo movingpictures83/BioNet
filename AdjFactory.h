@@ -13,7 +13,7 @@ using std::unordered_map;
 using std::function;
 
 namespace BioNet {
-	namespace BioAdjFactory {
+	namespace AdjFactory {
 		static unordered_map<string, function<GenericAdj*(void)>>mFactoryMap;
 
 		static void RegisterType(const string & id, function<GenericAdj*(void)> func)

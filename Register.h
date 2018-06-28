@@ -1,5 +1,5 @@
 #pragma once
-#include "BioAdjFactory.h"
+#include "AdjFactory.h"
 
 #include <string>
 #include <functional>
@@ -13,7 +13,7 @@ namespace BioNet {
 		Register(string name, GenericAdj * (*func)())
 		{
 			keyword = name;
-			BioAdjFactory::RegisterType(name, func);
+			AdjFactory::RegisterType(name, func);
 		}
 	};
 }
