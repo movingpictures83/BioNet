@@ -390,7 +390,7 @@ namespace BioNet {
 
 			vertexSet.erase(current);
 
-			for (int i = 0; i < network[current].size(); i++)
+			for (int i = 0; i < network->size(); i++)
 			{
 				if (network->getEdge(current, i))
 				{
