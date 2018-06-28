@@ -31,10 +31,14 @@ private:
 	static Register reg;
 public:
 	/// Returns the Network **Type** (Matrix, List, etc.) of a Network
-	static const string& NetworkType()
+	static string NetworkType()
 	{
-		const type_info& keyword = typeid(AdjMat<T>);
-		return keyword.name();
+		//static const string network = "BioAdjMat";
+		//return network;
+	    static const type_info& ti = typeid(AdjMat<T>);
+		string keyword = ti.name();
+		AdjFactory::mFactoryMap.find(keyword) == AdjFactory::mFactoryMap.end() ? Register(keyword, &AdjMat::make) : reg;
+		return keyword;
 	}
 
 	/// Uses a Factory to create a new **Network** of the current type
