@@ -1,6 +1,5 @@
 #pragma once
 #include "AdjFactory.h"
-
 #include <string>
 #include <functional>
 using std::string;
@@ -10,6 +9,12 @@ namespace BioNet {
 	struct Register {
 		// name="B"  checkType= address of B::checkType
 		string keyword;
+		/**
+		Constructor that registers function to AdjFactory's mFactoryMap
+
+		@param id - unique string identifier for the function being provided for the map.
+		@param func - unique function for constructing desired underlying type.
+		*/
 		Register(string name, GenericAdj * (*func)())
 		{
 			keyword = name;
