@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GenericAdj.h"
-#include "AdjMat.h"
+#include "adj/GenericAdj.h"
+#include "adj/AdjMat.h"
 #include "exception/Exception.h"
 #include <string>
 #include <vector>
