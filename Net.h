@@ -489,7 +489,7 @@ namespace BioNet {
 	const Net<T>& Net<T>::operator*=(const T i) const
 	{
 		network->scaleUp(i);
-		return this;
+		return *this;
 	}
 
 	template<typename T>

@@ -3,15 +3,15 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include "Net.h"
-#include "AdjList.h"
-#include "List.h"
-#include "IncorrectFileFormatException.h"
-#include "FileNotExistException.h"
-#include "DataInvalidFormatException.h"
-#include "Exception.h"
-#include "AdjFactory.h";
-#include "AdjMat.h"
+#include "..\..\Net.h"
+#include "..\..\adj\AdjList.h"
+#include "..\..\adj\List.h"
+#include "..\..\exception\IncorrectFileFormatException.h"
+#include "..\..\exception\FileNotExistException.h"
+#include "..\..\exception\DataInvalidFormatException.h"
+#include "..\..\exception\Exception.h"
+#include "..\..\factory\AdjFactory.h"
+#include "..\..\adj\AdjMat.h"
 
 using std::string;
 using std::to_string;
@@ -27,6 +27,7 @@ void ExceptionTest();
 bool UndirectedTest();
 void UnitTestRegister();
 bool BioListTest();
+bool BioListOperatorTest();
 bool BioAdjListTest();
 
 bool fequal(float a, float b) {
@@ -49,7 +50,13 @@ int main()
 	cout << "======Exception UNIT TEST======" << endl;
 	ExceptionTest();
 	UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	
+	cout << "====== Register Test ======" << endl;
+	UnitTestRegister();
+	 
+	cout << "====== BioList Operator Test ======" << endl;
 
+	BioListOperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	return 0;
 }
 
@@ -68,15 +75,22 @@ bool ShortestPathUnitTest()
 }
 
 bool BioAdjListTest() {
-	AdjList<float> list;
-	if (list.size() != 5) return false;
-	list.setNode(0, "A");
-	list.setNode(1, "B");
-	list.setNode(2, "C");
-	list.setNode(3, "D");
-	list.setNode(4, "E");
-	if (list.degree(0) != 0 && list.degree(1) != 0 && list.degree(2) != 0 && list.degree(3) != 0 && list.degree(4) != 0) return false;
-	return true;
+	try {
+		AdjList<float> list;
+		if (list.size() != 5) return false;
+		list.setNode(0, "A");
+		list.setNode(1, "B");
+		list.setNode(2, "C");
+		list.setNode(3, "D");
+		list.setNode(4, "E");
+		if (list.degree(0) != 0 && list.degree(1) != 0 && list.degree(2) != 0 && list.degree(3) != 0 && list.degree(4) != 0) return false;
+		return true;
+	}
+	catch (exception e)
+	{
+		cout << e.what();
+		return false;
+	}
 }
 
 
@@ -89,6 +103,27 @@ bool BioListTest() {
 	if (!fequal(list.getWeight("Carbon Dioxide"), 0.2f)) return false;
 	list.setWeight("Sodium Chloride", 1.5f);
 	if (!fequal(list.getWeight("Sodium Chloride"), 1.5f)) return false;
+	return true;
+}
+
+bool BioListOperatorTest() {
+
+	Net<float> aNet;
+	aNet.resize(3);
+	aNet.setRange(10.0f, 10.0f);
+	aNet.setNode(0, "Sodium");
+	aNet.setNode(1, "Carbon Dioxide");
+	aNet.setNode(2, "Sodium Chloride");
+
+	aNet.setEdge(0, 1, 0.5f);
+	aNet.setEdge(1, 2, 1.0f);
+	aNet.setEdge(0, 2, 1.5f);
+
+
+	aNet *= 2.0f;
+
+	if (aNet.getEdge(0, 1) != 1 || aNet.getEdge(1, 2) != 2 || aNet.getEdge(0, 2) != 3)
+		return false;
 	return true;
 }
 
@@ -184,11 +219,11 @@ void UnitTestRegister()
 		e->resize(10);
 		auto const val = e->getEdge(0, 0);
 		if (typeid(decltype(val)) == typeid(int))
-			cout << "Correct Type";
+			cout << "Correct Type" << endl;
 	}
 	catch (exception e)
 	{
-		cout << e.what();
+		cout << e.what() << endl;
 	}
 
 }
