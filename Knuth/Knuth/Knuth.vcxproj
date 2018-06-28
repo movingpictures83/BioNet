@@ -91,7 +91,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>../../Adj;../../IO;../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../exception;../../Adj;../../IO;../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>../../Adj;../../IO;../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../exception;../../Adj;../../IO;../../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,23 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\BioAdj.h" />
-    <ClInclude Include="..\..\BioAdjFactory.h" />
-    <ClInclude Include="..\..\BioList.h" />
-    <ClInclude Include="..\..\BioNet.h" />
-    <ClInclude Include="..\..\File.h" />
-    <ClInclude Include="..\..\Reader.h" />
-    <ClInclude Include="..\..\Writer.h" />
-    <ClInclude Include="Exception.h" />
-    <ClInclude Include="GMLReader.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\BioList.cpp" />
-    <ClCompile Include="..\..\BioNet.cpp" />
-    <ClCompile Include="..\..\BioNetException.cpp" />
-    <ClCompile Include="GMLReader.cpp" />
+    <ClCompile Include="GMLHandler.cpp" />
     <ClCompile Include="Knuth.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -174,6 +158,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\exception\FileNotExistException.h" />
+    <ClInclude Include="..\..\io\Reader.h" />
+    <ClInclude Include="..\..\io\Writer.h" />
+    <ClInclude Include="..\..\Net.h" />
+    <ClInclude Include="GMLException.h" />
+    <ClInclude Include="GMLHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
