@@ -30,7 +30,7 @@ namespace BioNet {
 			if (keyPair != mFactoryMap.end())
 				return static_cast<Adj<T> *>(keyPair->second());
 			else
-				throw BioNetException("Error Creating network of type " + type + ".\n");
+				throw Exception("Error Creating network of type " + type + ".\n");
 		}
 	}
 }
