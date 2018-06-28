@@ -1,7 +1,7 @@
 #pragma once
 #include "BioAdj.h"
 #include "BioList.h"
-#include "BioNetException.h"
+#include "Exception.h"
 #include <vector>
 #include <string>
 #include <map>
@@ -220,7 +220,7 @@ namespace BioNet {
 
 		/// delete a node in the network
 		/**
-			
+			@param name the name of the node to delete
 		*/
 		void deleteNode(const string & name)
 		{
@@ -231,6 +231,10 @@ namespace BioNet {
 			network.erase(network.begin() + index);
 		}
 
+		/// delete a node in the network
+		/**
+			@param index the index of the node to delete
+		*/
 		void deleteNode(int index)
 		{
 			auto name = network[index].getName();
@@ -240,7 +244,10 @@ namespace BioNet {
 			network.erase(network.begin() + index);
 		}
 
-
+		/// create a copy of the network
+		/**
+			@param rhs the Adj to copy
+		*/
 		void copy(const BioAdj<T>* rhs) {
 			auto _rhs = static_cast<const AdjList<T>*>(rhs);
 			network = vector<BioList<T>>(_rhs->network.size());
@@ -249,9 +256,19 @@ namespace BioNet {
 		}
 		//void addNode(const string& str)
 		//{}
+
+		/// scale the weights of the network
+		/**
+			@param scale the factor to scale the weights
+		*/
 		void scaleWeights(const T& scale)
 		{}
-		bool isEqual(const BioAdj<T>*)
+
+		/// check if two networks are equal
+		/**
+			@param adj the network to compare
+		*/
+		bool isEqual(const BioAdj<T>* adj)
 		{
 			return true;
 		}
@@ -318,6 +335,11 @@ namespace BioNet {
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		////ADD TEAM
+
+		/// add a node to the network
+		/**
+			@param name the name of the node to add
+		*/
 		void addNode(const string& name)
 		{
 			network.emplace_back(BioList<T>(name));
@@ -333,10 +355,19 @@ namespace BioNet {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		////SCALE TEAM
 
+		/// scale the network by a factor
+		/**
+			@param weight the factor to scale by
+		*/
 		void scaleUp(T weight) {
 			for (int i = 0; i < network.size(); i++)
 				network[i] *= weight;
 		}
+
+		/// scale the network by a factor
+		/**
+		@param weight the factor to scale by
+		*/
 		void scaleDown(T weight) {
 			for (int i = 0; i < network.size(); i++)
 				network[i] /= weight;

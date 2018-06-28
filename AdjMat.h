@@ -6,7 +6,7 @@
 #include "BioAdj.h"
 #include "Register.h"
 
-#include "BioNetException.h"
+#include "Exception.h"
 #include "BioAdjFactory.h"
 #include <numeric>
 
@@ -16,23 +16,31 @@ using std::ostream;
 using std::type_info;
 using std::endl;
 
+namespace BioNet {
 
+/// Network implemented as an Adjacency **Matrix**
+/** represents a Network implemented as an Adjacency **Matrix**
+- overrides most methods from its parent's generic class
+*/
 template<typename T>
-class BioAdjMat : public BioAdj<T>
+class AdjMat : public Adj<T>
 {
 private:
 	vector<vector<T>> matrix;
 	vector<string> names;
 	static Register reg;
 public:
+	/// Returns the Network **Type** (Matrix, List, etc.) of a Network
 	static const string& NetworkType()
 	{
 		const type_info& keyword = typeid(BioAdjMat<T>);
 		return keyword.name();
 	}
 
-	static Adj* make() { return new BioAdjMat<T>; }
+	/// Uses a Factory to create a new **Network** of the current type
+	static GenericAdj* make() { return new AdjMat<T>; }
 
+	/// Creates a new Network
 	BioAdjMat(int size = 5) {
 		names.resize(size);
 		matrix.resize(size);
@@ -57,17 +65,17 @@ public:
 	void deleteNode(const string &);
 	void deleteNode(const int);
 	//BioAdjMat<T> operator+ (const string &);
-	//const BioAdjMat<T> & operator+= (const string &);
-	//const BioAdjMat<T> & operator/= (const T &);
-	//const BioAdjMat<T> & operator*= (const T &);
-	//bool operator== (const BioAdjMat<T> &);
-	//bool operator!= (const BioAdjMat<T> &);
+	//const AdjMat<T> & operator+= (const string &);
+	//const AdjMat<T> & operator/= (const T &);
+	//const AdjMat<T> & operator*= (const T &);
+	//bool operator== (const AdjMat<T> &);
+	//bool operator!= (const AdjMat<T> &);
 	//const string & operator[] (int);
 	//T operator() (int, int);
-	//friend ostream & operator<< (const ostream &, const BioAdjMat<T> &);
+	//friend ostream & operator<< (const ostream &, const AdjMat<T> &);
 
 	// moving operators to BioNet Class, this becomes copy
-	void copy(const BioAdj<T> * rhs) {
+	void copy(const Adj<T> * rhs) {
 		names.resize(rhs->size());
 		for (int i = 0; i < names.size(); i++) {
 			names[i] = rhs->getNode(i);
@@ -86,8 +94,8 @@ public:
 		setNode( sz, aNode);
 	}
 
-	bool isEqual (const BioAdj<T>* rhs) {
-		auto _rhs = static_cast<const BioAdjMat<T> *>(rhs);
+	bool isEqual (const Adj<T>* rhs) {
+		auto _rhs = static_cast<const AdjMat<T> *>(rhs);
 		for (int i = 0; i < names.size(); i++) {
 			if (names[i].compare(_rhs->names[i]))
 				return false;
@@ -114,25 +122,25 @@ public:
 
 // Moved code from BioAdjMat.cpp to work properly now that it's templated
 
-//BioAdjFactory::mFactoryMap["matrix"] = []() {new BioAdjMat()};
+//template<>
+Register AdjMat<int>::reg = Register("BioAdjMatInt", &AdjMat::make);
+//template<>
+Register AdjMat<float>::reg = Register("BioAdjMatFloat", &AdjMat::make);
+//template<>
+Register AdjMat<double>::reg = Register("BioAdjMatDouble", &AdjMat::make);
 
-//template<>
-Register BioAdjMat<int>::reg = Register("BioAdjMatInt", &BioAdjMat::make);
-//template<>
-Register BioAdjMat<float>::reg = Register("BioAdjMatFloat", &BioAdjMat::make);
-//template<>
-Register BioAdjMat<double>::reg = Register("BioAdjMatDouble", &BioAdjMat::make);
-
+/// Sets the weight of a given **Edge** (by its indexes) in the Network **Matrix**
 template <typename T>
-void BioAdjMat<T>::setEdge(const int i, const int j, const T w)
+void AdjMat<T>::setEdge(const int i, const int j, const T w)
 {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
 		throw BioNetException("setEdge() has wrong range");
 	matrix[i][j] = w;
 }
 
+/// Sets the weight of a given **Edge** (by its neightboring Node-Names) in the Network **Matrix**
 template <typename T>
-void BioAdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
+void AdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 {
 	int i = -1;
 	int j = -1;
@@ -154,16 +162,18 @@ void BioAdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 	setEdge(i, j, w);
 }
 
+/// Returns the weight of a given **Edge** (by its indexes) in the Network **Matrix**
 template <typename T>
-T BioAdjMat<T>::getEdge(const int i, const int j) const {
+T AdjMat<T>::getEdge(const int i, const int j) const {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
 		throw BioNetException("setEdge() has wrong range");
 
 	return matrix[i][j];
 }
 
+/// Returns the weight of a given **Edge** (by its neightboring Node-Names) in the Network **Matrix**
 template <typename T>
-T BioAdjMat<T>::getEdge(const string& n1, const string& n2) const
+T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 {
 	int i = -1;
 	int j = -1;
@@ -185,8 +195,9 @@ T BioAdjMat<T>::getEdge(const string& n1, const string& n2) const
 	return getEdge(i, j);
 }
 
+/// Returns the internal index of a **Node** given its **Name**
 template <typename T>
-int BioAdjMat<T>::findNodeIndex(const string & lookup) const
+int AdjMat<T>::findNodeIndex(const string & lookup) const
 {
 	int index = 0;
 	for (auto node : names)
@@ -199,8 +210,9 @@ int BioAdjMat<T>::findNodeIndex(const string & lookup) const
 	return -1;
 }
 
+/// Sets the name of a **Node** given its internal index
 template <typename T>
-void BioAdjMat<T>::setNode(const int index, const string &name)
+void AdjMat<T>::setNode(const int index, const string &name)
 {
 	if (index < 0 || index >= names.size())
 		throw BioNetException("Trying to add name out of range");
@@ -208,8 +220,9 @@ void BioAdjMat<T>::setNode(const int index, const string &name)
 	names[index] = name;
 }
 
+/// Returns the nameof a **Node** given its index
 template <typename T>
-string BioAdjMat<T>::getNode(const int index) const
+string AdjMat<T>::getNode(const int index) const
 {
 	if (index < 0 || index >= names.size())
 		throw BioNetException("Trying to add name out of range");
@@ -217,16 +230,20 @@ string BioAdjMat<T>::getNode(const int index) const
 	return names[index];
 }
 
+/// Removes an **Edge** from the **Network** given its two neighboring Node-names
 template <typename T>
-void BioAdjMat<T>::deleteEdge(const string & istr, const string & jstr)
+void AdjMat<T>::deleteEdge(const string & istr, const string & jstr)
 {
 	int i = findNodeIndex(istr);
 	int j = findNodeIndex(jstr);
 	deleteEdge(i, j);
 }
 
+/// Removes an **Edge** from the **Network** given its internal indexes
+/**- it does this by setting the value of the **Edge** to 0 in the **Matrix** representation
+*/
 template <typename T>
-void BioAdjMat<T>::deleteEdge(const int i, const int j)
+void AdjMat<T>::deleteEdge(const int i, const int j)
 {
 	auto size = names.size();
 	if (i < 0 || j < 0 || i >= size || j >= size)
@@ -234,15 +251,17 @@ void BioAdjMat<T>::deleteEdge(const int i, const int j)
 	matrix[i][j] = 0;
 }
 
+/// Removes a **Node** from the **Network** given its name
 template <typename T>
-void BioAdjMat<T>::deleteNode(const string & nodeName)
+void AdjMat<T>::deleteNode(const string & nodeName)
 {
 	auto node = findNodeIndex(nodeName);
 	deleteNode(node);
 }
 
+/// Removes a **Node** from the **Network** given its index
 template <typename T>
-void BioAdjMat<T>::deleteNode(const int nodeIndex)
+void AdjMat<T>::deleteNode(const int nodeIndex)
 {
 	auto size = matrix.size();
 	if (nodeIndex < 0 || nodeIndex >= size)
@@ -253,8 +272,9 @@ void BioAdjMat<T>::deleteNode(const int nodeIndex)
 		node.erase(node.begin() + nodeIndex);
 }
 
+/// Re-sizes the **Network** to a new given size
 template <typename T>
-void BioAdjMat<T>::resize(const int size) {
+void AdjMat<T>::resize(const int size) {
 	if (size <= 0)
 		throw BioNetException("resize value is invalid");
 	matrix.resize(size);
@@ -264,20 +284,22 @@ void BioAdjMat<T>::resize(const int size) {
 	names.resize(size);
 }
 
+/// Returns the size of the current **Network**
 template <typename T>
-int BioAdjMat<T>::size() const {
+int AdjMat<T>::size() const {
 	return names.size();
 }
 
+
 template <typename T>
-T BioAdjMat<T>::degree(const int index) const {
+T AdjMat<T>::degree(const int index) const {
 	if (index < 0 || index >= matrix.size())
 		throw BioNetException("Index out of bounds!");
 	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
 }
 
 template <typename T>
-int BioAdjMat<T>::numberOfEdges() const {
+int AdjMat<T>::numberOfEdges() const {
 	int edges = 0;
 
 	for (int i = 0; i < matrix.size(); i++)
@@ -307,7 +329,7 @@ int BioAdjMat<T>::numberOfEdges() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// removing thisoperator overload in favorof having them only in BioNet
+// removing this operator overload in favor of having them only in BioNet
 //template <typename T>
 //BioAdjMat<T> BioAdjMat<T>::addNode (const string& aNode)
 //{
@@ -530,3 +552,5 @@ int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
 *
 *
 */
+
+}

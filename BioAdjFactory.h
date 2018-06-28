@@ -4,8 +4,8 @@
 #include <functional>
 #include <typeinfo>
 #include "BioAdj.h"
-#include "BioAdjMat.h"
 #include "Exception.h"
+//#include "BioAdjMat.h"
 //#include "BioAdjList.h"
 
 using std::string;
