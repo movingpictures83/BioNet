@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../BioNet/BioNode.h"
+#include "BioEdge.h"
 
 
 #include <string>

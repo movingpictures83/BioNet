@@ -1,9 +1,10 @@
 #include "CppUnitTest.h"
-#include "../../BioNet.h"
+#include "Net.h"
 
 #define NETWORK_SIZE 5
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using BioNet::Net;
 
 namespace UnitTest
 {
@@ -13,7 +14,7 @@ namespace UnitTest
 
 		TEST_METHOD(TestMethod1)
 		{
-			BioNet<float> b = BioNet<float>();
+			Net<float> b = Net<float>();
 			b.resize(NETWORK_SIZE);
 			for (int i = 0; i < b.size(); ++i)
 			{

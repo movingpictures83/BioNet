@@ -1,8 +1,8 @@
 #pragma once
 
-#include "GenericAdj.h"
+#include "adj/GenericAdj.h"
 #include "AdjMat.h"
-#include "Exception.h"
+#include "exception/Exception.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -94,6 +94,11 @@ namespace BioNet {
 
 		ostream& operator<<(ostream&) const;
 
+		/// 
+		/**
+		
+
+		*/
 		template<class T>
 		const Net<T>& operator +=(const string& rhs)
 		{
@@ -119,6 +124,11 @@ namespace BioNet {
 	   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	   // AFTERNOON COHORT DIJKSTRA
 	   //
+	   /// 
+	   /**
+		
+
+	   */
 		void convertToType(const string&);
 		const T degree(const int) const;
 		//void reserve(size_t);
@@ -193,6 +203,11 @@ namespace BioNet {
 			delete network;
 	}
 
+	/// Set Range
+	/**
+	@param min Mininum value
+	@param max Maximum value
+	*/
 	template<typename T>
 	void Net<T>::setRange(const T min, const T max) {
 		if (min > max)
@@ -203,6 +218,12 @@ namespace BioNet {
 		maxweight = max;
 	}
 
+	/// Set Edge
+	/**
+	@param i origin node
+	@param j destination node
+	@param w weight, should be between mininum Weight and maximum Weight allowed
+	*/
 	template<typename T>
 	void Net<T>::setEdge(const int i, const int j, const T w) {
 		//Converting to a Network Class
@@ -221,6 +242,11 @@ namespace BioNet {
 		}
 	}
 
+	/// Set Node
+	/**
+	@param i node, should be present in the matrix
+	@param n name of the node
+	*/
 	template<typename T>
 	void Net<T>::setNode(const int i, const string& n) {
 		/// Converting to a Network Class

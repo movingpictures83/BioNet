@@ -33,7 +33,7 @@ public:
 	/// Returns the Network **Type** (Matrix, List, etc.) of a Network
 	static const string& NetworkType()
 	{
-		const type_info& keyword = typeid(BioAdjMat<T>);
+		const type_info& keyword = typeid(AdjMat<T>);
 		return keyword.name();
 	}
 
@@ -41,13 +41,13 @@ public:
 	static GenericAdj* make() { return new AdjMat<T>; }
 
 	/// Creates a new Network
-	BioAdjMat(int size = 5) {
+	AdjMat(int size = 5) {
 		names.resize(size);
 		matrix.resize(size);
 		for (auto& n : matrix)
 			n.resize(size);
 	}
-	~BioAdjMat() {}
+	~AdjMat() {}
 
 	void setEdge(const int, const int, const T);
 	void setEdge(const string&, const string&, const T);
