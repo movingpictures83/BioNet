@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GenericAdj.h"
-#include "AdjMat.h"
+#include "adj/GenericAdj.h"
+#include "adj/AdjMat.h"
 #include "exception/Exception.h"
 #include <string>
 #include <vector>
@@ -489,7 +489,7 @@ namespace BioNet {
 	const Net<T>& Net<T>::operator*=(const T i) const
 	{
 		network->scaleUp(i);
-		return this;
+		return *this;
 	}
 
 	template<typename T>
