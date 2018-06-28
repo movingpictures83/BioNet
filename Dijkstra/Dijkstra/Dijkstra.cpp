@@ -81,7 +81,7 @@ bool BioAdjListTest() {
 
 
 bool BioListTest() {
-	BioList<float> list(0.5f, "Sodium");
+	List<float> list(0.5f, "Sodium");
 	if (list.getName() != "Sodium") return false;
 	if (!fequal(list.getWeight("Sodium"),0.5f)) return false;
 	list.insertFront(0.2f, "Carbon Dioxide");;

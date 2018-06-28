@@ -16,14 +16,14 @@ namespace BioNet {
 	/// An Adjacency List for BioNet
 	/**
 		AdjList impements an adjacency list to represent the Bionet network.
-		It consists of a vector of BioList, each element representing a node in the network with
+		It consists of a vector of List, each element representing a node in the network with
 		its corresponding edges.
 	*/
 	template <typename T>
 	class AdjList : public Adj<T>
 	{
 	public:
-		vector<BioList<T>> network;
+		vector<List<T>> network;
 		static Register reg;
 	public:
 		/// Used for factory Construction
@@ -46,9 +46,9 @@ namespace BioNet {
 		/// AdjList Copy constructor
 		AdjList(const AdjList& copy)
 		{
-			network = vector<BioList<T>>(copy.network.size());
+			network = vector<List<T>>(copy.network.size());
 			for (size_t i = 0; i < copy.network.size(); i++)
-				network[i] = BioList<T>(copy.network[i]);
+				network[i] = List<T>(copy.network[i]);
 		}
 		/// AdjList constructor
 		/**
@@ -262,9 +262,9 @@ namespace BioNet {
 		*/
 		void copy(const Adj<T>* rhs) {
 			auto _rhs = static_cast<const AdjList<T>*>(rhs);
-			network = vector<BioList<T>>(_rhs->network.size());
+			network = vector<List<T>>(_rhs->network.size());
 			for (size_t i = 0; i < _rhs->network.size(); i++)
-				network[i] = BioList<T>(_rhs->network[i]);
+				network[i] = List<T>(_rhs->network[i]);
 		}
 		//void addNode(const string& str)
 		//{}
@@ -286,7 +286,7 @@ namespace BioNet {
 		}
 		/*const BioAdjList& operator+=(const string nodename)
 		{
-			network.push_back(BioList<T>(0, nodename));
+			network.push_back(List<T>(0, nodename));
 			return *this;
 		}*/
 
@@ -354,7 +354,7 @@ namespace BioNet {
 		*/
 		void addNode(const string& name)
 		{
-			network.emplace_back(BioList<T>(name));
+			network.emplace_back(List<T>(name));
 
 		}
 
