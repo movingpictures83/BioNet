@@ -9,14 +9,14 @@ using namespace BioNet;
 using std::string;
 
 /**
-Declares DataInvalidFormatException constructor that inherits from BioNet::Exception
+Inherits from BioNet::Exception
 
 */
 class DataInvalidFormatException : public Exception {
 public:
 	/**
-	Inherits from BioNet::Exception
-	Takes Exception message as parameter
+	Declares DataInvalidFormatException constructor that inherits from BioNet::Exception
+	Takes Exception message as parameter	
 
 	*/
 	DataInvalidFormatException(string message) : Exception(message) {}
