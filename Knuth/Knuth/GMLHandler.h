@@ -7,7 +7,11 @@
 #include "Reader.h"
 #include "Writer.h"
 #include "File.h"
+#include "List.h"
 #include <vector>
+#include "FileNotExistException.h"
+#include "IncorrectFileFormatException.h"
+#include "DataInvalidFormatException.h"
 using std::string;
 using std::ifstream;
 using std::ofstream;
@@ -16,30 +20,137 @@ using std::fixed;
 using std::endl;
 using std::vector;
 
-struct Node {
+struct GMLNode {
 	int id;
 	string label;
 };
-struct Edge {
+struct GMLEdge {
 	int source;
 	int target;
 	double weight;
 };
 
 
-class GMLHandler : public FileHandler
+class GMLHandler : public BioNet::FileHandler
 {
 private:
-	ifstream infile;
-	vector<Node> nodes;
-	vector<Edge> edges;
 
 public:
 	GMLHandler() { extension = "gml"; }
 	template <typename T>
-	static void doRead(BioNet<T>&, const string& fname);
+	static void doRead(Net<T>& b, const string& fname){
+
+		// check if path
+		string filename = "";
+		size_t found = fname.find("/") + fname.find("\\");
+
+		filename += fname;
+		ifstream infile;
+		vector<GMLNode> nodes;
+		nodes.reserve(20);
+		try {
+			infile.open(filename);
+		}
+		catch (FileNotExistException ex) {
+
+			cout << ex.what() << endl;
+			exit(1);
+		}
+
+		GMLNode node;
+		GMLEdge edge;
+
+		try {
+			string temp;
+			do {
+				infile >> temp;
+				if (0 == temp.compare("node"))
+				{
+					infile >> temp >> temp >> temp;
+					// temp has ID value now
+					try
+					{
+						node.id = stoi(temp);
+					}
+					catch (DataInvalidFormatException ex)
+					{
+						cout << ex.what() << endl;
+						exit(1);
+					}
+					infile >> temp >> temp;
+					node.label = temp.substr(1, temp.length() - 2);
+					nodes.push_back(node);
+				}
+				else  if (0 == temp.compare("edge"))
+				{
+					break;
+				}
+				else continue;
+			} while (!infile.eof());
+
+			for (size_t i = 0; i < nodes.size(); i++)
+			{
+				b.setNode(nodes[i].id, nodes[i].label);
+			}
+
+			do {
+				if (0 == temp.compare("edge"))
+				{
+					infile >> temp >> temp >> temp;
+
+					try
+					{
+						edge.source = stoi(temp);
+					}
+					catch (DataInvalidFormatException ex)
+					{
+						cout << ex.what() << endl;
+						exit(1);
+					}
+					infile >> temp >> temp;
+
+					try
+					{
+						edge.target = stoi(temp);
+					}
+					catch (DataInvalidFormatException ex)
+					{
+						cout << ex.what() << endl;
+						exit(1);
+					}
+					infile >> temp >> temp;
+
+					try
+					{
+						edge.weight = stof(temp);
+					}
+					catch (DataInvalidFormatException ex)
+					{
+						cout << ex.what() << endl;
+						exit(1);
+					}
+					b.setEdge(edge.source, edge.target, edge.weight);
+
+				}
+				else
+				{
+					infile >> temp;
+					continue;
+				}
+			} while (!infile.eof());
+
+		}
+		catch (IncorrectFileFormatException ex)
+		{
+			cout << ex.what() << endl;
+			exit(1);
+
+		}
+	}
 	template <typename T>
-	static void doWrite(BioNet<T>&, const string& fname);
+	static void doWrite(Net<T>&, const string& fname) {
+		return;
+	};
 //	GMLHandler(string p = "") : Reader(p), Writer(p) {};
 //	~GMLHandler();
 //	string getDefaultExt() { return ".gml"; }

@@ -3,15 +3,16 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include "Net.h"
-#include "AdjList.h"
-#include "List.h"
-#include "IncorrectFileFormatException.h"
-#include "FileNotExistException.h"
-#include "DataInvalidFormatException.h"
-#include "Exception.h"
-#include "AdjFactory.h"
-#include "AdjMat.h"
+
+
+#include "..\..\adj\AdjList.h"
+#include "..\..\adj\List.h"
+#include "..\..\exception\IncorrectFileFormatException.h"
+#include "..\..\exception\FileNotExistException.h"
+#include "..\..\exception\DataInvalidFormatException.h"
+#include "..\..\exception\Exception.h"
+#include "..\..\factory\AdjFactory.h"
+#include "..\..\adj\AdjMat.h"
 
 using std::string;
 using std::to_string;
@@ -27,6 +28,7 @@ void ExceptionTest();
 bool UndirectedTest();
 void UnitTestRegister();
 bool BioListTest();
+bool BioListOperatorTest();
 bool BioAdjListTest();
 bool OperatorTest();
 Net<int> createTestBioNet_BioAdjListInt(int size);
@@ -41,21 +43,33 @@ int main()
 	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======BIOADJLIST TEST======" << endl;
 
-	//cout << "======UNIT TEST======" << endl;
-	//UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "======UNIT TEST======" << endl;
+	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "======Operators Test======" << endl;
+	OperatorsTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "======SHORTEST PATH UNIT TEST======" << endl;
 
-	//cout << "======SHORTEST PATH UNIT TEST======" << endl;
-
-	//ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
+	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
 	//
-	//cout << "======Exception UNIT TEST======" << endl;
-	//ExceptionTest();
-	//UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "======Exception UNIT TEST======" << endl;
+	ExceptionTest();
+	cout << "======Undirected UNIT Test======" << endl;
+	UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	
+	cout << "====== Register Test ======" << endl;
+	UnitTestRegister();
+	 
+	cout << "====== BioList Operator Test ======" << endl;
 	
 	cout << "======OPERATOR TEST======" << endl;
 	OperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
+	BioListOperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	return 0;
+}
+
+bool OperatorsTest() {
+	return false;
 }
 
 bool ShortestPathUnitTest()
@@ -69,11 +83,11 @@ bool ShortestPathUnitTest()
 	net.setEdge(0, 1, -1);
 	net.setEdge(1, 2, 1);
 	net.setEdge(0, 2, 1);
-	return net.shortestPath(0, 2) == 1;
+	return net.shortestPath(0, 1) == -1;
 }
 
 bool BioAdjListTest() {
-	AdjList<float> list;
+	AdjList<int> list;
 	if (list.size() != 5) return false;
 	list.setNode(0, "A");
 	list.setNode(1, "B");
@@ -81,6 +95,24 @@ bool BioAdjListTest() {
 	list.setNode(3, "D");
 	list.setNode(4, "E");
 	if (list.degree(0) != 0 && list.degree(1) != 0 && list.degree(2) != 0 && list.degree(3) != 0 && list.degree(4) != 0) return false;
+	list.setEdge("A", "B", 1);
+	list.setEdge("B", "C", 2);
+	list.setEdge("C", "D", 3);
+	list.setEdge("D", "E", 4);
+	auto x = list.getEdge("A", "B");
+	list.scaleUp(10);
+	x = list.getEdge("A", "B");
+	if (list.getEdge("A", "B") != 10 && list.getEdge("B", "C") != 20
+		&& list.getEdge("C", "D") != 30
+		&& list.getEdge("D", "E") != 40) return false;
+	list.scaleDown(10);
+	if (list.getEdge("A", "B") != 1 && list.getEdge("B", "C") != 2
+		&& list.getEdge("C", "D") != 3
+		&& list.getEdge("D", "E") != 4) return false;
+	list.setEdge("A", "B", 25);
+	if (list.getEdge("A", "B") != 25) return false;
+	if (list.findNodeIndex("E") != 4) return false;
+	if (list.numberOfEdges() != 4) return false;
 	return true;
 }
 
@@ -94,6 +126,27 @@ bool BioListTest() {
 	if (!fequal(list.getWeight("Carbon Dioxide"), 0.2f)) return false;
 	list.setWeight("Sodium Chloride", 1.5f);
 	if (!fequal(list.getWeight("Sodium Chloride"), 1.5f)) return false;
+	return true;
+}
+
+bool BioListOperatorTest() {
+
+	Net<float> aNet;
+	aNet.resize(3);
+	aNet.setRange(10.0f, 10.0f);
+	aNet.setNode(0, "Sodium");
+	aNet.setNode(1, "Carbon Dioxide");
+	aNet.setNode(2, "Sodium Chloride");
+
+	aNet.setEdge(0, 1, 0.5f);
+	aNet.setEdge(1, 2, 1.0f);
+	aNet.setEdge(0, 2, 1.5f);
+
+
+	aNet *= 2.0f;
+
+	if (aNet.getEdge(0, 1) != 1 || aNet.getEdge(1, 2) != 2 || aNet.getEdge(0, 2) != 3)
+		return false;
 	return true;
 }
 
@@ -189,11 +242,11 @@ void UnitTestRegister()
 		e->resize(10);
 		auto const val = e->getEdge(0, 0);
 		if (typeid(decltype(val)) == typeid(int))
-			cout << "Correct Type";
+			cout << "Correct Type" << endl;
 	}
 	catch (exception e)
 	{
-		cout << e.what();
+		cout << e.what() << endl;
 	}
 
 }
