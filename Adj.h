@@ -58,7 +58,11 @@ namespace BioNet {
 		virtual void deleteNode(int) = 0;
 		/// adds a **Node** t the **Network** with the given name
 		virtual void addNode(const string&) = 0;
+		/// copies from another **Network** when both have the same *templated type*
+		/**this should call the expectedly more efficient custom method for the internal implementation of the Network*/
 		virtual void copy(const Adj<T>* rhs) = 0;
+		/// checks if the current *Network** is the same as another (with the same *templated type*)
+		/**this should call the expectedly more efficient custom method for the internal implementation of the Network*/
 		virtual bool isEqual(const Adj<T>*) = 0;
 		virtual void scaleUp(const T) = 0;
 		virtual void scaleDown(const T) = 0;
