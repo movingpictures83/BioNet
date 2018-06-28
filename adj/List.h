@@ -96,6 +96,8 @@ public:
 		head = recursiveDeleteEdge(head, name);
 	}
 	void clear() {
+		if (!head) return;
+
 		if (head->getNext() == NULL)
 		{
 			delete head;

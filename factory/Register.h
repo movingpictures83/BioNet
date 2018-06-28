@@ -10,9 +10,9 @@ namespace BioNet {
 		// name="B"  checkType= address of B::checkType
 		string keyword;
 		/**
-		Constructor that registers function to AdjFactory's mFactoryMap
+		Constructor that registers function with AdjFactory's mFactoryMap
 
-		@param id - unique string identifier for the function being provided for the map.
+		@param name - unique string identifier for the function being provided for the map.
 		@param func - unique function for constructing desired underlying type.
 		*/
 		Register(string name, GenericAdj * (*func)())

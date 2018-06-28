@@ -153,7 +153,10 @@ namespace BioNet {
 			auto node = network[x].front();
 			auto result = 0.0f;
 			while (node)
+			{
 				result += node->getWeight();
+				node = node->getNext();
+			}
 			return result;
 		}
 
