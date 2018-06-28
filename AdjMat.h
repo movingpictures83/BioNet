@@ -134,7 +134,7 @@ template <typename T>
 void AdjMat<T>::setEdge(const int i, const int j, const T w)
 {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
-		throw BioNetException("setEdge() has wrong range");
+		throw Exception("setEdge() has wrong range");
 	matrix[i][j] = w;
 }
 
@@ -157,7 +157,7 @@ void AdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 		}
 	}
 
-	if (i == -1 || j == -1) throw BioNetException("Node not found");
+	if (i == -1 || j == -1) throw Exception("Node not found");
 
 	setEdge(i, j, w);
 }
@@ -166,7 +166,7 @@ void AdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 template <typename T>
 T AdjMat<T>::getEdge(const int i, const int j) const {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
-		throw BioNetException("setEdge() has wrong range");
+		throw Exception("setEdge() has wrong range");
 
 	return matrix[i][j];
 }
@@ -190,7 +190,7 @@ T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 		}
 	}
 
-	if (i == -1 || j == -1) throw BioNetException("Node not found");
+	if (i == -1 || j == -1) throw Exception("Node not found");
 
 	return getEdge(i, j);
 }
@@ -215,7 +215,7 @@ template <typename T>
 void AdjMat<T>::setNode(const int index, const string &name)
 {
 	if (index < 0 || index >= names.size())
-		throw BioNetException("Trying to add name out of range");
+		throw Exception("Trying to add name out of range");
 
 	names[index] = name;
 }
@@ -225,7 +225,7 @@ template <typename T>
 string AdjMat<T>::getNode(const int index) const
 {
 	if (index < 0 || index >= names.size())
-		throw BioNetException("Trying to add name out of range");
+		throw Exception("Trying to add name out of range");
 
 	return names[index];
 }
@@ -247,7 +247,7 @@ void AdjMat<T>::deleteEdge(const int i, const int j)
 {
 	auto size = names.size();
 	if (i < 0 || j < 0 || i >= size || j >= size)
-		throw BioNetException("Trying to delete invaid edge");
+		throw Exception("Trying to delete invaid edge");
 	matrix[i][j] = 0;
 }
 
@@ -265,7 +265,7 @@ void AdjMat<T>::deleteNode(const int nodeIndex)
 {
 	auto size = matrix.size();
 	if (nodeIndex < 0 || nodeIndex >= size)
-		throw BioNetException("Trying to delete invaid Node");
+		throw Exception("Trying to delete invaid Node");
 
 	matrix.erase(matrix.begin() + nodeIndex);
 	for (auto & node : matrix)
@@ -276,7 +276,7 @@ void AdjMat<T>::deleteNode(const int nodeIndex)
 template <typename T>
 void AdjMat<T>::resize(const int size) {
 	if (size <= 0)
-		throw BioNetException("resize value is invalid");
+		throw Exception("resize value is invalid");
 	matrix.resize(size);
 	for (int i = 0; i < matrix.size(); i++) {
 		matrix[i].resize(size);
@@ -294,7 +294,7 @@ int AdjMat<T>::size() const {
 template <typename T>
 T AdjMat<T>::degree(const int index) const {
 	if (index < 0 || index >= matrix.size())
-		throw BioNetException("Index out of bounds!");
+		throw Exception("Index out of bounds!");
 	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
 }
 
