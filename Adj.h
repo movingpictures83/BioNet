@@ -26,21 +26,37 @@ namespace BioNet {
 	public:
 		// BioAdj();
 		//~BioAdj();
+		/// sets an **Edge** given the *indexes* of its neighboring **Nodes**
 		virtual void setEdge(const int, const int, const T) = 0;
+		/// sets an **Edge** given the *names* of its neighboring **Nodes**
 		virtual void setEdge(const string&, const string&, const T) = 0;
+		/// returns an **Edge** given the *indexes* of its neighboring **Nodes**
 		virtual T getEdge(const int, const int) const = 0;
+		/// returns an **Edge** given the *names* of its neighboring **Nodes**
 		virtual T getEdge(const string&, const string&) const = 0;
+		/// sets the name of a **Node**
 		virtual void setNode(const int, const string&) = 0;
+		/// returns the name of a **Node**
 		virtual string getNode(const int) const = 0;
+		/// returns the size of the **Network**
 		virtual int size() const = 0;
+		/// returns the sum of all weights of the **Edges** in the **Network**
 		virtual T degree(const int) const = 0;
+		/// returns the number of **Edges** in the **Network**
 		virtual int numberOfEdges() const = 0;
+		/// resizes the **Network** to a given size
 		virtual void resize(const int) = 0;
+		/// returns the internal index of a **Node** with the given name
 		virtual int findNodeIndex(const string&) const = 0;
+		/// removes an **Edge** given the *names* of its neighboring **Nodes**
 		virtual void deleteEdge(const string&, const string&) = 0;
+		/// removes an **Edge** given the *indexes* of its neighboring **Nodes**
 		virtual void deleteEdge(int, int) = 0;
+		/// removes the **Node** with the given *name*
 		virtual void deleteNode(const string&) = 0;
+		/// removes the **Node** byt its internal *index*
 		virtual void deleteNode(int) = 0;
+		/// adds a **Node** t the **Network** with the given name
 		virtual void addNode(const string&) = 0;
 		virtual void copy(const Adj<T>* rhs) = 0;
 		virtual bool isEqual(const Adj<T>*) = 0;
