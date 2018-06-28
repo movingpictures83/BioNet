@@ -1,15 +1,15 @@
 #include "stdafx.h"
-#include "CSVReader.h"
+#include "CSVHandler.h"
 #include <fstream>
 #include <sstream>
-#include "..\..\BioNetException.h"
+#include "../../exception/Exception.h"
 
 using std::ifstream;
 using std::ios;
 using std::stringstream;
 
 
-vector <string> CSVReader::split(const string &s, char delim) {
+vector <string> CSVHandler::split(const string &s, char delim) {
 	vector<string> result;
 	stringstream ss(s);
 	string item;
