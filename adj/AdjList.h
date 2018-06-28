@@ -80,10 +80,13 @@ namespace BioNet {
 		*/
 		void setEdge(const string& x, const string& y, const T w)
 		{
-			int i = 0;
-			while (network[i].getName() != x)
-				i++;
-			network[i].setWeight(y, w);
+			for (int i = 0; i < network.size(); i++) {
+				if (network[i].getName() == x && network[i].search(y)) {
+					network[i].setWeight(y, w);
+					return;
+				}
+			}
+			network[this->findNodeIndex(x)].insertFront(w, y);
 		}
 
 		/// gets the weight of the edge
@@ -172,7 +175,7 @@ namespace BioNet {
 			for (size_t i = 0; i < network.size(); i++)
 			{
 				auto node = network[i].front();
-				while (node)
+				for(node; node != nullptr; node = node->getNext())
 					result++;
 			}
 			return result;

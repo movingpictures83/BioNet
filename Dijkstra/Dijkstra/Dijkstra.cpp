@@ -28,6 +28,7 @@ bool UndirectedTest();
 void UnitTestRegister();
 bool BioListTest();
 bool BioAdjListTest();
+bool OperatorsTest();
 
 bool fequal(float a, float b) {
 	return fabs(b - a) < FLT_EPSILON;
@@ -41,16 +42,22 @@ int main()
 	BioAdjListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======UNIT TEST======" << endl;
 	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
-
+	cout << "======Operators Test======" << endl;
+	OperatorsTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======SHORTEST PATH UNIT TEST======" << endl;
 
 	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
 	//
 	cout << "======Exception UNIT TEST======" << endl;
 	ExceptionTest();
+	cout << "======Undirected UNIT Test======" << endl;
 	UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
 	return 0;
+}
+
+bool OperatorsTest() {
+	return false;
 }
 
 bool ShortestPathUnitTest()
@@ -68,7 +75,7 @@ bool ShortestPathUnitTest()
 }
 
 bool BioAdjListTest() {
-	AdjList<float> list;
+	AdjList<int> list;
 	if (list.size() != 5) return false;
 	list.setNode(0, "A");
 	list.setNode(1, "B");
@@ -76,6 +83,24 @@ bool BioAdjListTest() {
 	list.setNode(3, "D");
 	list.setNode(4, "E");
 	if (list.degree(0) != 0 && list.degree(1) != 0 && list.degree(2) != 0 && list.degree(3) != 0 && list.degree(4) != 0) return false;
+	list.setEdge("A", "B", 1);
+	list.setEdge("B", "C", 2);
+	list.setEdge("C", "D", 3);
+	list.setEdge("D", "E", 4);
+	auto x = list.getEdge("A", "B");
+	list.scaleUp(10);
+	x = list.getEdge("A", "B");
+	if (list.getEdge("A", "B") != 10 && list.getEdge("B", "C") != 20
+		&& list.getEdge("C", "D") != 30
+		&& list.getEdge("D", "E") != 40) return false;
+	list.scaleDown(10);
+	if (list.getEdge("A", "B") != 1 && list.getEdge("B", "C") != 2
+		&& list.getEdge("C", "D") != 3
+		&& list.getEdge("D", "E") != 4) return false;
+	list.setEdge("A", "B", 25);
+	if (list.getEdge("A", "B") != 25) return false;
+	if (list.findNodeIndex("E") != 4) return false;
+	if (list.numberOfEdges() != 4) return false;
 	return true;
 }
 
