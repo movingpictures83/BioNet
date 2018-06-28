@@ -3,8 +3,8 @@
 #include <unordered_map>
 #include <functional>
 #include <typeinfo>
-#include "Adj.h"
-#include "Exception.h"
+#include "adj/Adj.h"
+#include "exception/Exception.h"
 
 using std::string;
 using std::unordered_map;

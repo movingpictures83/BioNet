@@ -1,12 +1,12 @@
 #pragma once
 #include "Adj.h"
 #include "List.h"
-#include "Exception.h"
+#include "../exception/Exception.h"
 #include <vector>
 #include <string>
 #include <map>
 #include <algorithm>
-#include "Register.h"
+#include "../factory/Register.h"
 using std::vector;
 using std::string;
 using std::map;
