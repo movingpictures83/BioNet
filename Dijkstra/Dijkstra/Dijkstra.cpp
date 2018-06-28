@@ -39,16 +39,16 @@ int main()
 	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======BIOADJLIST TEST======" << endl;
 	BioAdjListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
-	//cout << "======UNIT TEST======" << endl;
-	//UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "======UNIT TEST======" << endl;
+	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
-	//cout << "======SHORTEST PATH UNIT TEST======" << endl;
+	cout << "======SHORTEST PATH UNIT TEST======" << endl;
 
-	//ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
+	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
 	//
-	//cout << "======Exception UNIT TEST======" << endl;
-	//ExceptionTest();
-	//UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "======Exception UNIT TEST======" << endl;
+	ExceptionTest();
+	UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
 	return 0;
 }
@@ -64,7 +64,7 @@ bool ShortestPathUnitTest()
 	net.setEdge(0, 1, -1);
 	net.setEdge(1, 2, 1);
 	net.setEdge(0, 2, 1);
-	return net.shortestPath(0, 2) == 1;
+	return net.shortestPath(0, 1) == -1;
 }
 
 bool BioAdjListTest() {

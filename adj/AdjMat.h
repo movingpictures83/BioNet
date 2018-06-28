@@ -49,7 +49,7 @@ public:
 		names.resize(size);
 		matrix.resize(size);
 		for (auto& n : matrix)
-			n.resize(size);
+			n.resize(size, 0);
 	}
 	~AdjMat() {}
 

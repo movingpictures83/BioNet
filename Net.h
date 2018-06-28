@@ -48,7 +48,7 @@ namespace BioNet {
 		/// Default constructor
 		Net();
 
-		Net(const T, const T, const bool = false, const string& = AdjMat<float>::NetworkType());
+		Net(const T, const T, const bool = false, const string& = AdjMat<T>::NetworkType());
 		Net(const Net<T>&);
 		Net(Net<T>&&);
 		~Net();
@@ -363,12 +363,12 @@ namespace BioNet {
 		if (end < 0 || end > network->size())
 			throw Exception("End node is not in the matrix range");
 
-		float negativeEdges = 0.0;
+		T negativeEdges = 0;
 
 		if (minweight < 0)
 			negativeEdges = minweight * -1 + 1;
 
-		vector<float> dist(network->size(), std::numeric_limits<float>::max());
+		vector<T> dist(network->size(), std::numeric_limits<T>::max());
 
 		vector<int> prev(network->size(), -1);
 
@@ -379,7 +379,7 @@ namespace BioNet {
 		for (int i = 0; i < network->size(); i++)
 			vertexSet.insert(i);
 
-		auto distFunct = bind([](vector<float>& d, int x, int y) {return d[x] < d[y]; }, dist, _1, _2);
+		auto distFunct = bind([](vector<T>& d, int x, int y) {return d[x] < d[y]; }, dist, _1, _2);
 
 		while (vertexSet.size())
 		{
@@ -407,7 +407,7 @@ namespace BioNet {
 			}
 		}
 
-		if (dist[end] == std::numeric_limits<float>::max())
+		if (dist[end] == std::numeric_limits<T>::max())
 			throw Exception("No path found from start to end nodes.");
 
 		auto result = dist[end];
