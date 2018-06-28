@@ -3,10 +3,8 @@
 #include "Writer.h"
 
 namespace BioNet {
-	/**
-	Subclass of read writer that allows for an object to be use with all of the functionality 
-	of both classes
-	*/
+	
+	///Subclass of read writer that allows for an object to be use with all of the functionality of both classes
 	class ReadWriter : public  Reader, public Writer {
 	
 	public:

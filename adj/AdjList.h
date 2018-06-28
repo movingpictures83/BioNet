@@ -378,8 +378,8 @@ namespace BioNet {
 }
 
 template<>
-Register BioNet::AdjList<int>::reg = Register("BioAdjListInt", &AdjList<int>::make); 
+BioNet::Register BioNet::AdjList<int>::reg = Register("BioAdjListInt", &AdjList<int>::make); 
 template<>
-Register BioNet::AdjList<float>::reg = Register("BioAdjListFloat", &AdjList<float>::make); 
+BioNet::Register BioNet::AdjList<float>::reg = Register("BioAdjListFloat", &AdjList<float>::make); 
 template<>
-Register BioNet::AdjList<double>::reg = Register("BioAdjListDouble", &AdjList<double>::make);
+BioNet::Register BioNet::AdjList<double>::reg = Register("BioAdjListDouble", &AdjList<double>::make);

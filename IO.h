@@ -5,9 +5,8 @@
 using std::string;
 
 namespace BioNet {
-	/**
-		Parent class for reader and writer classes allows for shared paths between classes
-	*/
+	///Parent class for reader and writer classes allows for shared paths between classes
+	
 	class IO {
 	protected:
 		///Global path directory used when the directory is not given by the user
