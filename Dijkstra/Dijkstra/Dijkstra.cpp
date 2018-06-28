@@ -3,11 +3,15 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include "../../BioNet.h"
-#include "../../BioList.h"
-#include "../../BioNetException.h"
-#include "../../BioAdjFactory.h";
-#include "../../BioAdjList.h"
+#include "../../Net.h"
+#include "../../adj/AdjList.h"
+#include "../../adj/List.h"
+#include "../../exception/IncorrectFileFormatException.h"
+#include "../../exception/FileNotExistException.h"
+#include "../../exception/DataInvalidFormatException.h"
+#include "../../exception/Exception.h"
+#include "../../factory/AdjFactory.h";
+#include "../../adj/AdjMat.h"
 
 using std::string;
 using std::to_string;
@@ -15,6 +19,7 @@ using std::cout;
 using std::endl;
 using std::fixed;
 using std::for_each;
+using namespace BioNet;
 
 bool ShortestPathUnitTest();
 bool UnitTest();
@@ -51,7 +56,7 @@ int main()
 bool ShortestPathUnitTest()
 {
 	//Test for BioNet shortest path WIP
-	BioNet<int> net; // Default min -1 max 1
+	Net<int> net; // Default min -1 max 1
 	net.resize(3);
 	net.setNode(0, "A");
 	net.setNode(1, "B");
@@ -63,7 +68,7 @@ bool ShortestPathUnitTest()
 }
 
 bool BioAdjListTest() {
-	BioAdjList<float> list;
+	AdjList<float> list;
 	if (list.size() != 5) return false;
 	list.setNode(0, "A");
 	list.setNode(1, "B");
@@ -98,7 +103,7 @@ bool UndirectedTest()
 {
 	try
 	{
-		BioNet<int> net;
+		Net<int> net;
 		net.resize(2);
 		net.setNode(0, "A");
 		net.setNode(1, "B");
@@ -114,7 +119,7 @@ bool UndirectedTest()
 
 bool UnitTest()
 {
-	BioNet<float> TestBio(-1, 1, true);
+	Net<float> TestBio(-1, 1, true);
 	TestBio.resize(5);
 	char posNeg = 1;
 	//Random Values
@@ -150,13 +155,13 @@ bool UnitTest()
 
 void ExceptionTest()
 {
-	BioNet<int> TestBio;
+	Net<int> TestBio;
 	TestBio.resize(5);
 
 	try {
 		TestBio.getEdge(10, 3);
 	}
-	catch (BioNetException & e)
+	catch (Exception & e)
 	{
 		cout << "First Parameter of getEdge() -" << e.what() << endl;
 	}
@@ -164,7 +169,7 @@ void ExceptionTest()
 	try {
 		TestBio.getEdge(3, 10);
 	}
-	catch (BioNetException & e)
+	catch (Exception & e)
 	{
 		cout << "Second Parameter of getEdge() -" << e.what() << endl;
 	}
@@ -172,7 +177,7 @@ void ExceptionTest()
 	try {
 		TestBio.getNode(10);
 	}
-	catch (BioNetException & e)
+	catch (Exception & e)
 	{
 		cout << "Parameter of getNode() -" << e.what() << endl;
 	}
@@ -182,7 +187,7 @@ void ExceptionTest()
 void UnitTestRegister()
 {
 	try {
-		BioAdj<int> * e = BioAdjFactory::create<int>(BioAdjMat<int>::NetworkType());
+		Adj<int> * e = AdjFactory::create<int>(AdjMat<int>::NetworkType());
 		e->resize(10);
 		auto const val = e->getEdge(0, 0);
 		if (typeid(decltype(val)) == typeid(int))

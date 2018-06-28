@@ -147,27 +147,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\BioAdj.h" />
-    <ClInclude Include="..\..\BioAdjFactory.h" />
-    <ClInclude Include="..\..\BioAdjList.h" />
-    <ClInclude Include="..\..\BioAdjMat.h" />
-    <ClInclude Include="..\..\BioList.h" />
-    <ClInclude Include="..\..\BioNet.h" />
-    <ClInclude Include="..\..\BioNetException.h" />
-    <ClInclude Include="..\..\BioNode.h" />
-    <ClInclude Include="..\..\Register.h" />
-    <ClInclude Include="..\..\IO.h" />
-    <ClInclude Include="..\..\Reader.h" />
-    <ClInclude Include="..\..\Writer.h" />
+    <ClInclude Include="..\..\adj\Adj.h" />
+    <ClInclude Include="..\..\adj\AdjList.h" />
+    <ClInclude Include="..\..\adj\AdjMat.h" />
+    <ClInclude Include="..\..\adj\Edge.h" />
+    <ClInclude Include="..\..\adj\GenericAdj.h" />
+    <ClInclude Include="..\..\adj\List.h" />
+    <ClInclude Include="..\..\exception\DataInvalidFormatException.h" />
+    <ClInclude Include="..\..\exception\Exception.h" />
+    <ClInclude Include="..\..\exception\FileNotExistException.h" />
+    <ClInclude Include="..\..\exception\IncorrectFileFormatException.h" />
+    <ClInclude Include="..\..\factory\AdjFactory.h" />
+    <ClInclude Include="..\..\factory\Register.h" />
+    <ClInclude Include="..\..\io\File.h" />
+    <ClInclude Include="..\..\io\IO.h" />
+    <ClInclude Include="..\..\io\Reader.h" />
+    <ClInclude Include="..\..\io\ReadWriter.h" />
+    <ClInclude Include="..\..\io\Writer.h" />
+    <ClInclude Include="..\..\Net.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\BioAdj.cpp" />
-    <ClCompile Include="..\..\BioAdjMat.cpp" />
-    <ClCompile Include="..\..\BioNet.cpp" />
-    <ClCompile Include="..\..\BioNetException.cpp" />
-    <ClCompile Include="..\..\IO.cpp" />
+    <ClCompile Include="..\..\exception\Exception.cpp" />
+    <ClCompile Include="..\..\io\IO.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

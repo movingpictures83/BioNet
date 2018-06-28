@@ -21,40 +21,58 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioNet.h">
+    <ClInclude Include="..\..\io\File.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioNetException.h">
+    <ClInclude Include="..\..\io\IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioAdj.h">
+    <ClInclude Include="..\..\io\Reader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioAdjFactory.h">
+    <ClInclude Include="..\..\io\ReadWriter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioAdjMat.h">
+    <ClInclude Include="..\..\io\Writer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioList.h">
+    <ClInclude Include="..\..\Net.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioNode.h">
+    <ClInclude Include="..\..\adj\Adj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\IO.h">
+    <ClInclude Include="..\..\adj\AdjList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Reader.h">
+    <ClInclude Include="..\..\adj\AdjMat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Writer.h">
+    <ClInclude Include="..\..\adj\Edge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Register.h">
+    <ClInclude Include="..\..\adj\GenericAdj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioAdjList.h">
+    <ClInclude Include="..\..\adj\List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\exception\DataInvalidFormatException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\exception\Exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\exception\FileNotExistException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\exception\IncorrectFileFormatException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\factory\AdjFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\factory\Register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,19 +83,10 @@
     <ClCompile Include="Dijkstra.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BioNet.cpp">
+    <ClCompile Include="..\..\exception\Exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BioNetException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\BioAdj.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\BioAdjMat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\IO.cpp">
+    <ClCompile Include="..\..\io\IO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
