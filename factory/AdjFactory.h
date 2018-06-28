@@ -5,8 +5,6 @@
 #include <typeinfo>
 #include "Adj.h"
 #include "Exception.h"
-//#include "BioAdjMat.h"
-//#include "BioAdjList.h"
 
 using std::string;
 using std::unordered_map;
@@ -15,7 +13,7 @@ using std::function;
 namespace BioNet {
 	namespace AdjFactory {
 
-		///Satic map object for factory that maps a function to string
+		///Static map object for factory that maps a function to string
 		static unordered_map<string, function<GenericAdj*(void)>>mFactoryMap;
 
 		/**
