@@ -3,11 +3,11 @@
 #include <string>
 #include <ostream>
 #include <typeinfo>
-#include "Adj.h"
-#include "Register.h"
+#include "adj/Adj.h"
+#include "factory/Register.h"
 
-#include "Exception.h"
-#include "AdjFactory.h"
+#include "exception/Exception.h"
+#include "factory/AdjFactory.h"
 #include <numeric>
 
 using std::vector;

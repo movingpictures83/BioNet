@@ -1,22 +1,25 @@
 #pragma once
 
 #include "Edge.h"
-
-
 #include <string>
 using std::string;
 
+
+/// A linked list for BioNet
+/**
+List impements linked list to represent the edges of a node. It also holds the name of the node.
+*/
 template<typename T>
-class BioList {
+class List {
 private:
 	string name;
-	BioEdge<T> * head;
-	bool doSearch(string name, BioEdge<T>* start) {
+	Edge<T> * head;
+	bool doSearch(string name, Edge<T>* start) {
 		if (start == NULL) return false;
 		else if (start->getName() == name) return true;
 		else return doSearch(name, start->getNext());
 	}
-	BioEdge<T>* recursiveDeleteEdge(BioEdge<T>* node, const string& name) {
+	Edge<T>* recursiveDeleteEdge(Edge<T>* node, const string& name) {
 		if (node == nullptr)
 			return nullptr;
 
@@ -31,20 +34,20 @@ private:
 		return node;
 	}
 public:
-	BioList() : head(nullptr) {}
-	BioList(const T weight, const string& name) {
+	List() : head(nullptr) {}
+	List(const T weight, const string& name) {
 		this->name = name;
-		head = new BioEdge<T>(weight, name, NULL);	}
-	BioList(const BioList<T>& copy) {
+		head = new Edge<T>(weight, name, NULL);	}
+	List(const List<T>& copy) {
 		for (auto node = copy.head; node != nullptr; node = node->getNext())
 			insertFront(node->getWeight(), node->getName());
 	}
-	BioList(const string& name)
+	List(const string& name)
 	{
 		this->name = name;
 		head = 0;
 	}
-	~BioList() {
+	~List() {
 		clear();
 	}
 	bool search(const string& name) { return doSearch(name, head); }
@@ -84,8 +87,8 @@ public:
 		}
 		return 0;
 	}
-	BioEdge<T>* insertFront(const T weight, const string& name) {
-		BioEdge<T>* newHead = new BioEdge<T>(weight, name, head);
+	Edge<T>* insertFront(const T weight, const string& name) {
+		Edge<T>* newHead = new Edge<T>(weight, name, head);
 		head = newHead;
 		return head;
 	}
@@ -98,30 +101,30 @@ public:
 			delete head;
 			return;
 		}
-		BioEdge<T>* temp = head;
+		Edge<T>* temp = head;
 		head = temp->getNext();
 		delete temp;
 		clear();
 	}
-	BioEdge<T>* front() const { return head; }
-	BioList<T> operator*(const T weight) {
-		BioList list(*this);
+	Edge<T>* front() const { return head; }
+	List<T> operator*(const T weight) {
+		List list(*this);
 		for (auto node = list.head; node != nullptr; node = node->getNext())
 			node->setWeight(node->getWeight() * weight);
 		return list;
 	}
-	const BioList<T>& operator*=(const T weight) {
+	const List<T>& operator*=(const T weight) {
 		for (auto node = head; node != nullptr; node = node->getNext())
 			node->setWeight(node->getWeight() * weight);
 		return *this;
 	}
-	BioList<T> operator/(const T weight) {
-		BioList list(*this);
+	List<T> operator/(const T weight) {
+		List list(*this);
 		for (auto node = list.head; node != nullptr; node = node->getNext())
 			node->setWeight(node->getWeight() / weight);
 		return list;
 	}
-	const BioList<T>& operator/=(const T weight) {
+	const List<T>& operator/=(const T weight) {
 		for (auto node = head; node != nullptr; node = node->getNext())
 			node->setWeight(node->getWeight() / weight);
 		return *this;
