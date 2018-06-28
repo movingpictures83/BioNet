@@ -7,7 +7,7 @@
 #include "Register.h"
 
 #include "Exception.h"
-#include "BioAdjFactory.h"
+#include "AdjFactory.h"
 #include <numeric>
 
 using std::vector;
