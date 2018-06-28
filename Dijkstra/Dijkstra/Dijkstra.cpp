@@ -81,21 +81,14 @@ bool BioAdjListTest() {
 
 
 bool BioListTest() {
-	List<float> list(0.5f, "Sodium");
+	List<float> list("Sodium");
 	if (list.getName() != "Sodium") return false;
-	if (!fequal(list.getWeight("Sodium"),0.5f)) return false;
 	list.insertFront(0.2f, "Carbon Dioxide");;
 	list.insertFront(0.3f, "Sodium Chloride");
-	if (!list.search("Sodium")) return false;
+	if (!list.search("Sodium Chloride")) return false;
 	if (!fequal(list.getWeight("Carbon Dioxide"), 0.2f)) return false;
-	list *= 10;
-	if (!fequal(list.getWeight("Sodium"), 5)) return false;
-	if (!fequal(list.getWeight("Carbon Dioxide"), 2)) return false;
-	list /= 10;
-	if (!fequal(list.getWeight("Sodium"), 0.5f)) return false;
-	if (!fequal(list.getWeight("Carbon Dioxide"), 0.2f)) return false;
-	list.setWeight("Sodium", 1.5f);
-	if (!fequal(list.getWeight("Sodium"), 1.5f)) return false;
+	list.setWeight("Sodium Chloride", 1.5f);
+	if (!fequal(list.getWeight("Sodium Chloride"), 1.5f)) return false;
 	return true;
 }
 

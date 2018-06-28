@@ -373,7 +373,15 @@ namespace BioNet {
 		*/
 		void scaleUp(T weight) {
 			for (int i = 0; i < network.size(); i++)
-				network[i] *= weight;
+			{
+				Edge<T>* node = network[i].front();
+				while (node)
+				{
+					node->setWeight(node->getWeight() * weight);
+					node = node->getNext();
+				}
+
+			}
 		}
 
 		/// scale the network by a factor
@@ -382,7 +390,15 @@ namespace BioNet {
 		*/
 		void scaleDown(T weight) {
 			for (int i = 0; i < network.size(); i++)
-				network[i] /= weight;
+			{
+				Edge<T>* node = network[i].front();
+				while (node)
+				{
+					node->setWeight(node->getWeight() / weight);
+					node = node->getNext();
+				}
+
+			}
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
