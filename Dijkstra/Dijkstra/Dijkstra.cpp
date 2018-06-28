@@ -10,7 +10,7 @@
 #include "FileNotExistException.h"
 #include "DataInvalidFormatException.h"
 #include "Exception.h"
-#include "AdjFactory.h";
+#include "AdjFactory.h"
 #include "AdjMat.h"
 
 using std::string;
@@ -28,6 +28,8 @@ bool UndirectedTest();
 void UnitTestRegister();
 bool BioListTest();
 bool BioAdjListTest();
+bool OperatorTest();
+Net<int> createTestBioNet_BioAdjListInt(int size);
 
 bool fequal(float a, float b) {
 	return fabs(b - a) < FLT_EPSILON;
@@ -38,7 +40,7 @@ int main()
 	cout << "======BIOLIST TEST======" << endl;
 	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======BIOADJLIST TEST======" << endl;
-	BioAdjListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+
 	//cout << "======UNIT TEST======" << endl;
 	//UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
@@ -49,6 +51,9 @@ int main()
 	//cout << "======Exception UNIT TEST======" << endl;
 	//ExceptionTest();
 	//UndirectedTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	
+	cout << "======OPERATOR TEST======" << endl;
+	OperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
 	return 0;
 }
@@ -191,4 +196,47 @@ void UnitTestRegister()
 		cout << e.what();
 	}
 
+}
+
+bool OperatorTest()
+{
+	bool success = true;
+	Net<int> bn = createTestBioNet_BioAdjListInt(5);
+
+	// Operator ()
+	if (bn(2, 3) != 6) success = false;
+
+	// Operator ()
+	if (bn("Node3", "Node4") != 12) success = false;
+
+	// Operator +=
+	bn += "First";
+	if (bn[26] != "First") success = false; //26?
+
+	// Operator +
+
+
+	return success;
+}
+
+Net<int> createTestBioNet_BioAdjListInt(int size)
+{
+	Net<int> bn = Net<int>(0, size*size, true, "BioAdjListInt");
+
+	for (int i = 0; i < size; ++i)
+	{
+		bn.setNode(i, "Node" + std::to_string(i));
+	}
+	for (int i = 1; i < size; ++i)
+	{
+		for (int j = 1; j < size; ++j)
+		{
+			if (i != j)
+			{
+				bn.setEdge(i, j, i*j);
+			}
+		}
+	}
+
+	return bn;
 }
