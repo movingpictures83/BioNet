@@ -75,14 +75,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\..\exception;..\..\io;..\..\factory;..\..\adj;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\;..\..\exception;..\..\io;..\..\factory;..\..\adj;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\..\exception;..\..\io;..\..\factory;..\..\adj;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\;..\..\exception;..\..\io;..\..\factory;..\..\adj;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,9 +149,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Adj.h" />
+    <ClInclude Include="..\..\AdjMat.h" />
     <ClInclude Include="..\..\BioAdjFactory.h" />
-    <ClInclude Include="..\..\BioAdjMat.h" />
-    <ClInclude Include="..\..\BioNetException.h" />
+    <ClInclude Include="..\..\BioEdge.h" />
+    <ClInclude Include="..\..\BioList.h" />
     <ClInclude Include="..\..\File.h" />
     <ClInclude Include="..\..\IO.h" />
     <ClInclude Include="..\..\Knuth\Knuth\Exception.h" />
@@ -165,9 +167,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\BioAdjMat.cpp" />
-    <ClCompile Include="..\..\BioNet.cpp" />
-    <ClCompile Include="..\..\BioNetException.cpp" />
     <ClCompile Include="..\..\IO.cpp" />
     <ClCompile Include="CSVHandler.cpp" />
     <ClCompile Include="stdafx.cpp">
