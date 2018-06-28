@@ -1,10 +1,11 @@
 #pragma once
+
+#include "adj/Adj.h"
+#include "exception/Exception.h"
 #include <string>
 #include <unordered_map>
 #include <functional>
 #include <typeinfo>
-#include "adj/Adj.h"
-#include "exception/Exception.h"
 
 using std::string;
 using std::unordered_map;
@@ -17,8 +18,7 @@ namespace BioNet {
 		static unordered_map<string, function<GenericAdj*(void)>>mFactoryMap;
 
 		/**
-		Constructor Registration function utilized by register member struct initialization
-		by child classes of "GenericAdj".
+		Adds the contructing function to mFactoryMap
 
 		@param id - unique string identifier for the function being provided for the map.
 		@param func - unique function for constructing desired underlying type.
