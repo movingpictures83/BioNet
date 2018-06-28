@@ -40,8 +40,10 @@ namespace BioNet {
 		*/
 		static const string& NetworkType()
 		{
-			static const string network = "BioAdjLst";
-			return network;
+			static const type_info& ti = typeid(AdjList<T>);
+			string keyword = ti.name();
+			AdjFactory::mFactoryMap.find(keyword) == AdjFactory::mFactoryMap.end() ? Register(keyword, &AdjList::make) : reg;
+			return keyword;
 		}
 		/// AdjList Copy constructor
 		AdjList(const AdjList& copy)

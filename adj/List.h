@@ -152,8 +152,8 @@ public:
 	All edges instances are destroyed.
 	*/
 	void clear() {
-		if (!head) return;
-
+		if (!head)
+			return;
 		if (head->getNext() == NULL)
 		{
 			delete head;
