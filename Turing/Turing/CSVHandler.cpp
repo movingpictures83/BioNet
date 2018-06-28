@@ -2,7 +2,7 @@
 #include "CSVHandler.h"
 #include <fstream>
 #include <sstream>
-#include "..\..\BioNetException.h"
+#include "../../exception/Exception.h"
 
 using std::ifstream;
 using std::ios;

@@ -4,4 +4,7 @@
 
 using std::string;
 
-string IO::defaultPath = "C:\\Users\\student\\Desktop\\BioNet\\data\\Basic\\three_triads\\";
+
+namespace BioNet {
+	string BioNet::IO::defaultPath = "C:\\Users\\student\\Desktop\\BioNet\\data\\Basic\\three_triads\\";
+}

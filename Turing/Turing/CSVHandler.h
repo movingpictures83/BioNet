@@ -8,7 +8,7 @@
 #include "../../Writer.h"
 #include <fstream>
 #include <sstream>
-#include "..\..\BioNetException.h"
+#include "..\..\Exception.h"
 
 using std::ifstream;
 using std::ios;
@@ -22,7 +22,7 @@ using std::vector;
 class CSVHandler
 {
 public:
-	
+	///Method to read the files and populates a bionet
 	template <typename T>
 	static void doRead(BioNet<T> &bionet, const string & fname)
 	{

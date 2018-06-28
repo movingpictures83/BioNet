@@ -147,23 +147,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\BioAdj.h" />
     <ClInclude Include="..\..\BioAdjFactory.h" />
     <ClInclude Include="..\..\BioAdjMat.h" />
-    <ClInclude Include="..\..\BioNet.h" />
-    <ClInclude Include="..\..\Exception.h" />
+    <ClInclude Include="..\..\BioNetException.h" />
+    <ClInclude Include="..\..\File.h" />
     <ClInclude Include="..\..\IO.h" />
     <ClInclude Include="..\..\Knuth\Knuth\Exception.h" />
-    <ClInclude Include="CSVReader.h" />
+    <ClInclude Include="..\..\Net.h" />
+    <ClInclude Include="..\..\Reader.h" />
+    <ClInclude Include="..\..\ReadWriter.h" />
+    <ClInclude Include="..\..\Register.h" />
+    <ClInclude Include="..\..\Writer.h" />
+    <ClInclude Include="CSVHandler.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\BioAdjMat.cpp" />
     <ClCompile Include="..\..\BioNet.cpp" />
-    <ClCompile Include="..\..\Exception.cpp" />
+    <ClCompile Include="..\..\BioNetException.cpp" />
     <ClCompile Include="..\..\IO.cpp" />
-    <ClCompile Include="CSVReader.cpp" />
+    <ClCompile Include="CSVHandler.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

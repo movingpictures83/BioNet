@@ -1,7 +1,6 @@
 #pragma once
-#include "BioAdj.h"
-#include "BioList.h"
-#include "BioNetException.h"
+#include "../adj/Adj.h"
+#include "../exception/"
 #include <vector>
 #include <string>
 #include <map>

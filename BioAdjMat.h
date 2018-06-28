@@ -6,7 +6,7 @@
 #include "BioAdj.h"
 #include "Register.h"
 
-#include "BioNetException.h"
+#include "../BioNet/exception/"
 #include "BioAdjFactory.h"
 #include <numeric>
 
