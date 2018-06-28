@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "..\..\BioNet.h"
+#include "..\..\Net.h"
 #include <iostream>
 #include <ios>
 #include <vector>
@@ -8,7 +8,7 @@
 #include "../../Writer.h"
 #include <fstream>
 #include <sstream>
-#include "..\..\BioNetException.h"
+#include "..\..\Exception.h"
 
 using std::ifstream;
 using std::ios;
@@ -18,10 +18,11 @@ using std::cin;
 using std::cout;
 using std::vector;
 
-class CSVReader
+
+class CSVHandler
 {
 public:
-	
+	///Method to read the files and populates a bionet
 	template <typename T>
 	static void doRead(BioNet<T> &bionet, const string & fname)
 	{
