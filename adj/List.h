@@ -35,6 +35,15 @@ private:
 		node->setNext(recursiveDeleteEdge(node->getNext(), name));
 		return node;
 	}
+	/// Recursive helper function to delete the linked list.
+	void recursiveClear(Edge<T>* node)
+	{
+		if (node)
+		{
+			recursiveClear(node->getNext());
+			delete node;
+		}
+	}
 public:
 	/// Default constructor, initializes linked list to null.
 	List() : head(nullptr) {}
@@ -151,18 +160,9 @@ public:
 	/**
 	All edges instances are destroyed.
 	*/
-	void clear() {
-		if (!head)
-			return;
-		if (head->getNext() == NULL)
-		{
-			delete head;
-			return;
-		}
-		Edge<T>* temp = head;
-		head = temp->getNext();
-		delete temp;
-		clear();
+	void clear()
+	{
+		recursiveClear(head);
 	}
 
 	/// Get accessor method for the head of the linked list of edges.
