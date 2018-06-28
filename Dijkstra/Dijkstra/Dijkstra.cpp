@@ -3,7 +3,8 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include "..\..\Net.h"
+
+
 #include "..\..\adj\AdjList.h"
 #include "..\..\adj\List.h"
 #include "..\..\exception\IncorrectFileFormatException.h"
@@ -29,7 +30,8 @@ void UnitTestRegister();
 bool BioListTest();
 bool BioListOperatorTest();
 bool BioAdjListTest();
-bool OperatorsTest();
+bool OperatorTest();
+Net<int> createTestBioNet_BioAdjListInt(int size);
 
 bool fequal(float a, float b) {
 	return fabs(b - a) < FLT_EPSILON;
@@ -40,7 +42,7 @@ int main()
 	cout << "======BIOLIST TEST======" << endl;
 	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======BIOADJLIST TEST======" << endl;
-	BioAdjListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+
 	cout << "======UNIT TEST======" << endl;
 	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======Operators Test======" << endl;
@@ -58,6 +60,9 @@ int main()
 	UnitTestRegister();
 	 
 	cout << "====== BioList Operator Test ======" << endl;
+	
+	cout << "======OPERATOR TEST======" << endl;
+	OperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
 	BioListOperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	return 0;
@@ -244,4 +249,47 @@ void UnitTestRegister()
 		cout << e.what() << endl;
 	}
 
+}
+
+bool OperatorTest()
+{
+	bool success = true;
+	Net<int> bn = createTestBioNet_BioAdjListInt(5);
+
+	// Operator ()
+	if (bn(2, 3) != 6) success = false;
+
+	// Operator ()
+	if (bn("Node3", "Node4") != 12) success = false;
+
+	// Operator +=
+	bn += "First";
+	if (bn[26] != "First") success = false; //26?
+
+	// Operator +
+
+
+	return success;
+}
+
+Net<int> createTestBioNet_BioAdjListInt(int size)
+{
+	Net<int> bn = Net<int>(0, size*size, true, "BioAdjListInt");
+
+	for (int i = 0; i < size; ++i)
+	{
+		bn.setNode(i, "Node" + std::to_string(i));
+	}
+	for (int i = 1; i < size; ++i)
+	{
+		for (int j = 1; j < size; ++j)
+		{
+			if (i != j)
+			{
+				bn.setEdge(i, j, i*j);
+			}
+		}
+	}
+
+	return bn;
 }

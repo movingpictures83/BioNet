@@ -75,9 +75,6 @@ namespace BioNet {
 		const T operator()(size_t lhs, size_t rhs) const { return network->getEdge(lhs, rhs); }
 		const T operator()(const string & lhs, const string & rhs) const { return network->getEdge(lhs, rhs); }
 
-		Net<T> operator+(const string& rhs)const;
-		const Net<T>& operator +=(const string&);
-
 		const Net<T>& operator=(const Net& rhs);
 		const bool operator==(const Net& rhs) const { return this->isEqual(rhs); }
 		const bool operator!=(const Net& rhs) const { return !this->isEqual(rhs); }
@@ -99,14 +96,12 @@ namespace BioNet {
 		
 
 		*/
-		template<class T>
-		const Net<T>& operator +=(const string& rhs)
+		Net<T>* operator+=(const string& rhs)
 		{
 			network->addNode(rhs);
 			return this;
 		}
 
-		template<class T>
 		Net<T> operator+(const string& rhs)const
 		{
 			Net<T> bionet = *this;
