@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "..\..\Net.h"
+#include "../../Net.h"
 #include <iostream>
 #include <ios>
 #include <vector>
@@ -8,15 +8,18 @@
 #include "../../Writer.h"
 #include <fstream>
 #include <sstream>
-#include "..\..\Exception.h"
+#include "..\..\exception\Exception.h"
 
 using std::ifstream;
+using std::ofstream;
 using std::ios;
 using std::stringstream;
 using std::string;
 using std::cin;
 using std::cout;
 using std::vector;
+using BioNet::Net;
+
 
 
 class CSVHandler
@@ -24,12 +27,12 @@ class CSVHandler
 public:
 	///Method to read the files and populates a bionet
 	template <typename T>
-	static void doRead(BioNet<T> &bionet, const string & fname)
+	static void doRead(Net<T> &bionet, const string & fname)
 	{
 		//string filename;
 		ifstream inputFile(fname/*_filename*/, ios::in);
 		if (inputFile.fail())
-			throw BioNetException("Unable to open given file");
+			throw Exception("Unable to open given file");
 
 		string line;
 		vector <string> col_Values;
@@ -55,7 +58,7 @@ public:
 			{
 				string error = "Invalid column width for row " + std::to_string(row_count) + "Expected: " + std::to_string(cols)
 					+ " columns recieved: " + std::to_string(row_perCol);
-				throw BioNetException(error);
+				throw Exception(error);
 			}
 
 			//Moving through every row, and setting the col value.
@@ -68,7 +71,47 @@ public:
 	}
 
 	template <typename T>
-	static void doWrite(BioNet<T> &file, const string & fname) {}
+	static void doWrite(Net<T> &bionet, const string & fname)
+	{
+		ofstream outpuFile(fname, ios:out);
+		if(!bionet)
+			throw Exception("Bionet doesn't contain any data");
+
+		int rows = bionet.size();
+		int row = 0;
+		int col = 0;
+		//looping throgh columns like a matrix
+		while (row < rows)
+		{
+			if (row == 0)
+			{
+				//setting the nodes names
+				for (int col = 0; col < bionet.size(); col++)
+				{
+					if (col == 0)
+						outpuFile << "\"\"";
+					else
+					{
+						outpuFile << "," << bionet.getNode(col - 1);
+					}
+				}
+				
+			}
+			else
+			{ //setting the edges values 
+				for (int col = 0; col < bionet.size(); col++)
+				{
+				if(col == 0)
+					outpuFile << bionet.getNode(col);
+				else				
+					outpuFile << "," << bionet.getEdge(row - 1,col - 1);	
+				}
+				outpuFile << "\n";
+
+			}
+			row++;
+		}	
+	}
 
 	static string getDefaultExt() { return "csv"; }
 //private:

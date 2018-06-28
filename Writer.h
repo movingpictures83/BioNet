@@ -17,7 +17,7 @@ namespace BioNet {
 		Writer(string p = IO::getDefaultPath()) : IO(p) {}
 
 		template <typename R, typename T>
-		void writeFile(BioNet<T>& bn, string& fname, bool useDefault = true)
+		void writeFile(Net<T>& bn, string& fname, bool useDefault = true)
 		{
 			fname = (useDefault ? defaultPath : "") + fname;
 			R::doWrite(bn, fname);

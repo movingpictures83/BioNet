@@ -418,7 +418,7 @@ namespace BioNet {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	template<typename T>
-	const Net<T>& Net<T>::operator=(const BioNet<T>& rhs)
+	const Net<T>& Net<T>::operator=(const Net<T>& rhs)
 	{
 		minweight = rhs->minweight;
 		maxweight = rhs->maxWeight;

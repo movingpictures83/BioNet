@@ -149,9 +149,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\BioAdjFactory.h" />
-    <ClInclude Include="..\..\BioAdjMat.h" />
-    <ClInclude Include="..\..\BioNetException.h" />
+    <ClInclude Include="..\..\Adj.h" />
+    <ClInclude Include="..\..\adj\AdjList.h" />
+    <ClInclude Include="..\..\adj\GenericAdj.h" />
     <ClInclude Include="..\..\File.h" />
     <ClInclude Include="..\..\IO.h" />
     <ClInclude Include="..\..\Knuth\Knuth\Exception.h" />
@@ -165,9 +165,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\BioAdjMat.cpp" />
-    <ClCompile Include="..\..\BioNet.cpp" />
-    <ClCompile Include="..\..\BioNetException.cpp" />
+    <ClCompile Include="..\..\adj\AdjList.cpp" />
     <ClCompile Include="..\..\IO.cpp" />
     <ClCompile Include="CSVHandler.cpp" />
     <ClCompile Include="stdafx.cpp">

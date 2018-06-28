@@ -1,12 +1,12 @@
 #pragma once
-#include "BioAdj.h"
-#include "BioList.h"
+#include "../Adj.h"
+#include "../adj/AdjList.h"
 #include "Exception.h"
 #include <vector>
 #include <string>
 #include <map>
 #include <algorithm>
-#include "Register.h"
+#include "../Register.h"
 using std::vector;
 using std::string;
 using std::map;

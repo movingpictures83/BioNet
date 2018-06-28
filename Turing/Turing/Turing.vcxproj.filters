@@ -21,15 +21,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BioNetException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\BioAdjMat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\BioAdjFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,6 +48,15 @@
     <ClInclude Include="..\..\Register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\adj\AdjList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\adj\GenericAdj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Adj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -65,19 +65,13 @@
     <ClCompile Include="Turing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BioNet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\BioNetException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\BioAdjMat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\IO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CSVHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\adj\AdjList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
