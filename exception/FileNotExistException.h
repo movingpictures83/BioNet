@@ -9,13 +9,13 @@ using namespace BioNet;
 using std::string;
 
 /**
-Declares FileNotExistException constructor that inherits from BioNet::Exception
+Inherits from BioNet::Exception
 
 */
 class FileNotExistException : public Exception {
 public:
 	/**
-	Inherits from BioNet::Exception
+	Declares FileNotExistException constructor that inherits from BioNet::Exception
 	Takes Exception message as parameter
 
 	*/
