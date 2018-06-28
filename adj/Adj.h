@@ -2,7 +2,7 @@
 #include <string>
 #include <exception>
 #include <iostream>
-#include "Adj\GenericAdj.h"
+#include "GenericAdj.h"
 using std::string;
 using std::exception;
 using std::cerr;

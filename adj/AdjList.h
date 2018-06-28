@@ -1,6 +1,6 @@
 #pragma once
 #include "Adj.h"
-#include "BioList.h"
+#include "List.h"
 #include "Exception.h"
 #include <vector>
 #include <string>
@@ -15,7 +15,9 @@ using std::find_if;
 namespace BioNet {
 	/// An Adjacency List for BioNet
 	/**
-		
+		AdjList impements an adjacency list to represent the Bionet network.
+		It consists of a vector of BioList, each element representing a node in the network with
+		its corresponding edges.
 	*/
 	template <typename T>
 	class AdjList : public Adj<T>
@@ -24,24 +26,34 @@ namespace BioNet {
 		vector<BioList<T>> network;
 		static Register reg;
 	public:
+		/// Used for factory Construction
+		/**
+		@return A new, dynamic instance of AdjList
+		*/
 		static GenericAdj* make()
 		{
 			return new AdjList<T>();
 		}
-
+		/// Specifies the type of the network used to register instances in the factory.
+		/**
+		@return Type name of the network.
+		*/
 		static const string& NetworkType()
 		{
 			static const string network = "BioAdjLst";
 			return network;
 		}
-
+		/// AdjList Copy constructor
 		AdjList(const AdjList& copy)
 		{
 			network = vector<BioList<T>>(copy.network.size());
 			for (size_t i = 0; i < copy.network.size(); i++)
 				network[i] = BioList<T>(copy.network[i]);
 		}
-
+		/// AdjList constructor
+		/**
+		@param Initial size of the network
+		*/
 		AdjList(int i = 5) {
 			network.resize(i);
 		}
@@ -375,11 +387,12 @@ namespace BioNet {
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 	};
+
+	template<>
+	BioNet::Register BioNet::AdjList<int>::reg = Register("BioAdjListInt", &AdjList<int>::make);
+	template<>
+	BioNet::Register BioNet::AdjList<float>::reg = Register("BioAdjListFloat", &AdjList<float>::make);
+	template<>
+	BioNet::Register BioNet::AdjList<double>::reg = Register("BioAdjListDouble", &AdjList<double>::make);
 }
 
-template<>
-BioNet::Register BioNet::AdjList<int>::reg = Register("BioAdjListInt", &AdjList<int>::make); 
-template<>
-BioNet::Register BioNet::AdjList<float>::reg = Register("BioAdjListFloat", &AdjList<float>::make); 
-template<>
-BioNet::Register BioNet::AdjList<double>::reg = Register("BioAdjListDouble", &AdjList<double>::make);
