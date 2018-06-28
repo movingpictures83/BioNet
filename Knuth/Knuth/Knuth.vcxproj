@@ -150,6 +150,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\exception\Exception.cpp" />
+    <ClCompile Include="..\..\io\IO.cpp" />
     <ClCompile Include="GMLHandler.cpp" />
     <ClCompile Include="Knuth.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -160,7 +162,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\exception\DataInvalidFormatException.h" />
+    <ClInclude Include="..\..\exception\Exception.h" />
     <ClInclude Include="..\..\exception\FileNotExistException.h" />
+    <ClInclude Include="..\..\exception\IncorrectFileFormatException.h" />
+    <ClInclude Include="..\..\io\File.h" />
+    <ClInclude Include="..\..\io\IO.h" />
     <ClInclude Include="..\..\io\Reader.h" />
     <ClInclude Include="..\..\io\Writer.h" />
     <ClInclude Include="..\..\Net.h" />
