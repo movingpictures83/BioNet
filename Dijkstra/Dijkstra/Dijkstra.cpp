@@ -3,15 +3,15 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-#include "../../Net.h"
-#include "../../adj/AdjList.h"
-#include "../../adj/List.h"
-#include "../../exception/IncorrectFileFormatException.h"
-#include "../../exception/FileNotExistException.h"
-#include "../../exception/DataInvalidFormatException.h"
-#include "../../exception/Exception.h"
-#include "../../factory/AdjFactory.h";
-#include "../../adj/AdjMat.h"
+#include "Net.h"
+#include "AdjList.h"
+#include "List.h"
+#include "IncorrectFileFormatException.h"
+#include "FileNotExistException.h"
+#include "DataInvalidFormatException.h"
+#include "Exception.h"
+#include "AdjFactory.h";
+#include "AdjMat.h"
 
 using std::string;
 using std::to_string;
@@ -157,7 +157,7 @@ void ExceptionTest()
 {
 	Net<int> TestBio;
 	TestBio.resize(5);
-
+	
 	try {
 		TestBio.getEdge(10, 3);
 	}
