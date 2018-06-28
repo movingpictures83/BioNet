@@ -5,7 +5,7 @@
 #include <typeinfo>
 #include "BioAdj.h"
 #include "BioAdjMat.h"
-#include "BioNetException.h"
+#include "Exception.h"
 //#include "BioAdjList.h"
 
 using std::string;
