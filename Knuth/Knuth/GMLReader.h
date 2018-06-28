@@ -3,10 +3,10 @@
 
 #include <string>
 #include <fstream>
-#include "../../BioNet.h"
-#include "../../Reader.h"
-#include "../../Writer.h"
-#include "../../File.h"
+#include "Net.h"
+#include "Reader.h"
+#include "Writer.h"
+#include "File.h"
 #include <vector>
 using std::string;
 using std::ifstream;
