@@ -42,8 +42,8 @@ namespace BioNet {
 		virtual void deleteNode(const string&) = 0;
 		virtual void deleteNode(int) = 0;
 		virtual void addNode(const string&) = 0;
-		virtual void copy(const BioAdj<T>* rhs) = 0;
-		virtual bool isEqual(const BioAdj<T>*) = 0;
+		virtual void copy(const Adj<T>* rhs) = 0;
+		virtual bool isEqual(const Adj<T>*) = 0;
 		virtual void scaleUp(const T) = 0;
 		virtual void scaleDown(const T) = 0;
 

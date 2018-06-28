@@ -3,7 +3,7 @@
 #include <string>
 #include <ostream>
 #include <typeinfo>
-#include "BioAdj.h"
+#include "Adj.h"
 #include "Register.h"
 
 #include "Exception.h"
