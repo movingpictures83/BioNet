@@ -18,7 +18,7 @@ namespace BioNet {
 		
 	*/
 	template <typename T>
-	class AdjList : public BioAdj<T>
+	class AdjList : public Adj<T>
 	{
 	public:
 		vector<BioList<T>> network;
@@ -248,7 +248,7 @@ namespace BioNet {
 		/**
 			@param rhs the Adj to copy
 		*/
-		void copy(const BioAdj<T>* rhs) {
+		void copy(const Adj<T>* rhs) {
 			auto _rhs = static_cast<const AdjList<T>*>(rhs);
 			network = vector<BioList<T>>(_rhs->network.size());
 			for (size_t i = 0; i < _rhs->network.size(); i++)
@@ -268,7 +268,7 @@ namespace BioNet {
 		/**
 			@param adj the network to compare
 		*/
-		bool isEqual(const BioAdj<T>* adj)
+		bool isEqual(const Adj<T>* adj)
 		{
 			return true;
 		}
