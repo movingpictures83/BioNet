@@ -1,5 +1,5 @@
 #pragma once
-#include "BioAdj.h"
+#include "Adj.h"
 #include "BioList.h"
 #include "Exception.h"
 #include <vector>
