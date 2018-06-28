@@ -14,16 +14,24 @@ using std::function;
 
 namespace BioNet {
 	namespace AdjFactory {
+
+		///Satic map object for factory that maps a function to string
 		static unordered_map<string, function<GenericAdj*(void)>>mFactoryMap;
 
-		static void RegisterType(const string & id, function<GenericAdj*(void)> func)
-		{
-		//	if(mFactoryMap.find(id) != mFactoryMap.end())
-				mFactoryMap[id] = func;
-		/*	else
-				throw BioNetException("Error Creating network of type " + id + ".\n");*/
-		}
+		/**
+		Constructor Registration function utilized by register member struct initialization
+		by child classes of "GenericAdj".
 
+		@param id - unique string identifier for the function being provided for the map.
+		@param func - unique function for constructing desired underlying type.
+		*/
+		static void RegisterType(const string & id, function<GenericAdj*(void)> func)	{	mFactoryMap[id] = func;	}
+
+		/**
+		Factory function utilized to create Adj network objects based on user's input and template type
+
+		@param type - generic/defined keyword provided for search of function map to retrieve the desired constructor.
+		*/
 		template<typename T>
 		static Adj<T>* create(const string& type) {
 			auto keyPair = mFactoryMap.find(type);
