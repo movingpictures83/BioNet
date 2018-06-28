@@ -153,10 +153,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Adj.h" />
+    <ClInclude Include="..\..\AdjFactory.h" />
     <ClInclude Include="..\..\AdjMat.h" />
     <ClInclude Include="..\..\adj\AdjList.h" />
     <ClInclude Include="..\..\adj\GenericAdj.h" />
-    <ClInclude Include="..\..\BioAdjFactory.h" />
     <ClInclude Include="..\..\BioEdge.h" />
     <ClInclude Include="..\..\BioList.h" />
     <ClInclude Include="..\..\exception\DataInvalidFormatException.h" />
