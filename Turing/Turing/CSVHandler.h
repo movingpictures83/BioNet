@@ -1,14 +1,14 @@
 #pragma once
 #include <string>
-#include "../../Net.h"
+#include "Net.h"
 #include <iostream>
 #include <ios>
 #include <vector>
-#include "../../Reader.h"
-#include "../../Writer.h"
+#include "Reader.h"
+#include "Writer.h"
 #include <fstream>
 #include <sstream>
-#include "..\..\exception\Exception.h"
+#include "Exception.h"
 
 using std::ifstream;
 using std::ofstream;
@@ -19,6 +19,7 @@ using std::cin;
 using std::cout;
 using std::vector;
 using BioNet::Net;
+using BioNet::Exception;
 
 
 
@@ -33,7 +34,6 @@ public:
 		ifstream inputFile(fname/*_filename*/, ios::in);
 		if (inputFile.fail())
 			throw Exception("Unable to open given file");
-
 		string line;
 		vector <string> col_Values;
 		getline(inputFile, line);
@@ -73,7 +73,7 @@ public:
 	template <typename T>
 	static void doWrite(Net<T> &bionet, const string & fname)
 	{
-		ofstream outpuFile(fname, ios:out);
+		ofstream outpuFile(fname, ios::out);
 		if(!bionet)
 			throw Exception("Bionet doesn't contain any data");
 

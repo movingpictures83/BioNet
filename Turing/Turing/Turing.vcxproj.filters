@@ -71,7 +71,7 @@
     <ClCompile Include="CSVHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\adj\AdjList.cpp">
+    <ClCompile Include="..\..\exception\Exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

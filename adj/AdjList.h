@@ -195,7 +195,7 @@ namespace BioNet {
 			for (int i = 0; i < network.size(); i++)
 				if (network[i].getName() == name)
 					return i;
-			throw BioNetException("Node not found.");
+			throw Exception("Node not found.");
 		}
 
 		/// delete an edge in the network
