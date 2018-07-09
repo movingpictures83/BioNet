@@ -42,7 +42,7 @@ public:
 
 		// check if path
 		string filename = "";
-		size_t found = fname.find("/") + fname.find("\\");
+		//size_t found = fname.find("/") + fname.find("\\");
 
 		filename += fname;
 		ifstream infile;
