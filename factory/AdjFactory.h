@@ -1,7 +1,7 @@
 #pragma once
 
-#include "adj/Adj.h"
-#include "exception/Exception.h"
+#include "Adj.h"
+#include "Exception.h"
 #include <string>
 #include <unordered_map>
 #include <functional>
