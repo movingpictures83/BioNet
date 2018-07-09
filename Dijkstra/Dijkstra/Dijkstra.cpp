@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
-
+#include "..\..\Net.h"
 
 #include "..\..\adj\AdjList.h"
 #include "..\..\adj\List.h"
@@ -21,6 +21,7 @@ using std::endl;
 using std::fixed;
 using std::for_each;
 using namespace BioNet;
+using BioNet::Net;
 
 bool ShortestPathUnitTest();
 bool UnitTest();
@@ -31,6 +32,7 @@ bool BioListTest();
 bool BioListOperatorTest();
 bool BioAdjListTest();
 bool OperatorTest();
+bool OperatorsTest();
 Net<int> createTestBioNet_BioAdjListInt(int size);
 
 bool fequal(float a, float b) {

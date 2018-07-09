@@ -21,12 +21,12 @@ using std::endl;
 using std::vector;
 
 struct GMLNode {
-	int id;
+	unsigned int id;
 	string label;
 };
 struct GMLEdge {
-	int source;
-	int target;
+	unsigned int source;
+	unsigned int target;
 	double weight;
 };
 
@@ -42,7 +42,7 @@ public:
 
 		// check if path
 		string filename = "";
-		size_t found = fname.find("/") + fname.find("\\");
+		//size_t found = fname.find("/") + fname.find("\\");
 
 		filename += fname;
 		ifstream infile;

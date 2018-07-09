@@ -37,6 +37,10 @@ public:
 		string line;
 		vector <string> col_Values;
 		getline(inputFile, line);
+		// calculate the number of commas
+		// of the first line (header)
+		// then for this number generate the format string for scanf 
+		// and replace the split line by line for a scanf
 		col_Values = split(line, ',');
 		auto cols = col_Values.size();
 		bionet.resize((int)cols - 1);
