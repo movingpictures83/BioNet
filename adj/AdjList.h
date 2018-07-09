@@ -159,7 +159,7 @@ namespace BioNet {
 			auto result = 0.0f;
 			while (node)
 			{
-				result += node->getWeight();
+				result += (float) node->getWeight();
 				node = node->getNext();
 			}
 			return result;
