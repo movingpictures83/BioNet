@@ -39,18 +39,12 @@ private:
 public:
 	GMLHandler() { extension = "gml"; }
 	template <typename T>
-	static void doRead(Net<T>& b, const string& fname){
-
-		// check if path
-		string filename = "";
-		//size_t found = fname.find("/") + fname.find("\\");
-
-		filename += fname;
+	static void doRead(Net<T>& b, const string& fname){	
 		ifstream infile;
 		vector<GMLNode> nodes;
 		nodes.reserve(20);
 		try {
-			infile.open(filename);
+			infile.open(fname);
 		}
 		catch (FileNotExistException ex) {
 
