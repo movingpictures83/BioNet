@@ -100,7 +100,6 @@ public:
 						outpuFile << "," << bionet.getNode(col - 1);
 					}
 				}
-				
 			}
 			else
 			{ //setting the edges values 
@@ -123,5 +122,6 @@ public:
 	//string _filename;
 private :
 	static vector<string> split(const string &s, char delim);
+	char * split2(const string &s, char delim, int sizeB);
 };
 
