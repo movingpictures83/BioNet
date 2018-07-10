@@ -12,8 +12,6 @@ namespace BioNet {
 		///Global path directory used when the directory is not given by the user
 		static string defaultPath;
 	public:
-		IO(string path = "C:\\Users\\student\\Desktop\\BioNet\\data\\Basic\\three_triads\\") { setDefaultPath(path); }
-
 		/**
 			@returns the gobal default path used by all subclasses
 		*/

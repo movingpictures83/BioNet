@@ -15,7 +15,7 @@ namespace BioNet {
 	class Writer : public IO {
 
 	public:
-		Writer(string p = IO::getDefaultPath()) : IO(p) {}
+		Writer(string p = IO::getDefaultPath()){}
 
 		/**
 		Takes a populated network and writes it to the given file
