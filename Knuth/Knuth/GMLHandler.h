@@ -24,10 +24,11 @@ struct GMLNode {
 	unsigned int id;
 	string label;
 };
+template <typename T>
 struct GMLEdge {
 	unsigned int source;
 	unsigned int target;
-	double weight;
+	T weight;
 };
 
 
@@ -58,7 +59,7 @@ public:
 		}
 
 		GMLNode node;
-		GMLEdge edge;
+		GMLEdge<T> edge;
 
 		try {
 			string temp;
