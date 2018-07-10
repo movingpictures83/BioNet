@@ -18,3 +18,8 @@ vector <string> CSVHandler::split(const string &s, char delim) {
 	return result;
 }
 
+
+char * CSVHandler::split2(const string &s, char delim, int size)
+{
+	return NULL;
+}
