@@ -35,7 +35,8 @@ public:
 		if (inputFile.fail())
 			throw Exception("Unable to open given file");
 		string line;
-		vector <string> col_Values;
+		//vector <string> col_Values;
+		vector<string> col_Values;
 		getline(inputFile, line);
 		// calculate the number of commas
 		// of the first line (header)
