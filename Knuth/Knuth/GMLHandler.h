@@ -24,10 +24,11 @@ struct GMLNode {
 	unsigned int id;
 	string label;
 };
+template <typename T>
 struct GMLEdge {
 	unsigned int source;
 	unsigned int target;
-	double weight;
+	T weight;
 };
 
 
@@ -38,18 +39,12 @@ private:
 public:
 	GMLHandler() { extension = "gml"; }
 	template <typename T>
-	static void doRead(Net<T>& b, const string& fname){
-
-		// check if path
-		string filename = "";
-		//size_t found = fname.find("/") + fname.find("\\");
-
-		filename += fname;
+	static void doRead(Net<T>& b, const string& fname){	
 		ifstream infile;
 		vector<GMLNode> nodes;
 		nodes.reserve(20);
 		try {
-			infile.open(filename);
+			infile.open(fname);
 		}
 		catch (FileNotExistException ex) {
 
@@ -58,7 +53,7 @@ public:
 		}
 
 		GMLNode node;
-		GMLEdge edge;
+		GMLEdge<T> edge;
 
 		try {
 			string temp;
@@ -101,27 +96,13 @@ public:
 					try
 					{
 						edge.source = stoi(temp);
-					}
-					catch (DataInvalidFormatException ex)
-					{
-						cout << ex.what() << endl;
-						exit(1);
-					}
-					infile >> temp >> temp;
 
-					try
-					{
+						infile >> temp >> temp;
+
 						edge.target = stoi(temp);
-					}
-					catch (DataInvalidFormatException ex)
-					{
-						cout << ex.what() << endl;
-						exit(1);
-					}
-					infile >> temp >> temp;
 
-					try
-					{
+						infile >> temp >> temp;
+
 						edge.weight = stof(temp);
 					}
 					catch (DataInvalidFormatException ex)
