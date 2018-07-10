@@ -85,6 +85,7 @@ public:
 
 			for (size_t i = 0; i < nodes.size(); i++)
 			{
+				b.resize(nodes.size());
 				b.setNode(nodes[i].id, nodes[i].label);
 			}
 
