@@ -96,27 +96,13 @@ public:
 					try
 					{
 						edge.source = stoi(temp);
-					}
-					catch (DataInvalidFormatException ex)
-					{
-						cout << ex.what() << endl;
-						exit(1);
-					}
-					infile >> temp >> temp;
 
-					try
-					{
+						infile >> temp >> temp;
+
 						edge.target = stoi(temp);
-					}
-					catch (DataInvalidFormatException ex)
-					{
-						cout << ex.what() << endl;
-						exit(1);
-					}
-					infile >> temp >> temp;
 
-					try
-					{
+						infile >> temp >> temp;
+
 						edge.weight = stof(temp);
 					}
 					catch (DataInvalidFormatException ex)
