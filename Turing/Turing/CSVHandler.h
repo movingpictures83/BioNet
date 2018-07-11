@@ -19,6 +19,7 @@ using std::string;
 using std::cin;
 using std::cout;
 using std::vector;
+using std::stod;
 using BioNet::Net;
 using BioNet::Exception;
 using BioNet::FileHandler;
@@ -53,28 +54,24 @@ public:
 		}
 		vector <string> row_line;
 		int row_count = 0;
+		char * rowVal = 0;
 		while (!inputFile.eof())
 		{
 			getline(inputFile, line);
 			if (line == "")
 				continue;
-			col_Values = split(line, ',');
-			auto row_perCol = col_Values.size();
-			//Verify each row has the same column numbers
-			if (row_perCol != cols)
-			{
-				string error = "Invalid column width for row " + std::to_string(row_count) + "Expected: " + std::to_string(cols)
-					+ " columns recieved: " + std::to_string(row_perCol);
-				throw Exception(error);
-			}
+			rowVal = split2(line, ',', cols - 1);
 
 			//Moving through every row, and setting the col value.
 			for (int i = 1; i < cols; i++)
 			{
-				bionet.setEdge(row_count, i - 1, (T)stod(col_Values[i]));
+				bionet.setEdge(row_count, i - 1, (T)stod(&rowVal[i]));
 			}
 			row_count++;
 		}
+
+		free(rowVal);
+
 	}
 
 	template <typename T>
@@ -123,6 +120,6 @@ public:
 	//string _filename;
 private :
 	static vector<string> split(const string &s, char delim);
-	char * split2(const string &s, char delim, int sizeB);
+	static char * split2(const string &s, char delim, int sizeB);
 };
 
