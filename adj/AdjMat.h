@@ -52,7 +52,7 @@ public:
 	}
 	~AdjMat() {}
 	///Sets edge given two node indexes and numeric weight.
-	void setEdge(const int, const int, const T);
+	void setEdge(const int, const int, const T); 
 	///Sets edge given two node names and numeric weight.
 	void setEdge(const string&, const string&, const T);
 	///Get the weight of the edge given two numeric indexes.
@@ -95,29 +95,30 @@ public:
 	///Copies rhs into itself.
 	void copy(const Adj<T> * rhs) {
 		names.resize(rhs->size());
-		for (int i = 0; i < names.size(); i++) {
+		for (unsigned i = 0; i < names.size(); i++) {
 			names[i] = rhs->getNode(i);
 		}
 		matrix.resize(rhs->size());
-		for (int i = 0; i < rhs->size(); i++) {
-			for (int j = 0; j < rhs->size(); j++) {
+		for (unsigned i = 0; i < rhs->size(); i++) {
+			for (unsigned j = 0; j < rhs->size(); j++) {
 				matrix[i][j] = (T)rhs->getEdge(i, j);
 			}
 		}
 	}
 	///Add node with no edges given a name
 	void addNode (const string& aNode) {
-		int sz = size();
+		unsigned sz = size();
 		resize( sz + 1);
 		setNode( sz, aNode);
 	}
 	///Checks if rhs is equal 
 	bool isEqual (const Adj<T>* rhs) {
 		auto _rhs = static_cast<const AdjMat<T> *>(rhs);
-		for (int i = 0; i < names.size(); i++) {
+		unsigned size = names.size();
+		for (unsigned i = 0; i < size; i++) {
 			if (names[i].compare(_rhs->names[i]))
 				return false;
-			for (int j = 0; j < names.size(); j++)
+			for (unsigned j = 0; j < size; j++)
 				if (!((matrix[i][j] - _rhs->matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - _rhs->matrix[i][j]) < FLT_EPSILON))
 					return false;
 		}
@@ -125,14 +126,16 @@ public:
 	}
 	///Scales up the weights by a given factor
 	void scaleUp(const T factor) {
-		for (int i = 0; i < names.size(); i++)
-			for (int j = 0; j < names.size(); j++)
+		unsigned size = names.size();
+		for (unsigned i = 0; i < size; i++)
+			for (unsigned j = 0; j < size; j++)
 				matrix[i][j] *= factor;
 	}
 	///Scales down the weights by a given factor
 	void scaleDown(const T factor) {
-		for (int i = 0; i < names.size(); i++)
-			for (int j = 0; j < names.size(); j++)
+		unsigned size = names.size();
+		for (unsigned i = 0; i < size; i++)
+			for (unsigned j = 0; j < size; j++)
 				matrix[i][j] *= factor;
 	}
 };
@@ -164,7 +167,7 @@ void AdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 	int j = -1;
 
 	// loop through to find indeces
-	for (int x = 0; x < names.size(); x++) {
+	for (unsigned x = 0; x < names.size(); x++) {
 		if (!n1.compare(names[x]))
 		{
 			i = x;
@@ -197,7 +200,7 @@ T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 	int j = -1;
 
 	// loop through to find indeces
-	for (int x = 0; x < names.size(); x++) {
+	for (unsigned x = 0; x < names.size(); x++) {
 		if (!n1.compare(names[x]))
 		{
 			i = x;
@@ -217,10 +220,10 @@ T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 template <typename T>
 int AdjMat<T>::findNodeIndex(const string & lookup) const
 {
-	int index = 0;
-	for (auto node : names)
+	unsigned index = 0;
+	for (unsigned i = 0; i < names.size(); i++)
 	{
-		if (lookup.compare(node))
+		if (lookup.compare(names[i]))
 			return index;
 
 		index++;
@@ -263,7 +266,7 @@ void AdjMat<T>::deleteEdge(const string & istr, const string & jstr)
 template <typename T>
 void AdjMat<T>::deleteEdge(const int i, const int j)
 {
-	auto size = names.size();
+	unsigned size = names.size();
 	if (i < 0 || j < 0 || i >= size || j >= size)
 		throw Exception("Trying to delete invaid edge");
 	matrix[i][j] = 0;
@@ -273,7 +276,7 @@ void AdjMat<T>::deleteEdge(const int i, const int j)
 template <typename T>
 void AdjMat<T>::deleteNode(const string & nodeName)
 {
-	auto node = findNodeIndex(nodeName);
+	int node = findNodeIndex(nodeName);
 	deleteNode(node);
 }
 
@@ -281,7 +284,7 @@ void AdjMat<T>::deleteNode(const string & nodeName)
 template <typename T>
 void AdjMat<T>::deleteNode(const int nodeIndex)
 {
-	auto size = matrix.size();
+	unsigned size = matrix.size();
 	if (nodeIndex < 0 || nodeIndex >= size)
 		throw Exception("Trying to delete invaid Node");
 
@@ -296,7 +299,7 @@ void AdjMat<T>::resize(const int size) {
 	if (size <= 0)
 		throw Exception("resize value is invalid");
 	matrix.resize(size);
-	for (int i = 0; i < matrix.size(); i++) {
+	for (unsigned i = 0; i < matrix.size(); i++) {
 		matrix[i].resize(size);
 	}
 	names.resize(size);
@@ -318,10 +321,10 @@ T AdjMat<T>::degree(const int index) const {
 
 template <typename T>
 int AdjMat<T>::numberOfEdges() const {
-	int edges = 0;
+	unsigned edges = 0;
 
-	for (int i = 0; i < matrix.size(); i++)
-		for (int j = 0; j < matrix[i].size(); j++)
+	for (unsigned i = 0; i < matrix.size(); i++)
+		for (unsigned j = 0; j < matrix[i].size(); j++)
 		{
 			if (matrix[i][j] < -FLT_EPSILON || matrix[i][j] > FLT_EPSILON)
 				edges++;
