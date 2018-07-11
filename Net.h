@@ -54,10 +54,10 @@ namespace BioNet {
 		~Net();
 
 		void setRange(const T, const T);
-		void setEdge(const int, const int, const T);
+		void setEdge(const unsigned int i, const unsigned int j, const T);
 		void SetEdge(const string& n1, const string &n2, const T weight);
-		void setNode(const int, const string &n);
-		void deleteEdge(const int, const int);
+		void setNode(const unsigned int, const string &n);
+		void deleteEdge(const unsigned int, const unsigned int);
 		void deleteEdge(const string &l, const string &r);
 
 		const T shortestPath(const int, const int) const;
@@ -129,7 +129,7 @@ namespace BioNet {
 		const T degree(const int) const;
 		//void reserve(size_t);
 		const size_t size() const;
-		const int numberOfEdges() const;
+		const unsigned int numberOfEdges() const;
 
 		//
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,7 +221,7 @@ namespace BioNet {
 	@param w weight, should be between mininum Weight and maximum Weight allowed
 	*/
 	template<typename T>
-	void Net<T>::setEdge(const int i, const int j, const T w) {
+	void Net<T>::setEdge(const unsigned int i, const unsigned int j, const T w) {
 		//Converting to a Network Class
 		if (i < 0 || i > network->size())
 			throw Exception("Node is not in the matrix range");
@@ -261,7 +261,7 @@ namespace BioNet {
 	@param n name of the node
 	*/
 	template<typename T>
-	void Net<T>::setNode(const int i, const string& n) {
+	void Net<T>::setNode(const unsigned int i, const string& n) {
 		/// Converting to a Network Class
 		if (i < 0 || i > network->size())
 			throw Exception("Node is not in the matrix range");
@@ -423,8 +423,8 @@ namespace BioNet {
 		if (dist[end] == std::numeric_limits<T>::max())
 			throw Exception("No path found from start to end nodes.");
 
-		auto result = dist[end];
-		auto current = end;
+		T result = dist[end];
+		int current = end;
 		if (negativeEdges)
 			while (prev[current] != -1)
 			{
@@ -435,7 +435,7 @@ namespace BioNet {
 	}
 
 	template<typename T>
-	const int Net<T>::numberOfEdges() const {
+	const unsigned int Net<T>::numberOfEdges() const {
 		int x = network->numberOfEdges();
 		if (!directed)
 			x = x / 2;
@@ -443,7 +443,7 @@ namespace BioNet {
 	}
 
 	template<typename T>
-	void Net<T>::deleteEdge(const int lval, const int rval) {
+	void Net<T>::deleteEdge(const unsigned int lval, const unsigned int rval) {
 		// not implemented
 		//network->deleteEdge(lval, rval);
 	}

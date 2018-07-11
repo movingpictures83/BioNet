@@ -121,7 +121,7 @@ namespace BioNet {
 		*/
 		void setNode(const int i, const string& s)
 		{
-			auto oldName = network[i].getName();
+			string oldName = (string)network[i].getName();
 			network[i].setName(s);
 			for (int z = 0; z < network.size(); z++) {
 				if (z != i)
@@ -155,8 +155,8 @@ namespace BioNet {
 		*/
 		T degree(const int x) const
 		{
-			auto node = network[x].front();
-			auto result = 0.0f;
+			Edge<T> node = network[x].front();
+			float result = 0.0f;
 			while (node)
 			{
 				result += (float) node->getWeight();
@@ -171,10 +171,10 @@ namespace BioNet {
 		*/
 		int numberOfEdges() const
 		{
-			auto result = 0;
+			unsigned int result = 0;
 			for (size_t i = 0; i < network.size(); i++)
 			{
-				auto node = network[i].front();
+				Edge<T> node = network[i].front();
 				for(node; node != nullptr; node = node->getNext())
 					result++;
 			}
@@ -187,15 +187,15 @@ namespace BioNet {
 		*/
 		void resize(const int newSize)
 		{
-			auto sizeDifference = newSize - network.size();
+			unsigned int networkSize = network.size();
+			int sizeDifference = newSize - networkSize;
 
 			if (sizeDifference < 0) //Last sizeDifference nodes will be destroyed, so the other nodes that have edges to them must be cleaned.
 			{
 				sizeDifference *= -1;
-				auto networkSize = network.size();
 				for (size_t i = networkSize - sizeDifference; i < networkSize; i++)
 				{
-					auto name = network[i].getName();
+					string name = network[i].getName();
 					for (size_t j = 0; j < networkSize - sizeDifference; j++)
 						network[j].deleteEdge(name);
 				}
@@ -244,7 +244,7 @@ namespace BioNet {
 		*/
 		void deleteNode(const string & name)
 		{
-			auto index = findNodeIndex(name);
+			int index = findNodeIndex(name);
 			for (size_t i = 0; i < network.size(); i++)
 				if (i != index)
 					network[i].deleteEdge(name);
@@ -257,7 +257,7 @@ namespace BioNet {
 		*/
 		void deleteNode(int index)
 		{
-			auto name = network[index].getName();
+			string name = network[index].getName();
 			for (size_t i = 0; i < network.size(); i++)
 				if (i != index)
 					network[i].deleteEdge(name);
@@ -269,20 +269,11 @@ namespace BioNet {
 			@param rhs the Adj to copy
 		*/
 		void copy(const Adj<T>* rhs) {
-			auto _rhs = static_cast<const AdjList<T>*>(rhs);
+			AdjList<T>* _rhs = static_cast<const AdjList<T>*>(rhs);
 			network = vector<List<T>>(_rhs->network.size());
 			for (size_t i = 0; i < _rhs->network.size(); i++)
 				network[i] = List<T>(_rhs->network[i]);
 		}
-		//void addNode(const string& str)
-		//{}
-
-		/// scale the weights of the network
-		/**
-			@param scale the factor to scale the weights
-		*/
-		void scaleWeights(const T& scale)
-		{}
 
 		/// check if two networks are equal
 		/**
