@@ -51,7 +51,7 @@ namespace BioNet
 		/// Copy constructor
 		List(const List<T>& copy) {
 			this->name = copy.name;
-			this->head = copy.head;
+			this->head = nullptr;
 
 			for (auto node = copy.head; node != nullptr; node = node->getNext())
 				insertFront(node->getWeight(), node->getName());
