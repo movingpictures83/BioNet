@@ -48,12 +48,12 @@ public:
 		col_Values = split(line, ',');
 		auto cols = col_Values.size();
 		bionet.resize((int)cols - 1);
-		for (int col = 1; col < cols; col++)
+		for (unsigned int col = 1; col < cols; col++)
 		{
 			bionet.setNode(col - 1, col_Values[col]);
 		}
 		vector <string> row_line;
-		int row_count = 0;
+		unsigned int row_count = 0;
 		char * rowVal = 0;
 		while (!inputFile.eof())
 		{
@@ -63,7 +63,7 @@ public:
 			rowVal = split2(line, ',', cols - 1);
 
 			//Moving through every row, and setting the col value.
-			for (int i = 1; i < cols; i++)
+			for (unsigned int i = 1; i < cols; i++)
 			{
 				bionet.setEdge(row_count, i - 1, (T)stod(&rowVal[i]));
 			}
@@ -81,16 +81,16 @@ public:
 		if(!bionet)
 			throw Exception("Bionet doesn't contain any data");
 
-		int rows = bionet.size();
-		int row = 0;
-		int col = 0;
+		unsigned int rows = bionet.size();
+		unsigned int row = 0;
+		unsigned int col = 0;
 		//looping throgh columns like a matrix
 		while (row < rows)
 		{
 			if (row == 0)
 			{
 				//setting the nodes names
-				for (int col = 0; col < bionet.size(); col++)
+				for (unsigned int col = 0; col < bionet.size(); col++)
 				{
 					if (col == 0)
 						outpuFile << "\"\"";
@@ -102,7 +102,7 @@ public:
 			}
 			else
 			{ //setting the edges values 
-				for (int col = 0; col < bionet.size(); col++)
+				for (unsigned int col = 0; col < bionet.size(); col++)
 				{
 				if(col == 0)
 					outpuFile << bionet.getNode(col);
