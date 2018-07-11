@@ -45,6 +45,8 @@ public:
 		nodes.reserve(20);
 		try {
 			infile.open(fname);
+			if (infile.fail())
+				throw FileNotExistException("File does not exist");		
 		}
 		catch (FileNotExistException ex) {
 

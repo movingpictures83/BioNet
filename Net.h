@@ -55,6 +55,7 @@ namespace BioNet {
 
 		void setRange(const T, const T);
 		void setEdge(const int, const int, const T);
+		void SetEdge(const string& n1, const string &n2, const T weight);
 		void setNode(const int, const string &n);
 		void deleteEdge(const int, const int);
 		void deleteEdge(const string &l, const string &r);
@@ -233,8 +234,25 @@ namespace BioNet {
 
 		network->setEdge(i, j, w);
 		if (!directed) {
-			network->setEdge(i, j, w);
+			network->setEdge(j, i, w);
 		}
+	}
+
+	/// Set Edge
+	/*
+	@param n1 origin node
+	@param n2 destination node
+	@param w weight, should be between minimum weight and maximum weight allowed
+	*/
+	template<typename T>
+	void Net<T>::SetEdge(const string& n1, const string &n2, const T w)
+	{
+		if (w < minweight || w > maxweight)
+			throw Exception("Weight is not in the minWeight and maxWeight");
+
+		network->setEdge(n1, n2, w);
+		if (!directed)
+			network->setEdge(n2, n1, w);
 	}
 
 	/// Set Node
