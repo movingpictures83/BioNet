@@ -9,6 +9,7 @@
 #include <fstream>
 #include <sstream>
 #include "Exception.h"
+#include "File.h"
 
 using std::ifstream;
 using std::ofstream;
@@ -20,10 +21,11 @@ using std::cout;
 using std::vector;
 using BioNet::Net;
 using BioNet::Exception;
+using BioNet::FileHandler;
 
 
 
-class CSVHandler
+class CSVHandler: public FileHandler
 {
 public:
 	///Method to read the files and populates a bionet
@@ -117,7 +119,6 @@ public:
 		}	
 	}
 
-	static string getDefaultExt() { return "csv"; }
 //private:
 	//string _filename;
 private :
