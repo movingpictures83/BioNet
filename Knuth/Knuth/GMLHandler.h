@@ -45,8 +45,8 @@ public:
 		nodes.reserve(20);
 		try {
 			infile.open(fname);
-			//if (inputfile.fail()) cout << "ERROR" << endl;
-			//TODO: throw exception here if file doesn't open to avoid infinite loop later.
+			if (infile.fail())
+				throw FileNotExistException("File does not exist");		
 		}
 		catch (FileNotExistException ex) {
 
