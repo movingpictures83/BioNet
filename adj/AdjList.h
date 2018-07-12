@@ -143,7 +143,7 @@ namespace BioNet {
 		/**
 			@return the size of the network
 		*/
-		int size() const
+		unsigned int size() const
 		{
 			return network.size();
 		}
@@ -187,7 +187,7 @@ namespace BioNet {
 		*/
 		void resize(const int newSize)
 		{
-			unsigned int networkSize = network.size();
+			unsigned int networkSize = (unsigned int)network.size();
 			int sizeDifference = newSize - networkSize;
 
 			if (sizeDifference < 0) //Last sizeDifference nodes will be destroyed, so the other nodes that have edges to them must be cleaned.
