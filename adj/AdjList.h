@@ -169,7 +169,7 @@ namespace BioNet {
 		/**
 			@return the number of edges
 		*/
-		int numberOfEdges() const
+		unsigned int numberOfEdges() const
 		{
 			unsigned int result = 0;
 			for (size_t i = 0; i < network.size(); i++)

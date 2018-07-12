@@ -70,7 +70,7 @@ public:
 	///Get the degree of the node given an index
 	T degree(const int) const;
 	///Gets the total number of edges
-	int numberOfEdges() const;
+	unsigned int numberOfEdges() const;
 	///Returns the index of the node given a name
 	int findNodeIndex(const string&) const;
 	///Delete's the edge given two node names
@@ -320,7 +320,7 @@ T AdjMat<T>::degree(const int index) const {
 }
 
 template <typename T>
-int AdjMat<T>::numberOfEdges() const {
+unsigned int AdjMat<T>::numberOfEdges() const {
 	unsigned edges = 0;
 
 	for (unsigned i = 0; i < matrix.size(); i++)
