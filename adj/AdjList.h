@@ -155,7 +155,7 @@ namespace BioNet {
 		*/
 		T degree(const int x) const
 		{
-			Edge<T> node = network[x].front();
+			Edge<T>* node = network[x].front();
 			float result = 0.0f;
 			while (node)
 			{
@@ -174,7 +174,7 @@ namespace BioNet {
 			unsigned int result = 0;
 			for (size_t i = 0; i < network.size(); i++)
 			{
-				Edge<T> node = network[i].front();
+				Edge<T>* node = network[i].front();
 				for(node; node != nullptr; node = node->getNext())
 					result++;
 			}
@@ -268,8 +268,8 @@ namespace BioNet {
 		/**
 			@param rhs the Adj to copy
 		*/
-		void copy(const Adj<T>* rhs) {
-			AdjList<T>* _rhs = static_cast<const AdjList<T>*>(rhs);
+		void copy(const Adj<T>* rhs) override {
+			const AdjList<T>* _rhs = static_cast<const AdjList<T>*>(rhs);
 			network = vector<List<T>>(_rhs->network.size());
 			for (size_t i = 0; i < _rhs->network.size(); i++)
 				network[i] = List<T>(_rhs->network[i]);
