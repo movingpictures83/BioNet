@@ -18,7 +18,7 @@ namespace BioNet {
 		Register(string name, GenericAdj * (*func)())
 		{
 			keyword = name;
-			AdjFactory::RegisterType(name, func);
+			AdjFactory::getInstance()->RegisterType(name, func);
 		}
 	};
 }

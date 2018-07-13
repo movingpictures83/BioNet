@@ -156,6 +156,7 @@
     <ClInclude Include="..\..\adj\AdjList.h" />
     <ClInclude Include="..\..\adj\GenericAdj.h" />
     <ClInclude Include="..\..\exception\Exception.h" />
+    <ClInclude Include="..\..\factory\AdjFactory.h" />
     <ClInclude Include="..\..\IO.h" />
     <ClInclude Include="..\..\io\File.h" />
     <ClInclude Include="..\..\Net.h" />
