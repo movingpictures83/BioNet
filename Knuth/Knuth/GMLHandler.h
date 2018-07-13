@@ -6,7 +6,7 @@
 #include "Net.h"
 #include "Reader.h"
 #include "Writer.h"
-#include "File.h"
+#include "FileHandler.h"
 #include "List.h"
 #include <vector>
 #include "FileNotExistException.h"

@@ -27,9 +27,6 @@
     <ClInclude Include="..\..\exception\IncorrectFileFormatException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\io\File.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\io\IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -46,6 +43,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GMLHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\io\FileHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

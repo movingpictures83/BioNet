@@ -165,7 +165,7 @@
     <ClInclude Include="..\..\exception\Exception.h" />
     <ClInclude Include="..\..\exception\FileNotExistException.h" />
     <ClInclude Include="..\..\exception\IncorrectFileFormatException.h" />
-    <ClInclude Include="..\..\io\File.h" />
+    <ClInclude Include="..\..\io\FileHandler.h" />
     <ClInclude Include="..\..\io\IO.h" />
     <ClInclude Include="..\..\io\Reader.h" />
     <ClInclude Include="..\..\io\Writer.h" />
