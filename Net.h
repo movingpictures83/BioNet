@@ -231,10 +231,14 @@ namespace BioNet {
 
 		if (w < minweight || w > maxweight)
 			throw Exception("Weight is not in the minWeight and maxWeight");
-
-		network->setEdge(i, j, w);
-		if (!directed) {
-			network->setEdge(j, i, w);
+		try {
+			network->setEdge(i, j, w);
+			if (!directed) {
+				network->setEdge(j, i, w);
+			}
+		}
+		catch (exception e) {
+			cerr << e.what() << endl;
 		}
 	}
 
@@ -250,9 +254,15 @@ namespace BioNet {
 		if (w < minweight || w > maxweight)
 			throw Exception("Weight is not in the minWeight and maxWeight");
 
-		network->setEdge(n1, n2, w);
-		if (!directed)
-			network->setEdge(n2, n1, w);
+		try {
+			network->setEdge(n1, n2, w);
+			if (!directed)
+				network->setEdge(n2, n1, w);
+		}
+		catch (exception e) {
+			cerr << e.what() << endl;
+		}
+		
 	}
 
 	/// Set Node
