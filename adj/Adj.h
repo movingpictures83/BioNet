@@ -41,7 +41,7 @@ namespace BioNet {
 		/// returns the sum of all weights of the **Edges** in the **Network**
 		virtual T degree(const int) const = 0;
 		/// returns the number of **Edges** in the **Network**
-		virtual int numberOfEdges() const = 0;
+		virtual unsigned int numberOfEdges() const = 0;
 		/// resizes the **Network** to a given size
 		virtual void resize(const int) = 0;
 		/// returns the internal index of a **Node** with the given name
