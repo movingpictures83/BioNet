@@ -167,6 +167,7 @@ namespace BioNet
 		void clear()
 		{
 			recursiveClear(head);
+			head = nullptr;
 		}
 
 		/// Get accessor method for the head of the linked list of edges.
