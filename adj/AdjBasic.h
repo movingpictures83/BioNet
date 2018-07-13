@@ -22,7 +22,7 @@ namespace BioNet {
 	{
 		string source;
 		string destination;
-		T weight;
+		T  weight;
 	};
 
 	template <typename T>
@@ -31,7 +31,26 @@ namespace BioNet {
 	public:
 		
 		string* arrBNodes;
-		BasicEdge* arrBEdges;
+		BasicEdge<T>* arrBEdges;
+		int nTotalNodes;
+		int nTotalEdges;
+		int nCurNodes;
+		int nCurEdges;
+	
+	private:
+		void resizeEdge()
+		{
+			BasicEdge<T>* tempArrBEdges = new BasicEdge<T>[nTotalEdges << 1];
+			for (int n = 0; n < nTotalEdges; n++)
+			{
+				tempArrBEdges[n] = arrBEdges[n];
+			}
+
+			nTotalEdges = nTotalEdges << 1;
+			delete[] arrBEdges;
+			arrBEdges = tempArrBEdges;
+
+		}
 
 	public:
 		
@@ -66,7 +85,11 @@ namespace BioNet {
 		@param Initial size of the network
 		*/
 		AdjBasic(int i = 5) {
-			network.resize(i);
+			arrBNodes = new string[i];
+			arrBEdges = new BasicEdge<T>[i<<1];
+			nTotalNodes = i;
+			nTotalEdges = i << 1;
+			nCurEdges = 0;
 		}
 		~AdjBasic() {}
 
@@ -78,7 +101,18 @@ namespace BioNet {
 		*/
 		void setEdge(const int x, const int y, const T w)
 		{
-			return 0;
+			if ((x < 0 && x > nTotalNodes) || (y < 0 && y > nTotalNodes))
+			{
+				throw Exception("Node not found.");
+				return;
+			}
+			
+			string source = arrBNodes[x];
+			string destination = arrBNodes[y];
+
+			setEdge(source, destination, w);
+
+			return;
 		}
 
 		/// Set the edge between two nodes
@@ -89,9 +123,14 @@ namespace BioNet {
 		*/
 		void setEdge(const string& x, const string& y, const T w)
 		{
-			arrBEdges->source = x;
-			arrBEdges->destination = y;
-			arrBEdges->weight = w;
+			if (nCurEdges >= nTotalEdges)
+			{
+				resizeEdge();				
+			}	
+			arrBEdges[nCurEdges].source = x;
+			arrBEdges[nCurEdges].destination = y;
+			arrBEdges[nCurEdges].weight = w;
+			nCurEdges++;
 		}
 
 		/// gets the weight of the edge
@@ -102,7 +141,15 @@ namespace BioNet {
 		*/
 		T getEdge(const int x, const int y) const
 		{
-			return network[x].getWeight(network[y].getName());
+			double weight = 0.0;
+			if ((x < 0 && x > nTotalNodes) && (y < 0 && y > nTotalNodes))
+			{
+				string source = arrBNodes[x];
+				string destination = arrBNodes[y];
+
+				weight = getEdge(source, destination);
+			}
+			return weight;
 		}
 		/// gets the weight of the edge
 		/**
@@ -111,12 +158,19 @@ namespace BioNet {
 		@return the weight of the edge
 		*/
 		T getEdge(const string& a, const string& b) const
-		{		
-			for (int i = 0; i < network.size(); i++) {
-				if (strcmp(network[i].getName().c_str(), a.c_str()) == 0)
-					return network[i].getWeight(b);
+		{	
+			double weight = 0.0;
+			for (int nIdx = 0; nIdx < nTotalEdges; nIdx++)
+			{
+				BasicEdge<T> edge = arrBEdges[nIdx];
+				if (strcmp(edge.source.c_str(), a.c_str()) == 0 && strcmp(edge.destination.c_str(), b.c_str()) == 0)
+				{
+					weight = edge.weight;
+					break;
+				}						
 			}
-			return T();
+
+			return weight;
 		}
 
 		/// sets the node in the network
@@ -126,7 +180,12 @@ namespace BioNet {
 		*/
 		void setNode(const int i, const string& s)
 		{
+			if (i >= nTotalNodes)
+			{
+				resize(nTotalNodes << 1);
+			}
 			arrBNodes[i] = s;
+			nCurNodes++;
 		}
 
 		/// gets the name of the node
@@ -145,7 +204,7 @@ namespace BioNet {
 		*/
 		int size() const
 		{
-			return network.size();
+			return 0;
 		}
 
 		/// the degree of a node
@@ -155,18 +214,32 @@ namespace BioNet {
 		*/
 		T degree(const int x) const
 		{
+			if (x < 0 || x > nCurNodes)
+			{
+				throw Exception("Node not found.");
+			}
+			string strNode = arrBNodes[x];
+
+			float degree = 0.0f;
+			for (int nEdg = 0; nEdg < nCurEdges; nEdg++)
+			{
+				BasicEdge<T> edge = arrBEdges[nEdg];
 			
-			return result;
+				if (strcmp(edge.source.c_str(), strNode.c_str()) == 0 || strcmp(edge.destination.c_str(), strNode.c_str()) == 0)
+				{
+					degree += edge.weight;
+				}
+			}			
+			return degree;
 		}
 
 		/// get the number of edges in the network
 		/**
 		@return the number of edges
 		*/
-		int numberOfEdges() const
+		unsigned int numberOfEdges() const
 		{
-			
-			return result;
+			return nCurEdges;
 		}
 
 		/// resize the AdjList
@@ -175,23 +248,22 @@ namespace BioNet {
 		*/
 		void resize(const int newSize)
 		{
-			auto sizeDifference = newSize - network.size();
-
-			if (sizeDifference < 0) //Last sizeDifference nodes will be destroyed, so the other nodes that have edges to them must be cleaned.
+			// Resizing of Nodes array
+			if (newSize > nTotalNodes)
 			{
-				sizeDifference *= -1;
-				auto networkSize = network.size();
-				for (size_t i = networkSize - sizeDifference; i < networkSize; i++)
+				string* tempArrBNodes = new string[newSize];
+				for (int n = 0; n < nTotalNodes; n++)
 				{
-					auto name = network[i].getName();
-					for (size_t j = 0; j < networkSize - sizeDifference; j++)
-						network[j].deleteEdge(name);
+					tempArrBNodes[n] = arrBNodes[n];
 				}
+				
+				nTotalNodes = newSize;
+				delete[] arrBNodes;
+				arrBNodes = tempArrBNodes;				
 			}
-
-			network.resize(newSize);
 		}
 
+		
 		/// find the index of a node
 		/**
 		Finds the index of a node or returns a BioNetException if not found.
@@ -200,10 +272,11 @@ namespace BioNet {
 		*/
 		int findNodeIndex(const string& name) const
 		{
-			for (int i = 0; i < network.size(); i++)
+			/*for (int i = 0; i < network.size(); i++)
 				if (network[i].getName() == name)
 					return i;
-			throw Exception("Node not found.");
+			throw Exception("Node not found.");*/
+			return 0;
 		}
 
 		/// delete an edge in the network
@@ -213,7 +286,7 @@ namespace BioNet {
 		*/
 		void deleteEdge(const string & x, const string & y)
 		{
-			network[findNodeIndex(x)].deleteEdge(y);
+			//network[findNodeIndex(x)].deleteEdge(y);
 		}
 
 		/// delete an edge in the network
@@ -223,7 +296,7 @@ namespace BioNet {
 		*/
 		void deleteEdge(int x, int y)
 		{
-			network[x].deleteEdge(network[y].getName());
+			//network[x].deleteEdge(network[y].getName());
 		}
 
 		/// delete a node in the network
@@ -232,11 +305,11 @@ namespace BioNet {
 		*/
 		void deleteNode(const string & name)
 		{
-			auto index = findNodeIndex(name);
+			/*auto index = findNodeIndex(name);
 			for (size_t i = 0; i < network.size(); i++)
 				if (i != index)
 					network[i].deleteEdge(name);
-			network.erase(network.begin() + index);
+			network.erase(network.begin() + index);*/
 		}
 
 		/// delete a node in the network
@@ -245,11 +318,11 @@ namespace BioNet {
 		*/
 		void deleteNode(int index)
 		{
-			auto name = network[index].getName();
+			/*auto name = network[index].getName();
 			for (size_t i = 0; i < network.size(); i++)
 				if (i != index)
 					network[i].deleteEdge(name);
-			network.erase(network.begin() + index);
+			network.erase(network.begin() + index);*/
 		}
 
 		/// create a copy of the network
@@ -257,10 +330,10 @@ namespace BioNet {
 		@param rhs the Adj to copy
 		*/
 		void copy(const Adj<T>* rhs) {
-			auto _rhs = static_cast<const AdjBasic<T>*>(rhs);
+			/*auto _rhs = static_cast<const AdjBasic<T>*>(rhs);
 			network = vector<List<T>>(_rhs->network.size());
 			for (size_t i = 0; i < _rhs->network.size(); i++)
-				network[i] = List<T>(_rhs->network[i]);
+				network[i] = List<T>(_rhs->network[i]);*/
 		}
 		//void addNode(const string& str)
 		//{}
@@ -290,7 +363,7 @@ namespace BioNet {
 		*/
 		void addNode(const string& name)
 		{
-			network.emplace_back(List<T>(name));
+			//network.emplace_back(List<T>(name));
 
 		}
 
@@ -308,7 +381,7 @@ namespace BioNet {
 		@param weight the factor to scale by
 		*/
 		void scaleUp(T weight) {
-			for (int i = 0; i < network.size(); i++)
+			/*for (int i = 0; i < network.size(); i++)
 			{
 				Edge<T>* node = network[i].front();
 				while (node)
@@ -317,7 +390,7 @@ namespace BioNet {
 					node = node->getNext();
 				}
 
-			}
+			}*/
 		}
 
 		/// scale the network by a factor
@@ -325,7 +398,7 @@ namespace BioNet {
 		@param weight the factor to scale by
 		*/
 		void scaleDown(T weight) {
-			for (int i = 0; i < network.size(); i++)
+			/*for (int i = 0; i < network.size(); i++)
 			{
 				Edge<T>* node = network[i].front();
 				while (node)
@@ -334,7 +407,7 @@ namespace BioNet {
 					node = node->getNext();
 				}
 
-			}
+			}*/
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 	};

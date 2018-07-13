@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\adj\Adj.h" />
+    <ClInclude Include="..\..\adj\AdjBasic.h" />
     <ClInclude Include="..\..\adj\AdjList.h" />
     <ClInclude Include="..\..\adj\AdjMat.h" />
     <ClInclude Include="..\..\adj\Edge.h" />

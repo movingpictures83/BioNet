@@ -13,6 +13,7 @@
 #include "..\..\exception\Exception.h"
 #include "..\..\factory\AdjFactory.h"
 #include "..\..\adj\AdjMat.h"
+#include "..\..\adj\AdjBasic.h"
 
 using std::string;
 using std::to_string;
@@ -31,6 +32,7 @@ void UnitTestRegister();
 bool BioListTest();
 bool BioListOperatorTest();
 bool BioAdjListTest();
+void BioAdjBasicTest();
 bool OperatorTest();
 bool OperatorsTest();
 Net<int> createTestBioNet_BioAdjListInt(int size);
@@ -41,10 +43,11 @@ bool fequal(float a, float b) {
 
 int main()
 {
+	
 	cout << "======BIOLIST TEST======" << endl;
 	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======BIOADJLIST TEST======" << endl;
-
+	/*
 	cout << "======UNIT TEST======" << endl;
 	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======Operators Test======" << endl;
@@ -66,8 +69,57 @@ int main()
 	cout << "======OPERATOR TEST======" << endl;
 	OperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
+	cout << "======BIO LIST OPERATOR TEST======" << endl;
 	BioListOperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	*/
+	cout << "======ADJ BASIC TEST START ======" << endl;
+	BioAdjBasicTest();
+	cout << "======ADJ BASIC TEST END ======" << endl;
+
 	return 0;
+}
+
+void BioAdjBasicTest()
+{
+	AdjBasic<float> arr(2);
+	arr.setNode(0, "A");
+	arr.setNode(1, "B");
+	
+	arr.setEdge("A", "B", 0.5);
+	arr.setEdge("B", "A", -0.5);
+	arr.setEdge("A", "A", 1.0);
+	arr.setEdge("B", "B", 1.0);
+	
+	// Add New Node
+	arr.setNode(2, "C");
+
+	arr.setEdge("A", "C", 0.7);
+	arr.setEdge("B", "C", 0.8);
+	arr.setEdge("C", "C", 1.0);
+
+	//arr.resize(5);
+	//arr.setNode(3, "D");
+	//arr.setNode(4, "E");
+
+	
+	
+	//arr.setEdge("C", "A", -0.4);
+	
+	// Testing of GetEdge Function
+	float nWeight = 0.0;
+	nWeight = arr.getEdge("A", "B");
+	if (nWeight == 0.5)
+		cout << "======ADJ BASIC TEST WEIGHT PASSED ======" << endl;
+	else
+		cout << "======ADJ BASIC TEST WEIGHT FAILED ======" << endl;
+
+	// Testing for degree
+	float degree = arr.degree(0);  // Get degree for Node -'A'
+	if (degree == 1.7)
+		cout << "======ADJ BASIC TEST DEGREE PASSED ======" << endl;
+	else
+		cout << "======ADJ BASIC TEST DEGREE FAILED ======" << endl;
+
 }
 
 bool OperatorsTest() {
@@ -189,7 +241,16 @@ bool UnitTest()
 		TestBio.setNode(i, to_string(i));
 		for (int j{ 0 }; j < TestBio.size(); j++)
 		{
-			float amount = (i+j) % 5 == 0 ? 0.0f : (static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+
+			float amount = (i + j) % 5 == 0 ? 0.0f : (static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+			float amount1 = TestBio.getEdge(j, i);
+			if ( amount1 != 0)
+			{
+				amount = amount1;
+				int test = 0;
+				test = 1;
+			}
+			
 			TestBio.setEdge( i, j, ((i + j) % 2 == 0 ? -1 : 1) * amount);
 			if (amount > FLT_EPSILON || amount < -FLT_EPSILON)
 				nEdges++;
