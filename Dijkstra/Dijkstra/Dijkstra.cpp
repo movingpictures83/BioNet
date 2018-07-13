@@ -276,6 +276,7 @@ bool OperatorTest()
 
 Net<int> createTestBioNet_BioAdjListInt(int size)
 {
+	// TODO: Change the parameter list to include a Net<int>& to be modified rather than returning a local object.
 	Net<int> bn = Net<int>(0, size*size, true, "BioAdjListInt");
 
 	for (int i = 0; i < size; ++i)
