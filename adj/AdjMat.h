@@ -64,7 +64,7 @@ public:
 	///Get the node name given an index
 	string getNode(const int) const;
 	///Return's the size of the matrix
-	int size() const;
+	unsigned int size() const;
 	///Resize the matrix
 	void resize(const int);
 	///Get the degree of the node given an index
@@ -307,7 +307,7 @@ void AdjMat<T>::resize(const int size) {
 
 /// Returns the size of the current **Network**
 template <typename T>
-int AdjMat<T>::size() const {
+unsigned int AdjMat<T>::size() const {
 	return names.size();
 }
 
