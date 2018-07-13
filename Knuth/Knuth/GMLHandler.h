@@ -24,12 +24,6 @@ struct GMLNode {
 	unsigned int id;
 	string label;
 };
-template <typename T>
-struct GMLEdge {
-	unsigned int source;
-	unsigned int target;
-	T weight;
-};
 
 
 class GMLHandler : public BioNet::FileHandler
@@ -55,7 +49,6 @@ public:
 		}
 
 		GMLNode node;
-		GMLEdge<T> edge;
 
 		try {
 			string temp;
@@ -91,6 +84,10 @@ public:
 				b.setNode(nodes[i].id, nodes[i].label);
 			}
 
+			// temporary vars for reading data
+			unsigned int tempSource;
+			unsigned int tempTarget;
+			T tempWeight;
 			do {
 				if (0 == temp.compare("edge"))
 				{
@@ -98,22 +95,22 @@ public:
 
 					try
 					{
-						edge.source = stoi(temp);
+						tempSource = stoi(temp);
 
 						infile >> temp >> temp;
 
-						edge.target = stoi(temp);
+						tempTarget = stoi(temp);
 
 						infile >> temp >> temp;
 
-						edge.weight = stof(temp);
+						tempWeight = stof(temp);
 					}
 					catch (DataInvalidFormatException ex)
 					{
 						cout << ex.what() << endl;
 						exit(1);
 					}
-					b.setEdge(edge.source, edge.target, edge.weight);
+					b.setEdge(tempSource, tempTarget, tempWeight);
 
 				}
 				else
