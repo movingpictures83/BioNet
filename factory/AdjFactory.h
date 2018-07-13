@@ -49,13 +49,8 @@ namespace BioNet {
 		@param type - generic/defined keyword provided for search of function map to retrieve the desired constructor.
 		*/
 		template<typename T>
-		static Adj<T>* create(const string& type) {
-			unordered_map<string, GenericAdj* (*) ()>::const_iterator keyPair = mFactoryMap.find(type);
-			//auto keyPair = mFactoryMap->find(type);
-			if (keyPair != mFactoryMap.end())
-				return static_cast<Adj<T> *>(keyPair->second());
-			else
-				throw Exception("Error Creating network of type " + type + ".\n");
+		GenericAdj* create(string s) {
+			return mFactoryMap[s]();
 		}
 	};
 }
