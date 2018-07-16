@@ -114,7 +114,7 @@ namespace BioNet
 		@param New name for the destination node on an edge.
 		*/
 		void setEdgeName(const string& oldName, const string& newName) {
-			auto* node = head;
+			Edge<T>* node = head;
 			while (node)
 			{
 				if (node->getName() == oldName)
@@ -122,6 +122,7 @@ namespace BioNet
 					node->setName(newName);
 					break;
 				}
+				node = node->getNext();
 			}
 		}
 
