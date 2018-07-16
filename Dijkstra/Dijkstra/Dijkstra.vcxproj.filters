@@ -75,6 +75,9 @@
     <ClInclude Include="..\..\factory\Register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\adj\AdjBasic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

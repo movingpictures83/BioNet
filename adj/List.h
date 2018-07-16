@@ -83,6 +83,8 @@ namespace BioNet
 		@param New weight of the edge.
 		*/
 		bool setWeight(const string& name, const T weight) {
+			if (!search(name))
+				head = insertFront(weight, name);
 			auto * current = head;
 			while (current)
 			{
@@ -167,6 +169,7 @@ namespace BioNet
 		void clear()
 		{
 			recursiveClear(head);
+			head = nullptr;
 		}
 
 		/// Get accessor method for the head of the linked list of edges.
