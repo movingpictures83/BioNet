@@ -23,7 +23,9 @@ namespace BioNet {
 		@param id - unique string identifier for the function being provided for the map.
 		@param func - unique function for constructing desired underlying type.
 		*/
-		static void RegisterType(const string & id, function<GenericAdj*(void)> func)	{	mFactoryMap[id] = func;	}
+		static void RegisterType(const string & id, function<GenericAdj*(void)> func)	{	
+			mFactoryMap[id] = func;
+		}
 
 		/**
 		Factory function utilized to create Adj network objects based on user's input and template type
