@@ -137,18 +137,26 @@ bool BioListTest() {
 bool BioListOperatorTest() {
 
 	Net<float> aNet;
-	aNet.resize(3);
-	aNet.setRange(0.0f, 10.0f);
-	aNet.setNode(0, "Sodium");
-	aNet.setNode(1, "Carbon Dioxide");
-	aNet.setNode(2, "Sodium Chloride");
+	try
+	{
+		aNet.resize(3);
+		aNet.setRange(10.0f, 10.0f);
+		aNet.setNode(0, "Sodium");
+		aNet.setNode(1, "Carbon Dioxide");
+		aNet.setNode(2, "Sodium Chloride");
 
-	aNet.setEdge(0, 1, 0.5f);
-	aNet.setEdge(1, 2, 1.0f);
-	aNet.setEdge(0, 2, 1.5f);
+		aNet.setEdge(0, 1, 0.5f);
+		aNet.setEdge(1, 2, 1.0f);
+		aNet.setEdge(0, 2, 1.5f);
 
 
-	aNet *= 2.0f;
+		aNet *= 2.0f;
+	}
+	catch (Exception e)
+	{
+		cout << e.what() << endl;
+		return false;
+	}
 
 	if (aNet.getEdge(0, 1) != 1 || aNet.getEdge(1, 2) != 2 || aNet.getEdge(0, 2) != 3)
 		return false;
@@ -260,27 +268,34 @@ bool OperatorTest()
 {
 	bool success = true;
 	Net<int> bn;
-	createTestBioNet_BioAdjListInt(5, bn);
+	try
+	{
+		createTestBioNet_BioAdjListInt(5, bn);
 
-	// Operator ()
-	if (bn(2, 3) != 6) success = false;
+		// Operator ()
+		if (bn(2, 3) != 6) success = false;
 
-	// Operator ()
-	if (bn("Node3", "Node4") != 12) success = false;
+		// Operator ()
+		if (bn("Node3", "Node4") != 12) success = false;
 
-	// Operator +=
-	bn += "First";
-	if (bn[4] != "First") success = false; //26?
+		// Operator +=
+		bn += "First";
+		if (bn[26] != "First") success = false; //26?
 
-	// Operator +
+		// Operator +
 
+	}
+	catch (Exception e)
+	{
+		cout << e.what() << endl;
+		return false;
+	}
 
 	return success;
 }
 
 void createTestBioNet_BioAdjListInt(int size, Net<int>& _obj)
 {
-	// TODO: Change the parameter list to include a Net<int>& to be modified rather than returning a local object.
 	_obj = Net<int>(0, size*size, true, "BioAdjListInt");
 
 	for (int i = 0; i < size; ++i)
