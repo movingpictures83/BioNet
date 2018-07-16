@@ -160,6 +160,17 @@ namespace BioNet
 			head = recursiveDeleteEdge(head, name);
 		}
 
+		void deleteEdgeIter(const string& name)
+		{
+			Edge<T> temp;
+			while (head != NULL)
+			{
+				temp = head;
+				head = head->next;
+				delete temp;
+			}
+		}
+
 		/// Recursively releases all edges of the node.
 		/**
 		All edges instances are destroyed.

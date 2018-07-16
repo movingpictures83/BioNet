@@ -454,14 +454,12 @@ namespace BioNet {
 
 	template<typename T>
 	void Net<T>::deleteEdge(const unsigned int lval, const unsigned int rval) {
-		// not implemented
-		//network->deleteEdge(lval, rval);
+		network->deleteEdge(lval, rval);
 	}
 
 	template<typename T>
 	void Net<T>::deleteEdge(const string& lstr, const string& rstr) {
-		// not implemented
-		//network->deleteEdge(lstr, rstr);
+		network->deleteEdge(lstr, rstr);
 	}
 	//
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -469,11 +467,13 @@ namespace BioNet {
 	template<typename T>
 	const Net<T>& Net<T>::operator=(const Net<T>& rhs)
 	{
-		minweight = rhs->minweight;
-		maxweight = rhs->maxWeight;
-		directed = rhs->directed;
+		minweight = rhs.minweight;
+		maxweight = rhs.maxweight;
+		directed = rhs.directed;
 		networkType = networkType;
-		network->copy(rhs);
+		network->copy(rhs.network);
+
+		return *this;
 	}
 
 	//template<typename T>

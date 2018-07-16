@@ -2,6 +2,7 @@
 //
 #include <string>
 #include <iostream>
+#include <conio.h>
 #include <algorithm>
 #include "..\..\Net.h"
 
@@ -16,6 +17,7 @@
 
 using std::string;
 using std::to_string;
+using std::cin;
 using std::cout;
 using std::endl;
 using std::fixed;
@@ -33,7 +35,7 @@ bool BioListOperatorTest();
 bool BioAdjListTest();
 bool OperatorTest();
 bool OperatorsTest();
-Net<int> createTestBioNet_BioAdjListInt(int size);
+void createTestBioNet_BioAdjListInt(int size, Net<int>& _obj);
 
 bool fequal(float a, float b) {
 	return fabs(b - a) < FLT_EPSILON;
@@ -60,13 +62,14 @@ int main()
 	
 	cout << "====== Register Test ======" << endl;
 	UnitTestRegister();
-	 
-	cout << "====== BioList Operator Test ======" << endl;
 	
 	cout << "======OPERATOR TEST======" << endl;
 	OperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
+	cout << "====== BioList Operator Test ======" << endl;
 	BioListOperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	cout << "Press any key to continue..." << endl;
+	_getch();
 	return 0;
 }
 
@@ -135,7 +138,7 @@ bool BioListOperatorTest() {
 
 	Net<float> aNet;
 	aNet.resize(3);
-	aNet.setRange(10.0f, 10.0f);
+	aNet.setRange(0.0f, 10.0f);
 	aNet.setNode(0, "Sodium");
 	aNet.setNode(1, "Carbon Dioxide");
 	aNet.setNode(2, "Sodium Chloride");
@@ -256,7 +259,8 @@ void UnitTestRegister()
 bool OperatorTest()
 {
 	bool success = true;
-	Net<int> bn = createTestBioNet_BioAdjListInt(5);
+	Net<int> bn;
+	createTestBioNet_BioAdjListInt(5, bn);
 
 	// Operator ()
 	if (bn(2, 3) != 6) success = false;
@@ -266,7 +270,7 @@ bool OperatorTest()
 
 	// Operator +=
 	bn += "First";
-	if (bn[26] != "First") success = false; //26?
+	if (bn[4] != "First") success = false; //26?
 
 	// Operator +
 
@@ -274,14 +278,14 @@ bool OperatorTest()
 	return success;
 }
 
-Net<int> createTestBioNet_BioAdjListInt(int size)
+void createTestBioNet_BioAdjListInt(int size, Net<int>& _obj)
 {
 	// TODO: Change the parameter list to include a Net<int>& to be modified rather than returning a local object.
-	Net<int> bn = Net<int>(0, size*size, true, "BioAdjListInt");
+	_obj = Net<int>(0, size*size, true, "BioAdjListInt");
 
 	for (int i = 0; i < size; ++i)
 	{
-		bn.setNode(i, "Node" + std::to_string(i));
+		_obj.setNode(i, "Node" + std::to_string(i));
 	}
 	for (int i = 1; i < size; ++i)
 	{
@@ -289,10 +293,8 @@ Net<int> createTestBioNet_BioAdjListInt(int size)
 		{
 			if (i != j)
 			{
-				bn.setEdge(i, j, i*j);
+				_obj.setEdge(i, j, i*j);
 			}
 		}
 	}
-
-	return bn;
 }
