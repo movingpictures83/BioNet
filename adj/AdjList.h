@@ -403,11 +403,11 @@ namespace BioNet {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 	};
 
-	template<>
+	//template<>
 	BioNet::Register BioNet::AdjList<int>::reg = Register("BioAdjListInt", &AdjList<int>::make);
-	template<>
+	//template<>
 	BioNet::Register BioNet::AdjList<float>::reg = Register("BioAdjListFloat", &AdjList<float>::make);
-	template<>
+	//template<>
 	BioNet::Register BioNet::AdjList<double>::reg = Register("BioAdjListDouble", &AdjList<double>::make);
 }
 

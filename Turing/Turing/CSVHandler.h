@@ -9,7 +9,7 @@
 #include <fstream>
 #include <sstream>
 #include "Exception.h"
-#include "File.h"
+#include "FileHandler.h"
 
 using std::ifstream;
 using std::ofstream;
