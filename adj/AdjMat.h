@@ -36,7 +36,7 @@ public:
 		//return network;
 	    static const type_info& ti = typeid(AdjMat<T>);
 		string keyword = ti.name();
-		AdjFactory::mFactoryMap.find(keyword) == AdjFactory::mFactoryMap.end() ? Register(keyword, &AdjMat::make) : reg;
+		AdjFactory::getInstance()->mFactoryMap.find(keyword) == AdjFactory::getInstance()->mFactoryMap.end() ? Register(keyword, &AdjMat::make) : reg;
 		return keyword;
 	}
 
@@ -144,11 +144,11 @@ public:
 // Moved code from BioAdjMat.cpp to work properly now that it's templated
 
 //template<>
-Register AdjMat<int>::reg = Register("BioAdjMatInt", &AdjMat::make);
+Register AdjMat<int>::reg = Register(string("BioAdjMatInt"), &AdjMat::make);
 //template<>
-Register AdjMat<float>::reg = Register("BioAdjMatFloat", &AdjMat::make);
+Register AdjMat<float>::reg = Register(string("BioAdjMatFloat"), &AdjMat::make);
 //template<>
-Register AdjMat<double>::reg = Register("BioAdjMatDouble", &AdjMat::make);
+Register AdjMat<double>::reg = Register(string("BioAdjMatDouble"), &AdjMat::make);
 
 /// Sets the weight of a given **Edge** (by its indexes) in the Network **Matrix**
 template <typename T>
