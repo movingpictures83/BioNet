@@ -36,6 +36,7 @@ namespace BioNet {
 		int nTotalEdges;
 		int nCurNodes;
 		int nCurEdges;
+		static Register reg;
 	
 	private:
 		void resizeEdge()
@@ -60,7 +61,7 @@ namespace BioNet {
 		*/
 		static GenericAdj* make()
 		{
-			return new AdjList<T>();
+			return new AdjBasic<T>();
 		}
 		/// Specifies the type of the network used to register instances in the factory.
 		/**
@@ -204,7 +205,7 @@ namespace BioNet {
 		*/
 		int size() const
 		{
-			return 0;
+			return nCurNodes;
 		}
 
 		/// the degree of a node
@@ -220,7 +221,7 @@ namespace BioNet {
 			}
 			string strNode = arrBNodes[x];
 
-			float degree = 0.0f;
+			T degree = 0.0;
 			for (int nEdg = 0; nEdg < nCurEdges; nEdg++)
 			{
 				BasicEdge<T> edge = arrBEdges[nEdg];
@@ -272,10 +273,11 @@ namespace BioNet {
 		*/
 		int findNodeIndex(const string& name) const
 		{
-			/*for (int i = 0; i < network.size(); i++)
-				if (network[i].getName() == name)
-					return i;
-			throw Exception("Node not found.");*/
+			for (int n = 0; n < nCurNodes; n++)
+				if (strcmp(arrBNodes[n].c_str(), name.c_str()) == 0)
+					return n;
+			throw Exception("Node not found.");
+			
 			return 0;
 		}
 
@@ -285,8 +287,31 @@ namespace BioNet {
 		@param y the name of the second node
 		*/
 		void deleteEdge(const string & x, const string & y)
-		{
-			//network[findNodeIndex(x)].deleteEdge(y);
+		{	
+			BasicEdge<T>* tempArrBEdges = new BasicEdge<T>[nTotalEdges];
+			int nCopied = 0;
+			for (int nIdx = 0; nIdx < nCurEdges; nIdx++)
+			{
+				BasicEdge<T> edge = arrBEdges[nIdx];
+
+				// When only Node is passed do not copy
+				if ((strcmp(x.c_str(), y.c_str()) == 0) && (strcmp(edge.source.c_str(), x.c_str()) == 0 || strcmp(edge.destination.c_str(), x.c_str()) == 0))
+				{
+					// Dont copy when only Node is specified
+				}
+				else if ((strcmp(edge.source.c_str(), x.c_str()) == 0 && strcmp(edge.destination.c_str(), y.c_str()) == 0))
+				{
+					// Do not copy when you directly specify edge name
+				}
+				else
+				{
+					tempArrBEdges[nCopied] = edge;
+					nCopied++;
+				}
+			}
+			nCurEdges = nCopied;
+			delete[] arrBEdges;
+			arrBEdges = tempArrBEdges;
 		}
 
 		/// delete an edge in the network
@@ -294,9 +319,15 @@ namespace BioNet {
 		@param x the index of the first node
 		@param y the index of the second node
 		*/
-		void deleteEdge(int x, int y)
+		void deleteEdge(const int x, const int y)
 		{
-			//network[x].deleteEdge(network[y].getName());
+			if ((x < 0 && x > nCurNodes) && (y < 0 && y > nCurNodes))
+			{
+				string source = arrBNodes[x];
+				string destination = arrBNodes[y];
+
+				deleteEdge(source, destination);
+			}
 		}
 
 		/// delete a node in the network
@@ -305,24 +336,36 @@ namespace BioNet {
 		*/
 		void deleteNode(const string & name)
 		{
-			/*auto index = findNodeIndex(name);
-			for (size_t i = 0; i < network.size(); i++)
-				if (i != index)
-					network[i].deleteEdge(name);
-			network.erase(network.begin() + index);*/
+			int nNodeIndex = findNodeIndex(name);
+			if (nNodeIndex >= 0 && nNodeIndex < nCurNodes)
+				deleteNode(nNodeIndex);
+
+			deleteEdge(name, name);
 		}
 
 		/// delete a node in the network
 		/**
 		@param index the index of the node to delete
 		*/
-		void deleteNode(int index)
+		void deleteNode(const int index)
 		{
-			/*auto name = network[index].getName();
-			for (size_t i = 0; i < network.size(); i++)
-				if (i != index)
-					network[i].deleteEdge(name);
-			network.erase(network.begin() + index);*/
+			if(index < 0 || index > nCurNodes)
+				throw Exception("Invalid Node Index specified");
+			
+			string* tempArrBNodes = new string[nTotalNodes];
+			int nCopied = 0;
+			for (int n = 0; n < nCurNodes; n++)
+			{
+				if (index != n) // Copy all elements from the index except which is to be deleted
+				{
+					tempArrBNodes[nCopied] = arrBNodes[n];
+					nCopied++;
+				}
+			}
+
+			nCurNodes = nCopied;
+			delete[] arrBNodes;
+			arrBNodes = tempArrBNodes;			
 		}
 
 		/// create a copy of the network
@@ -330,20 +373,21 @@ namespace BioNet {
 		@param rhs the Adj to copy
 		*/
 		void copy(const Adj<T>* rhs) {
-			/*auto _rhs = static_cast<const AdjBasic<T>*>(rhs);
-			network = vector<List<T>>(_rhs->network.size());
-			for (size_t i = 0; i < _rhs->network.size(); i++)
-				network[i] = List<T>(_rhs->network[i]);*/
-		}
-		//void addNode(const string& str)
-		//{}
+			int test = rhs->size();
+			int abc = 0;
+			/*names.resize(rhs->size());
+			for (unsigned i = 0; i < names.size(); i++) {
+				names[i] = rhs->getNode(i);
+			}
+			matrix.resize(rhs->size());
+			for (unsigned i = 0; i < rhs->size(); i++) {
+				for (unsigned j = 0; j < rhs->size(); j++) {
+					matrix[i][j] = (T)rhs->getEdge(i, j);
+				}
+			}*/
 
-		/// scale the weights of the network
-		/**
-		@param scale the factor to scale the weights
-		*/
-		void scaleWeights(const T& scale)
-		{}
+		}
+
 
 		/// check if two networks are equal
 		/**
@@ -351,6 +395,10 @@ namespace BioNet {
 		*/
 		bool isEqual(const Adj<T>* adj)
 		{
+		/*	auto _rhs = static_cast<const AdjBasic<T> *>(rhs);
+			for (unsigned i = 0; i < nCurNodes; i++) {
+				if (arrBNodes[i].compare(_rhs->))
+					return false;*/
 			return true;
 		}
 		
@@ -363,8 +411,8 @@ namespace BioNet {
 		*/
 		void addNode(const string& name)
 		{
-			//network.emplace_back(List<T>(name));
-
+			nCurNodes++;
+			setNode(nCurNodes, name);
 		}
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,16 +429,11 @@ namespace BioNet {
 		@param weight the factor to scale by
 		*/
 		void scaleUp(T weight) {
-			/*for (int i = 0; i < network.size(); i++)
+			for (int n = 0; n < nCurEdges; n++)
 			{
-				Edge<T>* node = network[i].front();
-				while (node)
-				{
-					node->setWeight(node->getWeight() * weight);
-					node = node->getNext();
-				}
-
-			}*/
+				BasicEdge<T> edge = arrBEdges[n];
+				edge.weight = edge.weight * weight;
+			}
 		}
 
 		/// scale the network by a factor
@@ -398,20 +441,20 @@ namespace BioNet {
 		@param weight the factor to scale by
 		*/
 		void scaleDown(T weight) {
-			/*for (int i = 0; i < network.size(); i++)
+			for (int n = 0; n < nCurEdges; n++)
 			{
-				Edge<T>* node = network[i].front();
-				while (node)
-				{
-					node->setWeight(node->getWeight() / weight);
-					node = node->getNext();
-				}
-
-			}*/
+				BasicEdge<T> edge = arrBEdges[n];
+				edge.weight = edge.weight / weight;
+			}
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 	};
 
-	
+	template<>
+	BioNet::Register BioNet::AdjBasic<int>::reg = Register("BioAdjBasicInt", &AdjBasic<int>::make);
+	template<>
+	BioNet::Register BioNet::AdjBasic<float>::reg = Register("BioAdjBasicFloat", &AdjBasic<float>::make);
+	template<>
+	BioNet::Register BioNet::AdjBasic<double>::reg = Register("BioAdjBasicDouble", &AdjBasic<double>::make);
 }
 

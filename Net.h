@@ -163,7 +163,7 @@ namespace BioNet {
 		catch (const exception & e)
 		{
 			cerr << e.what() << endl;
-			exit(0);
+			exit(1);
 		}
 	}
 
@@ -214,6 +214,7 @@ namespace BioNet {
 		} catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		minweight = min;
 		maxweight = max;
@@ -241,6 +242,7 @@ namespace BioNet {
 		catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		network->setEdge(i, j, w);
 		if (!directed) {
@@ -264,6 +266,7 @@ namespace BioNet {
 		catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		network->setEdge(n1, n2, w);
 		if (!directed)
@@ -285,6 +288,7 @@ namespace BioNet {
 		catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		network->setNode(i, n);
 	}
@@ -303,6 +307,7 @@ namespace BioNet {
 		catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		return network->getEdge(i, j);
 	}
@@ -317,6 +322,7 @@ namespace BioNet {
 		catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		return network->getNode(i);
 	}
@@ -330,6 +336,7 @@ namespace BioNet {
 		catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		network->resize(size);
 	}
@@ -377,6 +384,7 @@ namespace BioNet {
 		catch (exception e)
 		{
 			cerr << e.what() << "Error converting network to type " + type + ".\n" << endl;
+			exit(1);
 		}
 
 	}
@@ -406,6 +414,7 @@ namespace BioNet {
 		catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		return network->degree(index);
 	}
@@ -422,6 +431,7 @@ namespace BioNet {
 		catch (Exception ex)
 		{
 			cerr << ex.what() << endl;
+			exit(1);
 		}
 		T negativeEdges = 0;
 
