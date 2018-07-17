@@ -37,6 +37,7 @@ bool OperatorTest();
 bool OperatorsTest();
 Net<int> createTestBioNet_BioAdjListInt(int size);
 
+
 bool fequal(float a, float b) {
 	return fabs(b - a) < FLT_EPSILON;
 }
@@ -47,7 +48,7 @@ int main()
 	cout << "======BIOLIST TEST======" << endl;
 	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======BIOADJLIST TEST======" << endl;
-	/*
+
 	cout << "======UNIT TEST======" << endl;
 	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======Operators Test======" << endl;
@@ -63,7 +64,11 @@ int main()
 	
 	cout << "====== Register Test ======" << endl;
 	UnitTestRegister();
-	 
+	
+	cout << endl << "======ADJ BASIC TEST START ======" << endl;
+	BioAdjBasicTest();
+	cout << "======ADJ BASIC TEST END ======" << endl << endl;
+
 	cout << "====== BioList Operator Test ======" << endl;
 	
 	cout << "======OPERATOR TEST======" << endl;
@@ -71,17 +76,15 @@ int main()
 
 	cout << "======BIO LIST OPERATOR TEST======" << endl;
 	BioListOperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
-	*/
-	cout << "======ADJ BASIC TEST START ======" << endl;
-	BioAdjBasicTest();
-	cout << "======ADJ BASIC TEST END ======" << endl;
+	
+	
 
 	return 0;
 }
 
 void BioAdjBasicTest()
 {
-	AdjBasic<float> arr(2);
+	AdjBasic<float> arr(3);
 	arr.setNode(0, "A");
 	arr.setNode(1, "B");
 	
@@ -97,29 +100,38 @@ void BioAdjBasicTest()
 	arr.setEdge("B", "C", 0.8);
 	arr.setEdge("C", "C", 1.0);
 
-	//arr.resize(5);
-	//arr.setNode(3, "D");
-	//arr.setNode(4, "E");
-
-	
-	
-	//arr.setEdge("C", "A", -0.4);
+	AdjBasic<float> copyarr(3);
+	//arr.copy(arr<T>);
 	
 	// Testing of GetEdge Function
 	float nWeight = 0.0;
 	nWeight = arr.getEdge("A", "B");
-	if (nWeight == 0.5)
-		cout << "======ADJ BASIC TEST WEIGHT PASSED ======" << endl;
+	if (fequal(nWeight,0.5))
+		cout << "1. ADJ BASIC TEST WEIGHT PASSED" << endl;
 	else
-		cout << "======ADJ BASIC TEST WEIGHT FAILED ======" << endl;
+		cout << "1. ADJ BASIC TEST WEIGHT FAILED" << endl;
+
+	// Testing of Find Node Index
+	int index = arr.findNodeIndex("C");
+	if(index ==2)
+		cout << "2. ADJ BASIC FIND NODE INDEX PASSED" << endl;
+	else
+		cout << "2. ADJ BASIC FIND NODE INDEX FAILED" << endl;
 
 	// Testing for degree
 	float degree = arr.degree(0);  // Get degree for Node -'A'
-	if (degree == 1.7)
-		cout << "======ADJ BASIC TEST DEGREE PASSED ======" << endl;
+	if (fequal(degree,1.7))
+		cout << "3. ADJ BASIC TEST DEGREE PASSED" << endl;
 	else
-		cout << "======ADJ BASIC TEST DEGREE FAILED ======" << endl;
+		cout << "3. ADJ BASIC TEST DEGREE FAILED" << endl;
 
+	
+	// Testing for Node Delete
+	arr.deleteNode("A");
+	if(arr.size() == 2 && arr.numberOfEdges() == 3)
+		cout << "4. ADJ BASIC NODE & EDGE DELETE PASSED" << endl;
+	else
+		cout << "4. ADJ BASIC NODE & EDGE DELETE FAILED" << endl;
 }
 
 bool OperatorsTest() {
