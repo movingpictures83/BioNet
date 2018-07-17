@@ -206,9 +206,14 @@ namespace BioNet {
 	*/
 	template<typename T>
 	void Net<T>::setRange(const T min, const T max) {
-		if (min > max)
+		try {
+			if (min > max)
+			{
+				throw Exception("mininum value is larger than maximum value");
+			}
+		} catch (Exception ex)
 		{
-			throw Exception("mininum value is larger than maximum value");
+			cerr << ex.what() << endl;
 		}
 		minweight = min;
 		maxweight = max;
@@ -223,15 +228,20 @@ namespace BioNet {
 	template<typename T>
 	void Net<T>::setEdge(const unsigned int i, const unsigned int j, const T w) {
 		//Converting to a Network Class
-		if (i < 0 || i > network->size())
-			throw Exception("Node is not in the matrix range");
+		try {
+			if (i < 0 || i > network->size())
+				throw Exception("Node is not in the matrix range");
 
-		if (j < 0 || j > network->size())
-			throw Exception("Node is not in the matrix range");
+			if (j < 0 || j > network->size())
+				throw Exception("Node is not in the matrix range");
 
-		if (w < minweight || w > maxweight)
-			throw Exception("Weight is not in the minWeight and maxWeight");
-
+			if (w < minweight || w > maxweight)
+				throw Exception("Weight is not in the minWeight and maxWeight");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		network->setEdge(i, j, w);
 		if (!directed) {
 			network->setEdge(j, i, w);
@@ -247,9 +257,14 @@ namespace BioNet {
 	template<typename T>
 	void Net<T>::SetEdge(const string& n1, const string &n2, const T w)
 	{
-		if (w < minweight || w > maxweight)
-			throw Exception("Weight is not in the minWeight and maxWeight");
-
+		try {
+			if (w < minweight || w > maxweight)
+				throw Exception("Weight is not in the minWeight and maxWeight");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		network->setEdge(n1, n2, w);
 		if (!directed)
 			network->setEdge(n2, n1, w);
@@ -263,9 +278,14 @@ namespace BioNet {
 	template<typename T>
 	void Net<T>::setNode(const unsigned int i, const string& n) {
 		/// Converting to a Network Class
-		if (i < 0 || i > network->size())
-			throw Exception("Node is not in the matrix range");
-
+		try {
+			if (i < 0 || i > network->size())
+				throw Exception("Node is not in the matrix range");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		network->setNode(i, n);
 	}
 
@@ -273,27 +293,44 @@ namespace BioNet {
 	template<typename T>
 	const T Net<T>::getEdge(const int i, const int j) const {
 		///Converting to a Network Class
-		if (i < 0 || i > network->size())
-			throw Exception("Node is not in the matrix range");
+		try {
+			if (i < 0 || i > network->size())
+				throw Exception("Node is not in the matrix range");
 
-		if (j < 0 || j > network->size())
-			throw Exception("Node is not in the matrix range");
+			if (j < 0 || j > network->size())
+				throw Exception("Node is not in the matrix range");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		return network->getEdge(i, j);
 	}
 
 	template<typename T>
 	const string Net<T>::getNode(const int i) const {
-		if (i < 0 || i > network->size())  // corrected from network.size()
-			throw Exception("Node is not in the matrix range");
 
+		try {
+			if (i < 0 || i > network->size())  // corrected from network.size()
+				throw Exception("Node is not in the matrix range");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		return network->getNode(i);
 	}
 
 	template<typename T>
 	void Net<T>::resize(const int size) {
-
-		if (size <= 0)
-			throw Exception("resize value is invalid");
+		try {
+			if (size <= 0)
+				throw Exception("resize value is invalid");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		network->resize(size);
 	}
 
@@ -362,20 +399,30 @@ namespace BioNet {
 
 	template<typename T>
 	const T Net<T>::degree(const int index) const {
-		if (index < 0 || index >= network->size())
-			throw Exception("Index out of bounds!");
+		try {
+			if (index < 0 || index >= network->size())
+				throw Exception("Index out of bounds!");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		return network->degree(index);
 	}
 
 	template<typename T>
 	const T Net<T>::shortestPath(const int start, const int end) const {
+		try {
+			if (start < 0 || start > network->size())
+				throw Exception("Start node is not in the matrix range");
 
-		if (start < 0 || start > network->size())
-			throw Exception("Start node is not in the matrix range");
-
-		if (end < 0 || end > network->size())
-			throw Exception("End node is not in the matrix range");
-
+			if (end < 0 || end > network->size())
+				throw Exception("End node is not in the matrix range");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		T negativeEdges = 0;
 
 		if (minweight < 0)
@@ -419,10 +466,14 @@ namespace BioNet {
 				}
 			}
 		}
-
-		if (dist[end] == std::numeric_limits<T>::max())
-			throw Exception("No path found from start to end nodes.");
-
+		try {
+			if (dist[end] == std::numeric_limits<T>::max())
+				throw Exception("No path found from start to end nodes.");
+		}
+		catch (Exception ex)
+		{
+			cerr << ex.what() << endl;
+		}
 		T result = dist[end];
 		int current = end;
 		if (negativeEdges)

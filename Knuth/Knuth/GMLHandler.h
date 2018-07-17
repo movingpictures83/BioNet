@@ -44,7 +44,7 @@ public:
 		}
 		catch (FileNotExistException ex) {
 
-			cout << ex.what() << endl;
+			cerr << ex.what() << endl;
 			exit(1);
 		}
 
@@ -64,7 +64,7 @@ public:
 					}
 					catch (DataInvalidFormatException ex)
 					{
-						cout << ex.what() << endl;
+						cerr << ex.what() << endl;
 						exit(1);
 					}
 					infile >> temp >> temp;
@@ -107,7 +107,7 @@ public:
 					}
 					catch (DataInvalidFormatException ex)
 					{
-						cout << ex.what() << endl;
+						cerr << ex.what() << endl;
 						exit(1);
 					}
 					b.setEdge(tempSource, tempTarget, tempWeight);
@@ -123,7 +123,7 @@ public:
 		}
 		catch (IncorrectFileFormatException ex)
 		{
-			cout << ex.what() << endl;
+			cerr << ex.what() << endl;
 			exit(1);
 
 		}
