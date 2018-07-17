@@ -129,8 +129,54 @@ public:
 		}
 	}
 	template <typename T>
-	static void doWrite(Net<T>&, const string& fname) {
-		return;
+	static void doWrite(Net<T>& net, const string& fname) {
+		ofstream outfile;
+		try {
+			outfile.open(fname);
+			if (outfile.fail())
+				throw FileNotExistException("File does not exist");
+		}
+		catch (FileNotExistException ex) {
+
+			cout << ex.what() << endl;
+			exit(1);
+		}
+
+		try {
+			// start of file
+			outfile << "graph [" << "\n";
+
+			// nodes
+			unsigned int netSize = net.size();
+			for (int i = 0; i < netSize; i++) {
+				outfile << "node [" << "\n";
+				outfile << "id " << i << "\n";
+				outfile << "label " << "\"" << net.getNode(i) << "\"" << "\n";
+				outfile << "]" << "\n";
+			}
+
+			// edges
+			for (int x = 0; x < netSize; x++) {
+				for (int y = 0; y < netSize; y++) {
+					T edgeWeight = net.getEdge(x, y);
+					if(edgeWeight){
+						outfile << "edge [" << "\n";
+						outfile << "source " << x << "\n";
+						outfile << "target " << y << "\n";
+						outfile << "weight " << edgeWeight << "\n";
+						outfile << "]" << "\n";
+					}
+				}
+			}
+
+			// end of file
+			outfile << "]" << endl;
+			outfile.close();
+		}
+		catch(Exception ex){
+			cout << ex.what() << endl;
+			exit(1);
+		}
 	};
 //	GMLHandler(string p = "") : Reader(p), Writer(p) {};
 //	~GMLHandler();

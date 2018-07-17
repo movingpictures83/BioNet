@@ -29,7 +29,7 @@ namespace BioNet {
 		not the provided path will be used
 		*/
 		template <typename R, typename T>
-		void writeFile(Net<T>& bn, string& fname, bool useDefault = true)
+		static void writeFile(Net<T>& bn, string& fname, bool useDefault = true)
 		{
 			fname = (useDefault ? defaultPath : "") + fname;
 			R::doWrite(bn, fname);
