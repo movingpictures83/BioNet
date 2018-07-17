@@ -136,7 +136,7 @@ public:
 		unsigned size = names.size();
 		for (unsigned i = 0; i < size; i++)
 			for (unsigned j = 0; j < size; j++)
-				matrix[i][j] *= factor;
+				matrix[i][j] /= factor;
 	}
 };
 
@@ -223,7 +223,7 @@ int AdjMat<T>::findNodeIndex(const string & lookup) const
 	unsigned index = 0;
 	for (unsigned i = 0; i < names.size(); i++)
 	{
-		if (lookup.compare(names[i]))
+		if (lookup == names[i])
 			return index;
 
 		index++;
