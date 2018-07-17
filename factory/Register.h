@@ -15,10 +15,11 @@ namespace BioNet {
 		@param name - unique string identifier for the function being provided for the map.
 		@param func - unique function for constructing desired underlying type.
 		*/
-		Register(string name, GenericAdj * (*func)())
+
+		Register(const string name, GenericAdj * (*func)())
 		{
 			keyword = name;
-			AdjFactory::RegisterType(name, func);
+			AdjFactory::getInstance()->RegisterType(name, func);
 		}
 	};
 }

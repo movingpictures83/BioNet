@@ -12,10 +12,38 @@ using std::unordered_map;
 using std::function;
 
 namespace BioNet {
-	namespace AdjFactory {
 
-		///Static map object for factory that maps a function to string
-		static unordered_map<string, function<GenericAdj*(void)>>mFactoryMap;
+	class  AdjFactory {
+
+	private:
+		static bool instanceFlag;
+		static AdjFactory *instance;
+		AdjFactory() { instanceFlag = false; }
+
+	public:
+
+		unordered_map<string, function<GenericAdj*(void)>>mFactoryMap;
+		~AdjFactory() { instanceFlag = false; }
+
+		static AdjFactory* getInstance() {
+
+			if (!instanceFlag) {
+
+				instance = new AdjFactory();
+
+				instanceFlag = true;
+
+				return instance;
+
+			}
+
+			else
+
+				return instance;
+
+		}
+
+
 
 		/**
 		Adds the contructing function to mFactoryMap
@@ -23,8 +51,9 @@ namespace BioNet {
 		@param id - unique string identifier for the function being provided for the map.
 		@param func - unique function for constructing desired underlying type.
 		*/
-		static void RegisterType(const string & id, function<GenericAdj*(void)> func)	{	
-			mFactoryMap[id] = func;
+		template <typename T>
+		void RegisterType(const string & id, GenericAdj* (*f) ()) { 
+			mFactoryMap[id] = f; 
 		}
 
 		/**
@@ -33,12 +62,10 @@ namespace BioNet {
 		@param type - generic/defined keyword provided for search of function map to retrieve the desired constructor.
 		*/
 		template<typename T>
-		static Adj<T>* create(const string& type) {
-			auto keyPair = mFactoryMap.find(type);
-			if (keyPair != mFactoryMap.end())
-				return static_cast<Adj<T> *>(keyPair->second());
-			else
-				throw Exception("Error Creating network of type " + type + ".\n");
+		Adj<T>* create(string s) {
+
+			return mFactoryMap[s]();
+
 		}
-	}
+	};
 }

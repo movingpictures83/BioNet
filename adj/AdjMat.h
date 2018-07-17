@@ -36,7 +36,7 @@ public:
 		//return network;
 	    static const type_info& ti = typeid(AdjMat<T>);
 		string keyword = ti.name();
-		AdjFactory::mFactoryMap.find(keyword) == AdjFactory::mFactoryMap.end() ? Register(keyword, &AdjMat::make) : reg;
+		AdjFactory::getInstance()->mFactoryMap.find(keyword) == AdjFactory::getInstance()->mFactoryMap.end() ? Register(keyword, &AdjMat::make) : reg;
 		return keyword;
 	}
 

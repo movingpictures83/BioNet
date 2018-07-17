@@ -21,28 +21,10 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\IO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Knuth\Knuth\Exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Reader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ReadWriter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Writer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CSVHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Net.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\adj\AdjList.h">
@@ -51,7 +33,13 @@
     <ClInclude Include="..\..\adj\GenericAdj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Adj.h">
+    <ClInclude Include="..\..\factory\AdjFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\factory\Register.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\adj\AdjMat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
