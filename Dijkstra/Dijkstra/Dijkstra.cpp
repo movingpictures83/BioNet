@@ -33,6 +33,7 @@ void UnitTestRegister();
 bool BioListTest();
 bool BioListOperatorTest();
 bool BioAdjListTest();
+bool BioAdjMatTest();
 bool OperatorTest();
 bool OperatorsTest();
 void createTestBioNet_BioAdjListInt(int size, Net<int>& _obj);
@@ -45,8 +46,7 @@ int main()
 {
 	cout << "======BIOLIST TEST======" << endl;
 	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
-	cout << "======BIOADJLIST TEST======" << endl;
-
+	
 	cout << "======UNIT TEST======" << endl;
 	UnitTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======Operators Test======" << endl;
@@ -68,6 +68,13 @@ int main()
 
 	cout << "====== BioList Operator Test ======" << endl;
 	BioListOperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+
+	cout << "====== BioAdjListTest Operator Test ======" << endl;
+	BioAdjListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+
+	cout << "====== BioAdjMatTest Operator Test ======" << endl;
+	BioAdjMatTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+
 	cout << "Press any key to continue..." << endl;
 	_getch();
 	return 0;
@@ -121,6 +128,36 @@ bool BioAdjListTest() {
 	return true;
 }
 
+bool BioAdjMatTest() {
+	AdjMat<int> matrix;
+	if (matrix.size() != 5) return false;
+	matrix.setNode(0, "A");
+	matrix.setNode(1, "B");
+	matrix.setNode(2, "C");
+	matrix.setNode(3, "D");
+	matrix.setNode(4, "E");
+	if (matrix.degree(0) != 0 && matrix.degree(1) != 0 && matrix.degree(2) != 0 && matrix.degree(3) != 0 && matrix.degree(4) != 0) return false;
+	matrix.setEdge("A", "B", 1);
+	matrix.setEdge("B", "C", 2);
+	matrix.setEdge("C", "D", 3);
+	matrix.setEdge("D", "E", 4);
+	auto x = matrix.getEdge("A", "B");
+	matrix.scaleUp(10);
+	x = matrix.getEdge("A", "B");
+	if (matrix.getEdge("A", "B") != 10 && matrix.getEdge("B", "C") != 20
+		&& matrix.getEdge("C", "D") != 30
+		&& matrix.getEdge("D", "E") != 40) return false;
+	matrix.scaleDown(10);
+	x = matrix.getEdge("A", "B");
+	if (matrix.getEdge("A", "B") != 1 && matrix.getEdge("B", "C") != 2
+		&& matrix.getEdge("C", "D") != 3
+		&& matrix.getEdge("D", "E") != 4) return false;
+	matrix.setEdge("A", "B", 25);
+	if (matrix.getEdge("A", "B") != 25) return false;
+	if (matrix.findNodeIndex("E") != 4) return false;
+	if (matrix.numberOfEdges() != 4) return false;
+	return true;
+}
 
 bool BioListTest() {
 	List<float> list("Sodium");
