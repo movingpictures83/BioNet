@@ -26,36 +26,14 @@ namespace BioNet {
 		/// Initializes the factory and maintains a single copy of the instance variable.
 		/** The instance AdjFactory variable, once initialized, will be the only one able to be created (singleton).
 		*/
-		static AdjFactory* getInstance() {
-
-			if (!instanceFlag) {
-
-				instance = new AdjFactory();
-
-				instanceFlag = true;
-
-				return instance;
-
-			}
-
-			else
-
-				return instance;
-
-		}
-
-
-
+		static AdjFactory* getInstance();
 		/**
 		Adds the contructing function to mFactoryMap
 
 		@param id - unique string identifier for the function being provided for the map.
 		@param func - unique function for constructing desired underlying type.
 		*/
-		void RegisterType(const string & id, GenericAdj* (*f) ()) { 
-			mFactoryMap[id] = f; 
-		}
-
+		void RegisterType(const string & id, GenericAdj* (*f) ());
 		/**
 		Factory function utilized to create Adj network objects based on user's input and template type
 
