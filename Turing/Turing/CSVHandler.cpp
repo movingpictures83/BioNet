@@ -19,9 +19,18 @@ vector <string> CSVHandler::split(const string &s, char delim) {
 }
 
 
-char * CSVHandler::split2(const string &s, char delim, const int size)
+char ** CSVHandler::split2(const string &s, const char delim, const int rows, const int colsize)
 {
-	char * result = (char *)malloc(size * 8);
+	char ** result = (char **)malloc(rows*sizeof(char *));
+	if (0 == result)
+		return 0;
+	for (int i = 0; i < rows; i++)
+	{
+		result[i] = (char *)malloc(colsize);
+		if (0 == result[i])
+			return 0;
+		memset((void *)result[i], 0, colsize);
+	}
 	char * str_s = (char *)s.c_str();
 	char* pch = NULL;
 	char * next_token = NULL;
@@ -32,7 +41,7 @@ char * CSVHandler::split2(const string &s, char delim, const int size)
 	int i = 0;
 	while (pch != NULL)
 	{
-		memcpy((void *)result[i], pch, 8);
+		memcpy((void *)result[i++], pch, strlen(pch));
 		pch = strtok_s(NULL, ",", &next_token);
 	}
 

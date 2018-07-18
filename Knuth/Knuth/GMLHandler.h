@@ -12,6 +12,7 @@
 #include "FileNotExistException.h"
 #include "IncorrectFileFormatException.h"
 #include "DataInvalidFormatException.h"
+#include "FileCreationFailedException.h"
 using std::string;
 using std::ifstream;
 using std::ofstream;
@@ -31,7 +32,24 @@ class GMLHandler : public BioNet::FileHandler
 private:
 
 public:
+	/**
+	 * GMLHandler constructor.
+	 *
+	 * Creates the object and sets extension as "gml".
+	 */
 	GMLHandler() { extension = "gml"; }
+
+	/** 
+	 * Reads a GML file into a Net<T> object.
+	 * 
+	 * Goes line by line reading the nodes and creating them in the Net<T> object,
+	 * then reads the edges and sets them in the appropriate nodes in the Net<T>.
+	 * Checks for wrong source or target nodes and for valid numbers. (No negatives)
+	 *
+	 * @param b Reference to the Net<T> object
+	 * @param fname File path of the GML file
+	 * @return No return value
+	 */
 	template <typename T>
 	static void doRead(Net<T>& b, const string& fname){	
 		ifstream infile;
@@ -43,14 +61,12 @@ public:
 				throw FileNotExistException("File does not exist");		
 		}
 		catch (FileNotExistException ex) {
-
 			cerr << ex.what() << endl;
-			exit(1);
+			return;
 		}
 
 		GMLNode node;
 
-		try {
 			string temp;
 			do {
 				infile >> temp;
@@ -62,7 +78,7 @@ public:
 					{
 						node.id = stoi(temp);
 					}
-					catch (DataInvalidFormatException ex)
+					catch (const std::invalid_argument& ex)
 					{
 						cerr << ex.what() << endl;
 						exit(1);
@@ -85,9 +101,9 @@ public:
 			}
 
 			// temporary vars for reading data
-			unsigned int tempSource;
-			unsigned int tempTarget;
-			T tempWeight;
+			unsigned int tempsource;
+			unsigned int temptarget;
+			T tempweight;
 			do {
 				if (0 == temp.compare("edge"))
 				{
@@ -95,22 +111,22 @@ public:
 
 					try
 					{
-						tempSource = stoi(temp);
+						tempsource = stoi(temp);
 
 						infile >> temp >> temp;
 
-						tempTarget = stoi(temp);
+						temptarget = stoi(temp);
 
 						infile >> temp >> temp;
 
-						tempWeight = stof(temp);
+						tempweight = stof(temp);
 					}
-					catch (DataInvalidFormatException ex)
+					catch (const std::invalid_argument& ex)
 					{
 						cerr << ex.what() << endl;
 						exit(1);
 					}
-					b.setEdge(tempSource, tempTarget, tempWeight);
+					b.setEdge(tempsource, temptarget, tempweight);
 
 				}
 				else
@@ -119,36 +135,39 @@ public:
 					continue;
 				}
 			} while (!infile.eof());
-
-		}
-		catch (IncorrectFileFormatException ex)
-		{
-			cerr << ex.what() << endl;
-			exit(1);
-
-		}
 	}
+
+	/**
+	 *  Writes a GML file from a Net<T> object.
+	 * 
+	 *	Writes line by line reading the nodes in the Net<T> object, then writes the
+	 *	the edges tied to the nodes in the Net<T>. Creates the GML file it it doesn't
+	 *	exist.
+	 *
+	 *	@param net Reference to the Net<T> object
+	 *	@param fname File path of the GML file
+	 *	@return No return value
+	 */
 	template <typename T>
 	static void doWrite(Net<T>& net, const string& fname) {
 		ofstream outfile;
 		try {
 			outfile.open(fname);
 			if (outfile.fail())
-				throw FileNotExistException("File does not exist");
+				throw FileCreationFailedException("Could not create file");
 		}
-		catch (FileNotExistException ex) {
+		catch (FileCreationFailedException ex) {
 
 			cout << ex.what() << endl;
-			exit(1);
+			return;
 		}
+			unsigned int netsize = net.size();
 
-		try {
 			// start of file
 			outfile << "graph [" << "\n";
 
 			// nodes
-			unsigned int netSize = net.size();
-			for (int i = 0; i < netSize; i++) {
+			for (int i = 0; i < netsize; i++) {
 				outfile << "node [" << "\n";
 				outfile << "id " << i << "\n";
 				outfile << "label " << "\"" << net.getNode(i) << "\"" << "\n";
@@ -156,14 +175,14 @@ public:
 			}
 
 			// edges
-			for (int x = 0; x < netSize; x++) {
-				for (int y = 0; y < netSize; y++) {
-					T edgeWeight = net.getEdge(x, y);
-					if(edgeWeight){
+			for (int x = 0; x < netsize; x++) {
+				for (int y = 0; y < netsize; y++) {
+					T edgeweight = net.getEdge(x, y);
+					if(edgeweight){
 						outfile << "edge [" << "\n";
 						outfile << "source " << x << "\n";
 						outfile << "target " << y << "\n";
-						outfile << "weight " << edgeWeight << "\n";
+						outfile << "weight " << edgeweight << "\n";
 						outfile << "]" << "\n";
 					}
 				}
@@ -172,11 +191,6 @@ public:
 			// end of file
 			outfile << "]" << endl;
 			outfile.close();
-		}
-		catch(Exception ex){
-			cout << ex.what() << endl;
-			exit(1);
-		}
 	};
 //	GMLHandler(string p = "") : Reader(p), Writer(p) {};
 //	~GMLHandler();

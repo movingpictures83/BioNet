@@ -56,6 +56,11 @@ int main()
 	cout << "======SHORTEST PATH UNIT TEST======" << endl;
 
 	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
+	
+	cout << endl << "======ADJ BASIC TEST START ======" << endl;
+	BioAdjBasicTest();
+	cout << "======ADJ BASIC TEST END ======" << endl << endl;
+
 	//
 	cout << "======Exception UNIT TEST======" << endl;
 	ExceptionTest();
@@ -65,10 +70,6 @@ int main()
 	cout << "====== Register Test ======" << endl;
 	UnitTestRegister();
 	
-	cout << endl << "======ADJ BASIC TEST START ======" << endl;
-	BioAdjBasicTest();
-	cout << "======ADJ BASIC TEST END ======" << endl << endl;
-
 	cout << "====== BioList Operator Test ======" << endl;
 	
 	cout << "======OPERATOR TEST======" << endl;
@@ -290,6 +291,7 @@ void ExceptionTest()
 	catch (Exception & e)
 	{
 		cout << "First Parameter of getEdge() -" << e.what() << endl;
+		return;
 	}
 
 	try {
@@ -313,7 +315,7 @@ void ExceptionTest()
 void UnitTestRegister()
 {
 	try {
-		Adj<int> * e = AdjFactory::create<int>(AdjMat<int>::NetworkType());
+		Adj<int> * e = AdjFactory::getInstance()->create<int>(AdjMat<int>::NetworkType(), Keyword<int>::value);
 		e->resize(10);
 		auto const val = e->getEdge(0, 0);
 		if (typeid(decltype(val)) == typeid(int))
