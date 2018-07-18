@@ -38,10 +38,15 @@ namespace BioNet {
 		//
 		//
 	private:
+		/// The minimum weight allowed for edges
 		T minweight;
+		/// The maxium weight allowed for edges
 		T maxweight;
+		/// The base network class, created by AdjFactory for downcasting
 		Adj<T>* network;
+		/// A bool to determine if the network has unidirectional edges or not
 		bool directed;
+		/// A string for the type of network being implemented
 		string networkType;
 
 	public:
@@ -80,6 +85,10 @@ namespace BioNet {
 		const bool operator==(const Net& rhs) const { return this->isEqual(rhs); }
 		const bool operator!=(const Net& rhs) const { return !this->isEqual(rhs); }
 
+		/// Assignment operator overload
+		/**
+		@param rhs Net class to set 'this' equal to
+		*/
 		template<class R>
 		const Net<T>& operator=(const Net<R>& rhs)
 		{
@@ -92,7 +101,7 @@ namespace BioNet {
 
 		ostream& operator<<(ostream&) const;
 
-		/// 
+		/// Overloaded operator+=
 		/**
 		
 
@@ -103,6 +112,7 @@ namespace BioNet {
 			return this;
 		}
 
+		/// Overloaded operator+
 		Net<T> operator+(const string& rhs)const
 		{
 			Net<T> bionet = *this;
@@ -151,6 +161,13 @@ namespace BioNet {
 		// Net(-1.0, 1.0);
 	}
 
+	/// Constructor for Net class
+	/**
+	@param min Minimum weight value
+	@param max Maximum weight value
+	@parm isDir Boolean determinng if network is unidirectional
+	@param type The netwowrk type
+	*/
 	template<typename T>
 	Net<T>::Net(const T min, const T max, const bool isDir, const string& type) {
 
@@ -167,6 +184,10 @@ namespace BioNet {
 		}
 	}
 
+	/// Copy constructor for the Net class
+	/**
+	@param rhs Net class to copy
+	*/
 	template<typename T>
 	Net<T>::Net(const Net<T>& rhs) {
 		setRange(rhs.minweight, rhs.maxweight);
@@ -193,13 +214,16 @@ namespace BioNet {
 		rhs.~Net();
 	}
 
+	/// Destructor for the Net class
+	/** Cleans up the network and all associated data inside
+	*/
 	template<typename T>
 	Net<T>::~Net() {
 		if (network != nullptr)
 			delete network;
 	}
 
-	/// Set Range
+	/// Sets the range of edge weights
 	/**
 	@param min Mininum value
 	@param max Maximum value
@@ -280,6 +304,11 @@ namespace BioNet {
 	}
 
 	// Accessors
+	/// Returns an edge based off of given indices
+	/**
+	@param i first index
+	@param j second index
+	*/
 	template<typename T>
 	const T Net<T>::getEdge(const int i, const int j) const {
 		///Converting to a Network Class
@@ -291,6 +320,10 @@ namespace BioNet {
 		return network->getEdge(i, j);
 	}
 
+	/// Returns the name of a node from a given index
+	/**
+	@param i Index of the network to retrieve 
+	*/
 	template<typename T>
 	const string Net<T>::getNode(const int i) const {
 		if (i < 0 || i > network->size())  // corrected from network.size()
@@ -299,6 +332,10 @@ namespace BioNet {
 		return network->getNode(i);
 	}
 
+	/// Resizes the network based off of given size
+	/**
+	@param size new size the resize to
+	*/
 	template<typename T>
 	void Net<T>::resize(const int size) {
 
@@ -354,6 +391,9 @@ namespace BioNet {
 
 	}
 
+	/// Network size accessor
+	/** Returns the size of the network
+	*/
 	template<typename T>
 	const size_t Net<T>::size() const
 	{
@@ -377,6 +417,11 @@ namespace BioNet {
 		return network->degree(index);
 	}
 
+	/// Returns the shortest path between two nodes
+	/**
+	@param start The starting node index
+	@param end The ending node index
+	*/
 	template<typename T>
 	const T Net<T>::shortestPath(const int start, const int end) const {
 
@@ -444,6 +489,9 @@ namespace BioNet {
 		return result;
 	}
 
+	/// Returns the number of edges in the network
+	/**
+	*/
 	template<typename T>
 	const unsigned int Net<T>::numberOfEdges() const {
 		int x = network->numberOfEdges();
@@ -452,11 +500,21 @@ namespace BioNet {
 		return x;
 	}
 
+	/// Deletes an edge between two nodes given the indices
+	/**
+	@param lval The first node index
+	@param rval the second node index
+	*/
 	template<typename T>
 	void Net<T>::deleteEdge(const unsigned int lval, const unsigned int rval) {
 		network->deleteEdge(lval, rval);
 	}
 
+	/// Deletes an edge between two nodes given the node names
+	/**
+	@param lstr The first node name
+	@param rstr the second node name
+	*/
 	template<typename T>
 	void Net<T>::deleteEdge(const string& lstr, const string& rstr) {
 		network->deleteEdge(lstr, rstr);
@@ -464,6 +522,10 @@ namespace BioNet {
 	//
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	/// Overloaded assignment operator
+	/**
+	@param rhs The Net object to set 'this' equal to
+	*/
 	template<typename T>
 	const Net<T>& Net<T>::operator=(const Net<T>& rhs)
 	{
@@ -492,6 +554,7 @@ namespace BioNet {
 	//	network->setNode(network->size() - 1, rhs);
 	//	return *this;
 	//}
+
 
 	template<typename T>
 	ostream& Net<T>::operator<<(ostream& os) const
