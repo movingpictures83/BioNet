@@ -23,7 +23,9 @@ namespace BioNet {
 	class AdjList : public Adj<T>
 	{
 	public:
+		/// A vector of Singly-Linked Lists representing the network
 		vector<List<T>> network;
+		/// The register for the AdjFactory
 		static Register reg;
 	public:
 		/// Used for factory Construction
