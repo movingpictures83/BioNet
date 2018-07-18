@@ -154,7 +154,7 @@ public:
 		try {
 			outfile.open(fname);
 			if (outfile.fail())
-				throw FileCreationFailedException("File does not exist");
+				throw FileCreationFailedException("Could not create file");
 		}
 		catch (FileCreationFailedException ex) {
 
