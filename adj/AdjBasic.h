@@ -61,6 +61,11 @@ namespace BioNet {
 
 		}
 
+		/// Clears edges 
+		/**
+		Clears the existing contents of the edge array
+		*/
+		
 	public:
 		
 		/// Used for factory Construction
@@ -113,11 +118,20 @@ namespace BioNet {
 		*/
 		void setEdge(const int x, const int y, const T w)
 		{
-			if ((x < 0 && x > nTotalNodes) || (y < 0 && y > nTotalNodes))
+			try
 			{
-				throw Exception("Node not found.");
+				if ((x < 0 && x > nTotalNodes) || (y < 0 && y > nTotalNodes))
+				{
+					throw ("Node not found");
+					return;
+				}
+			}
+			catch (std::out_of_range e)
+			{
+				cout << e.what() << endl;
 				return;
 			}
+			
 			
 			string source = arrBNodes[x];
 			string destination = arrBNodes[y];
@@ -269,18 +283,15 @@ namespace BioNet {
 		void resize(const int newSize)
 		{
 			// Resizing of Nodes array
-			if (newSize > nTotalNodes)
+			string* tempArrBNodes = new string[newSize];
+			for (int n = 0; n < newSize; n++)
 			{
-				string* tempArrBNodes = new string[newSize];
-				for (int n = 0; n < nTotalNodes; n++)
-				{
-					tempArrBNodes[n] = arrBNodes[n];
-				}
-				
-				nTotalNodes = newSize;
-				delete[] arrBNodes;
-				arrBNodes = tempArrBNodes;				
+				tempArrBNodes[n] = arrBNodes[n];
 			}
+
+			nTotalNodes = newSize;
+			delete[] arrBNodes;
+			arrBNodes = tempArrBNodes;
 		}
 
 		
@@ -399,17 +410,24 @@ namespace BioNet {
 		void copy(const Adj<T>* rhs) {
 			int test = rhs->size();
 			int abc = 0;
-			/*names.resize(rhs->size());
-			for (unsigned i = 0; i < names.size(); i++) {
-				names[i] = rhs->getNode(i);
+			arrBNodes->resize(rhs->size());
+			
+			for (unsigned i = 0; i < nTotalNodes; i++) {
+				arrBNodes[i] = rhs->getNode(i);
 			}
-			matrix.resize(rhs->size());
+
 			for (unsigned i = 0; i < rhs->size(); i++) {
 				for (unsigned j = 0; j < rhs->size(); j++) {
-					matrix[i][j] = (T)rhs->getEdge(i, j);
-				}
-			}*/
 
+					T weight = rhs->getEdge(i, j);
+					if (weight != 0)
+					{
+						string source = getNode(i);
+						string destination = getNode(j);
+						setEdge(source, destination, weight);
+					}					
+				}
+			}
 		}
 
 

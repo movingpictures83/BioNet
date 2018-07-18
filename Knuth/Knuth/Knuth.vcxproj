@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\exception\DataInvalidFormatException.h" />
     <ClInclude Include="..\..\exception\Exception.h" />
+    <ClInclude Include="..\..\exception\FileCreationFailedException.h" />
     <ClInclude Include="..\..\exception\FileNotExistException.h" />
     <ClInclude Include="..\..\exception\IncorrectFileFormatException.h" />
     <ClInclude Include="..\..\io\FileHandler.h" />
@@ -173,7 +174,6 @@
     <ClInclude Include="..\..\io\Reader.h" />
     <ClInclude Include="..\..\io\Writer.h" />
     <ClInclude Include="..\..\Net.h" />
-    <ClInclude Include="GMLException.h" />
     <ClInclude Include="GMLHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
