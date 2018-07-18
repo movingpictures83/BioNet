@@ -13,10 +13,10 @@ using std::map;
 using std::find_if;
 
 namespace BioNet {
-	/// An Adjacency Basic for BioNet
+	
+	/// Basic Edge structure
 	/**
-	AdjBasic impements an adjacency Basic to represent the Bionet network.
-	It consists of an array of nodes and an array of edges	*/
+	Holds the information for storing the edge. Consists of source, destination and its weight*/
 	template <typename T>
 	struct BasicEdge
 	{
@@ -25,6 +25,10 @@ namespace BioNet {
 		T  weight;
 	};
 
+	/// AdjBasic Class for Bionet
+	/**
+	AdjBasic impements an adjacency Basic to represent the Bionet network.
+	It consists of an array of nodes and an array of edges	*/
 	template <typename T>
 	class AdjBasic : public Adj<T>
 	{
@@ -39,6 +43,10 @@ namespace BioNet {
 		static Register reg;
 	
 	private:
+		/// Resizes edge array
+		/**
+		 Reallocates the size of the edge array and stores the existing edge information into new size
+		*/
 		void resizeEdge()
 		{
 			BasicEdge<T>* tempArrBEdges = new BasicEdge<T>[nTotalEdges << 1];
@@ -57,14 +65,16 @@ namespace BioNet {
 		
 		/// Used for factory Construction
 		/**
+		Used for factory construction
 		@return A new, dynamic instance of AdjList
 		*/
 		static GenericAdj* make()
 		{
 			return new AdjBasic<T>();
 		}
-		/// Specifies the type of the network used to register instances in the factory.
+		/// Returns network type 
 		/**
+		Specifies the type of the network used to register instances in the factory.
 		@return Type name of the network.
 		*/
 		static const string& NetworkType()
@@ -94,8 +104,9 @@ namespace BioNet {
 		}
 		~AdjBasic() {}
 
-		/// Set the edge between two nodes
+		/// Create the edge between two nodes
 		/**
+		Create the edge between two nodes when node index is specified and assigns the weight
 		@param x index of the first node
 		@param y index of the second node
 		@param w weight of the edge
@@ -116,8 +127,9 @@ namespace BioNet {
 			return;
 		}
 
-		/// Set the edge between two nodes
+		/// Create the edge between two nodes
 		/**
+		Create the edge between two nodes  when node name is specified and assigns weight
 		@param x name of the first node
 		@param y name of the second node
 		@param w weight of the edge
@@ -134,8 +146,9 @@ namespace BioNet {
 			nCurEdges++;
 		}
 
-		/// gets the weight of the edge
+		/// Returns the weight of the edge
 		/**
+		Returns the weight assigned for the edge
 		@param x index of the first node
 		@param y index of the second node
 		@return the weight of the edge
@@ -174,8 +187,9 @@ namespace BioNet {
 			return weight;
 		}
 
-		/// sets the node in the network
+		/// Create node
 		/**
+		Creates a node in a network at the specified index
 		@param i index of the node
 		@param s name of the node
 		*/
@@ -189,8 +203,9 @@ namespace BioNet {
 			nCurNodes++;
 		}
 
-		/// gets the name of the node
+		/// Get node name
 		/**
+		Get the name of the node at the specified index
 		@param i index of the node
 		@return the name of the node
 		*/
@@ -199,8 +214,9 @@ namespace BioNet {
 			return arrBNodes[i];
 		}
 
-		/// the size of the network
+		/// Return size of Nodes 
 		/**
+		Returns number of nodes present in the network
 		@return the size of the network
 		*/
 		int size() const
@@ -208,8 +224,9 @@ namespace BioNet {
 			return nCurNodes;
 		}
 
-		/// the degree of a node
+		/// Returns degree
 		/**
+		Returns the degree for the specified node at the index
 		@param x the index of the node
 		@return the total of the edges
 		*/
@@ -234,8 +251,9 @@ namespace BioNet {
 			return degree;
 		}
 
-		/// get the number of edges in the network
+		/// Returns number of edges
 		/**
+		Returns number of edges in a network
 		@return the number of edges
 		*/
 		unsigned int numberOfEdges() const
@@ -243,8 +261,9 @@ namespace BioNet {
 			return nCurEdges;
 		}
 
-		/// resize the AdjList
+		/// Resize Node array
 		/**
+		Resizes the nodes array and copies the existing nodes in array of new size
 		@param newSize the new size of the network
 		*/
 		void resize(const int newSize)
@@ -265,7 +284,7 @@ namespace BioNet {
 		}
 
 		
-		/// find the index of a node
+		/// Returns node index
 		/**
 		Finds the index of a node or returns a BioNetException if not found.
 		@param name the name of the node
@@ -281,8 +300,9 @@ namespace BioNet {
 			return 0;
 		}
 
-		/// delete an edge in the network
+		/// Deletes edge
 		/**
+		Delete an edge in the network
 		@param x the name of the first node
 		@param y the name of the second node
 		*/
@@ -314,8 +334,9 @@ namespace BioNet {
 			arrBEdges = tempArrBEdges;
 		}
 
-		/// delete an edge in the network
+		/// Deletes edge
 		/**
+		Delete an edge in the network
 		@param x the index of the first node
 		@param y the index of the second node
 		*/
@@ -330,8 +351,9 @@ namespace BioNet {
 			}
 		}
 
-		/// delete a node in the network
+		///Delete node  
 		/**
+		Delete a node in the network
 		@param name the name of the node to delete
 		*/
 		void deleteNode(const string & name)
@@ -343,8 +365,9 @@ namespace BioNet {
 			deleteEdge(name, name);
 		}
 
-		/// delete a node in the network
+		/// Delete node
 		/**
+		Delete a node in the network
 		@param index the index of the node to delete
 		*/
 		void deleteNode(const int index)
@@ -368,8 +391,9 @@ namespace BioNet {
 			arrBNodes = tempArrBNodes;			
 		}
 
-		/// create a copy of the network
+		/// Copy network 
 		/**
+		Copies existing network in a new network
 		@param rhs the Adj to copy
 		*/
 		void copy(const Adj<T>* rhs) {
@@ -389,8 +413,9 @@ namespace BioNet {
 		}
 
 
-		/// check if two networks are equal
+		/// Checks equality
 		/**
+		Checks if two networks are equal
 		@param adj the network to compare
 		*/
 		bool isEqual(const Adj<T>* adj)
@@ -401,12 +426,10 @@ namespace BioNet {
 					return false;*/
 			return true;
 		}
-		
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		////ADD TEAM
 
-		/// add a node to the network
+		/// Add node
 		/**
+		Adds a node in a network
 		@param name the name of the node to add
 		*/
 		void addNode(const string& name)
@@ -415,17 +438,9 @@ namespace BioNet {
 			setNode(nCurNodes, name);
 		}
 
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		////EQUALS TEAM
-
-
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		////SCALE TEAM
-
-		/// scale the network by a factor
+		/// Scale up the network
 		/**
+		Scales up the network by a factor specified
 		@param weight the factor to scale by
 		*/
 		void scaleUp(T weight) {
@@ -436,8 +451,9 @@ namespace BioNet {
 			}
 		}
 
-		/// scale the network by a factor
+		/// Scale down the network
 		/**
+		Scales down the network by specified factor
 		@param weight the factor to scale by
 		*/
 		void scaleDown(T weight) {
@@ -446,8 +462,7 @@ namespace BioNet {
 				BasicEdge<T> edge = arrBEdges[n];
 				edge.weight = edge.weight / weight;
 			}
-		}
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
+		}		
 	};
 
 	template<>

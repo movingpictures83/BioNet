@@ -23,7 +23,6 @@ namespace BioNet {
 	public:
 		unordered_map<string, GenericAdj* (*) ()>mFactoryMap;
 		~AdjFactory() { instanceFlag = false; }
-
 		/// Initializes the factory and maintains a single copy of the instance variable.
 		/** Ensures that factory/singleton patterns are enforced to have one single instance.
 
@@ -65,8 +64,11 @@ namespace BioNet {
 		@param type - generic/defined keyword provided for search of function map to retrieve the desired constructor.
 		*/
 		template<typename T>
-		static Adj<T>* create(const string & s) {
-			return mFactoryMap[s]();
+		Adj<T>* create(const string & s) {
+			if (mFactoryMap.count(s) == 0)
+				throw Exception("Error Creating network of type " + s + ".\n");
+			else
+				return static_cast<Adj<T> *>(mFactoryMap[s]());
 		}
 	};
 }
