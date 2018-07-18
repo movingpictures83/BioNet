@@ -39,9 +39,6 @@
     <ClInclude Include="..\..\Net.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GMLException.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GMLHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
