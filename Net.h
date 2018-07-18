@@ -158,7 +158,7 @@ namespace BioNet {
 		directed = isDir;
 		networkType = type;
 		try {
-			network = AdjFactory::create<T>(networkType);
+			network = AdjFactory::getInstance()->create<T>(networkType);
 		}
 		catch (const exception & e)
 		{
