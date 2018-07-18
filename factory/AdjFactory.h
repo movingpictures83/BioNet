@@ -12,6 +12,7 @@ using std::unordered_map;
 
 namespace BioNet {
 
+	/// AdjFactory implements the Factory Pattern for Adj
 	class  AdjFactory {
 
 	private:
@@ -20,10 +21,12 @@ namespace BioNet {
 		AdjFactory() { instanceFlag = false; }
 
 	public:
-
 		unordered_map<string, GenericAdj* (*) ()>mFactoryMap;
 		~AdjFactory() { instanceFlag = false; }
 
+		/// Initializes the factory and maintains a single copy of the instance variable.
+		/** The instance AdjFactory variable, once initialized, will be the only one able to be created (singleton).
+		*/
 		static AdjFactory* getInstance() {
 
 			if (!instanceFlag) {
