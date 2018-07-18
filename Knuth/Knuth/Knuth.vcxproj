@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\exception\DataInvalidFormatException.h" />
     <ClInclude Include="..\..\exception\Exception.h" />
+    <ClInclude Include="..\..\exception\FileCreationFailedException.h" />
     <ClInclude Include="..\..\exception\FileNotExistException.h" />
     <ClInclude Include="..\..\exception\IncorrectFileFormatException.h" />
     <ClInclude Include="..\..\io\FileHandler.h" />

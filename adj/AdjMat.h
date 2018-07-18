@@ -109,6 +109,9 @@ public:
 		}
 	}
 	///Adds node with no edges given a name
+	/**
+	@param aNode Node to be added.
+	*/
 	void addNode (const string& aNode) {
 		unsigned sz = size();
 		resize( sz + 1);
@@ -128,6 +131,9 @@ public:
 		return true;
 	}
 	///Scales up the weights by a given factor
+	/**
+	@param factor number to scale on.
+	*/
 	void scaleUp(const T factor) {
 		unsigned size = names.size();
 		for (unsigned i = 0; i < size; i++)
@@ -135,6 +141,9 @@ public:
 				matrix[i][j] *= factor;
 	}
 	///Scales down the weights by a given factor
+	/**
+	@param factor number to scale on.
+	*/
 	void scaleDown(const T factor) {
 		unsigned size = names.size();
 		for (unsigned i = 0; i < size; i++)
@@ -244,7 +253,7 @@ void AdjMat<T>::setNode(const int index, const string &name)
 	names[index] = name;
 }
 
-/// Returns the nameof a **Node** given its index
+/// Returns the name of a **Node** given its index
 template <typename T>
 string AdjMat<T>::getNode(const int index) const
 {
