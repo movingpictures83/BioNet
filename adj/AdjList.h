@@ -30,10 +30,8 @@ namespace BioNet {
 		/**
 		@return A new, dynamic instance of AdjList
 		*/
-		static GenericAdj* make()
-		{
-			return new AdjList<T>();
-		}
+	
+		static GenericAdj* make() { return new AdjList<T>; }
 		/// Specifies the type of the network used to register instances in the factory.
 		/**
 		@return Type name of the network.

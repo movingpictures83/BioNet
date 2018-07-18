@@ -9,7 +9,6 @@
 
 using std::string;
 using std::unordered_map;
-using std::function;
 
 namespace BioNet {
 
@@ -22,7 +21,7 @@ namespace BioNet {
 
 	public:
 
-		unordered_map<string, function<GenericAdj*(void)>>mFactoryMap;
+		unordered_map<string, GenericAdj* (*) ()>mFactoryMap;
 		~AdjFactory() { instanceFlag = false; }
 
 		static AdjFactory* getInstance() {
@@ -51,7 +50,6 @@ namespace BioNet {
 		@param id - unique string identifier for the function being provided for the map.
 		@param func - unique function for constructing desired underlying type.
 		*/
-		template <typename T>
 		void RegisterType(const string & id, GenericAdj* (*f) ()) { 
 			mFactoryMap[id] = f; 
 		}
@@ -62,10 +60,8 @@ namespace BioNet {
 		@param type - generic/defined keyword provided for search of function map to retrieve the desired constructor.
 		*/
 		template<typename T>
-		Adj<T>* create(string s) {
-
+		static Adj<T>* create(const string & s) {
 			return mFactoryMap[s]();
-
 		}
 	};
 }
