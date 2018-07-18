@@ -29,7 +29,7 @@ private:
 	vector<string> names;
 	static Register reg;
 public:
-	/// Returns the Network **Type** (Matrix, List, etc.) of a Network
+	/// Returns the Network's **Type** (Matrix, List, etc.).
 	static string NetworkType()
 	{
 		//static const string network = "BioAdjMat";
@@ -51,35 +51,38 @@ public:
 			n.resize(size, 0);
 	}
 	~AdjMat() {}
-	///Sets edge given two node indexes and numeric weight.
+	///Sets the edge given two node indexes and numeric weight.
+	/**
+
+	*/
 	void setEdge(const int, const int, const T); 
-	///Sets edge given two node names and numeric weight.
+	///Sets the edge given two node names and numeric weight.
 	void setEdge(const string&, const string&, const T);
-	///Get the weight of the edge given two numeric indexes.
+	///Gets the weight of the edge given two numeric indexes.
 	T getEdge(const int, const int) const;
-	///Get the weight of the edge given two node names
+	///Gets the weight of the edge given two node names
 	T getEdge(const string&, const string&) const;
-	///Set's the node name given an index
+	///Sets the node name given an index
 	void setNode(const int, const string&);
-	///Get the node name given an index
+	///Gets the node name given an index
 	string getNode(const int) const;
-	///Return's the size of the matrix
+	///Returns the size of the matrix
 	int size() const;
-	///Resize the matrix
+	///Resizes the matrix
 	void resize(const int);
-	///Get the degree of the node given an index
+	///Gets the degree of the node given an index
 	T degree(const int) const;
 	///Gets the total number of edges
 	unsigned int numberOfEdges() const;
 	///Returns the index of the node given a name
 	int findNodeIndex(const string&) const;
-	///Delete's the edge given two node names
+	///Deletes the edge given two node names
 	void deleteEdge(const string &, const string &);
-	///Delete's the edge given the two node indexes
+	///Deletes the edge given the two node indexes
 	void deleteEdge(int, int);
-	///Delete node given name
+	///Deletes node given name
 	void deleteNode(const string &);
-	///Delete node given index
+	///Deletes node given index
 	void deleteNode(const int);
 	//BioAdjMat<T> operator+ (const string &);
 	//const AdjMat<T> & operator+= (const string &);
@@ -105,7 +108,7 @@ public:
 			}
 		}
 	}
-	///Add node with no edges given a name
+	///Adds node with no edges given a name
 	void addNode (const string& aNode) {
 		unsigned sz = size();
 		resize( sz + 1);
@@ -293,7 +296,7 @@ void AdjMat<T>::deleteNode(const int nodeIndex)
 		node.erase(node.begin() + nodeIndex);
 }
 
-/// Re-sizes the **Network** to a new given size
+/// Resizes the **Network** to a new given size
 template <typename T>
 void AdjMat<T>::resize(const int size) {
 	if (size <= 0)

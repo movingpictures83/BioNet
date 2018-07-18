@@ -23,7 +23,10 @@ namespace BioNet {
 	class AdjList : public Adj<T>
 	{
 	public:
+		/// A vector of List<T> containing the network.
 		vector<List<T>> network;
+		
+		/// Registers the network type.
 		static Register reg;
 	public:
 		/// Used for factory Construction
@@ -59,7 +62,7 @@ namespace BioNet {
 		}
 		~AdjList() {}
 
-		/// Set the edge between two nodes
+		/// Sets the edge between two nodes
 		/**
 			@param x index of the first node
 			@param y index of the second node
@@ -70,7 +73,7 @@ namespace BioNet {
 			network[x].setWeight(network[y].getName(), w);
 		}
 
-		/// Set the edge between two nodes
+		/// Sets the edge between two nodes
 		/**
 		@param x name of the first node
 		@param y name of the second node
@@ -163,7 +166,7 @@ namespace BioNet {
 			return result;
 		}
 
-		/// get the number of edges in the network
+		/// gets the number of edges in the network
 		/**
 			@return the number of edges
 		*/
@@ -179,7 +182,7 @@ namespace BioNet {
 			return result;
 		}
 		
-		/// resize the AdjList
+		/// resizes the AdjList
 		/**
 			@param newSize the new size of the network
 		*/
@@ -202,7 +205,7 @@ namespace BioNet {
 			network.resize(newSize);
 		}
 
-		/// find the index of a node
+		/// finds the index of a node
 		/**
 			Finds the index of a node or returns a BioNetException if not found.
 			@param name the name of the node
@@ -216,7 +219,7 @@ namespace BioNet {
 			throw Exception("Node not found.");
 		}
 
-		/// delete an edge in the network
+		/// deletes an edge in the network
 		/**
 			@param x the name of the first node
 			@param y the name of the second node
@@ -226,7 +229,7 @@ namespace BioNet {
 			network[findNodeIndex(x)].deleteEdge(y);
 		}
 
-		/// delete an edge in the network
+		/// deletes an edge in the network
 		/**
 			@param x the index of the first node
 			@param y the index of the second node
@@ -236,7 +239,7 @@ namespace BioNet {
 			network[x].deleteEdge(network[y].getName());
 		}
 
-		/// delete a node in the network
+		/// deletes a node in the network
 		/**
 			@param name the name of the node to delete
 		*/
@@ -249,7 +252,7 @@ namespace BioNet {
 			network.erase(network.begin() + index);
 		}
 
-		/// delete a node in the network
+		/// deletes a node in the network
 		/**
 			@param index the index of the node to delete
 		*/
@@ -262,7 +265,7 @@ namespace BioNet {
 			network.erase(network.begin() + index);
 		}
 
-		/// create a copy of the network
+		/// creates a copy of the network
 		/**
 			@param rhs the Adj to copy
 		*/
@@ -273,7 +276,7 @@ namespace BioNet {
 				network[i] = List<T>(_rhs->network[i]);
 		}
 
-		/// check if two networks are equal
+		/// checks whether two networks are equal
 		/**
 			@param adj the network to compare
 		*/
@@ -345,7 +348,7 @@ namespace BioNet {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		////ADD TEAM
 
-		/// add a node to the network
+		/// adds a node to the network
 		/**
 			@param name the name of the node to add
 		*/
@@ -364,7 +367,7 @@ namespace BioNet {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		////SCALE TEAM
 
-		/// scale the network by a factor
+		/// scales the network by a factor
 		/**
 			@param weight the factor to scale by
 		*/
@@ -381,7 +384,7 @@ namespace BioNet {
 			}
 		}
 
-		/// scale the network by a factor
+		/// scales the network by a factor
 		/**
 		@param weight the factor to scale by
 		*/

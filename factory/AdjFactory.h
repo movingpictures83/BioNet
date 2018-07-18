@@ -14,7 +14,7 @@ using std::invalid_argument;
 
 namespace BioNet {
 
-	/// AdjFactory implements the Factory Pattern for Adj
+	/// Implements the Factory Pattern for Adj
 	class  AdjFactory {
 
 	private:
@@ -26,7 +26,9 @@ namespace BioNet {
 		unordered_map<string, GenericAdj* (*) ()>mFactoryMap;
 		~AdjFactory() { instanceFlag = false; }
 		/// Initializes the factory and maintains a single copy of the instance variable.
-		/** The instance AdjFactory variable, once initialized, will be the only one able to be created (singleton).
+		/** Ensures that factory/singleton patterns are enforced to have one single instance.
+
+		@return Unique factory instance to be available at runtime.
 		*/
 		static AdjFactory* getInstance() {
 
