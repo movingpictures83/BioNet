@@ -361,7 +361,7 @@ unsigned int AdjMat<T>::size() const {
 	return names.size();
 }
 
-
+/// Returns the degree of the current Network
 template <typename T>
 T AdjMat<T>::degree(const int index) const {
 	try
@@ -376,6 +376,7 @@ T AdjMat<T>::degree(const int index) const {
 	}
 }
 
+/// Returns the number of edges of the current Network
 template <typename T>
 int AdjMat<T>::numberOfEdges() const {
 	unsigned edges = 0;
