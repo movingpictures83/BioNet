@@ -29,7 +29,11 @@ using BioNet::FileHandler;
 class CSVHandler: public FileHandler
 {
 public:
-	///Method to read the files and populates a bionet
+	/// Method to read the files and populates a bionet
+	/**
+	@param bionet Reference to a **Net** object.
+	@param fname  File name to read from.
+	*/
 	template <typename T>
 	static void doRead(Net<T> &bionet, const string & fname)
 	{
@@ -75,6 +79,11 @@ public:
 	}
 
 	template <typename T>
+	/// Writes the BioNet to a file
+	/**
+	@param bionet Reference to a **Net** object.
+	@param fname  File name to output to.
+	*/
 	static void doWrite(Net<T> &bionet, const string & fname)
 	{
 		ofstream outpuFile(fname, ios::out);
