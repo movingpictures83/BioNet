@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\exception\Exception.cpp" />
+    <ClCompile Include="..\..\factory\AdjFactory.cpp" />
     <ClCompile Include="..\..\io\IO.cpp" />
     <ClCompile Include="Knuth.cpp" />
     <ClCompile Include="stdafx.cpp">

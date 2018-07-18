@@ -12,6 +12,7 @@
 #include "FileNotExistException.h"
 #include "IncorrectFileFormatException.h"
 #include "DataInvalidFormatException.h"
+#include "FileCreationFailedException.h"
 using std::string;
 using std::ifstream;
 using std::ofstream;
@@ -60,14 +61,12 @@ public:
 				throw FileNotExistException("File does not exist");		
 		}
 		catch (FileNotExistException ex) {
-
 			cerr << ex.what() << endl;
-			exit(1);
+			return;
 		}
 
 		GMLNode node;
 
-		try {
 			string temp;
 			do {
 				infile >> temp;
@@ -79,7 +78,7 @@ public:
 					{
 						node.id = stoi(temp);
 					}
-					catch (DataInvalidFormatException ex)
+					catch (const std::invalid_argument& ex)
 					{
 						cerr << ex.what() << endl;
 						exit(1);
@@ -122,7 +121,7 @@ public:
 
 						tempweight = stof(temp);
 					}
-					catch (DataInvalidFormatException ex)
+					catch (const std::invalid_argument& ex)
 					{
 						cerr << ex.what() << endl;
 						exit(1);
@@ -136,14 +135,6 @@ public:
 					continue;
 				}
 			} while (!infile.eof());
-
-		}
-		catch (IncorrectFileFormatException ex)
-		{
-			cerr << ex.what() << endl;
-			exit(1);
-
-		}
 	}
 
 	/**
@@ -163,15 +154,13 @@ public:
 		try {
 			outfile.open(fname);
 			if (outfile.fail())
-				throw FileNotExistException("File does not exist");
+				throw FileCreationFailedException("File does not exist");
 		}
-		catch (FileNotExistException ex) {
+		catch (FileCreationFailedException ex) {
 
 			cout << ex.what() << endl;
-			exit(1);
+			return;
 		}
-
-		try {
 			unsigned int netsize = net.size();
 
 			// start of file
@@ -202,11 +191,6 @@ public:
 			// end of file
 			outfile << "]" << endl;
 			outfile.close();
-		}
-		catch(Exception ex){
-			cerr << ex.what() << endl;
-			exit(1);
-		}
 	};
 //	GMLHandler(string p = "") : Reader(p), Writer(p) {};
 //	~GMLHandler();

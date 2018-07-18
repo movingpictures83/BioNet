@@ -25,6 +25,7 @@ using std::set;
 using std::exception;
 using std::cerr;
 using std::endl;
+using BioNet::Keyword;
 
 namespace BioNet {
 	/*
@@ -158,7 +159,7 @@ namespace BioNet {
 		directed = isDir;
 		networkType = type;
 		try {
-			network = AdjFactory::getInstance()->create<T>(networkType);
+			network = AdjFactory::getInstance()->create<T>(networkType, Keyword<T>::value);
 		}
 		catch (const exception & e)
 		{
