@@ -154,66 +154,94 @@ Register AdjMat<double>::reg = Register("BioAdjMatDouble", &AdjMat::make);
 template <typename T>
 void AdjMat<T>::setEdge(const int i, const int j, const T w)
 {
-	if (i < 0 || i > names.size() || j < 0 || j > names.size())
-		throw Exception("setEdge() has wrong range");
-	matrix[i][j] = w;
+	try 
+	{
+		if (i < 0 || i > names.size() || j < 0 || j > names.size())
+			throw Exception("setEdge() has wrong range");
+		matrix[i][j] = w;
+	}	
+	catch (exception e) 
+	{
+		cerr << e.what() << endl;
+	}
 }
 
 /// Sets the weight of a given **Edge** (by its neightboring Node-Names) in the Network **Matrix**
 template <typename T>
 void AdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 {
-	int i = -1;
-	int j = -1;
+	try
+	{
+		int i = -1;
+		int j = -1;
 
-	// loop through to find indeces
-	for (unsigned x = 0; x < names.size(); x++) {
-		if (!n1.compare(names[x]))
-		{
-			i = x;
+		// loop through to find indeces
+		for (unsigned x = 0; x < names.size(); x++) {
+			if (!n1.compare(names[x]))
+			{
+				i = x;
+			}
+			if (!n2.compare(names[x]))
+			{
+				j = x;
+			}
 		}
-		if (!n2.compare(names[x]))
-		{
-			j = x;
-		}
+
+		if (i == -1 || j == -1) throw Exception("Node not found");
+
+		setEdge(i, j, w);
 	}
-
-	if (i == -1 || j == -1) throw Exception("Node not found");
-
-	setEdge(i, j, w);
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
 }
 
 /// Returns the weight of a given **Edge** (by its indexes) in the Network **Matrix**
 template <typename T>
 T AdjMat<T>::getEdge(const int i, const int j) const {
-	if (i < 0 || i > names.size() || j < 0 || j > names.size())
-		throw Exception("setEdge() has wrong range");
+	try 
+	{
+		if (i < 0 || i > names.size() || j < 0 || j > names.size())
+			throw Exception("setEdge() has wrong range");
 
-	return matrix[i][j];
+		return matrix[i][j];
+	}	
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
 }
 
 /// Returns the weight of a given **Edge** (by its neightboring Node-Names) in the Network **Matrix**
 template <typename T>
 T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 {
-	int i = -1;
-	int j = -1;
+	try
+	{
+		int i = -1;
+		int j = -1;
 
-	// loop through to find indeces
-	for (unsigned x = 0; x < names.size(); x++) {
-		if (!n1.compare(names[x]))
-		{
-			i = x;
+		// loop through to find indeces
+		for (unsigned x = 0; x < names.size(); x++) {
+			if (!n1.compare(names[x]))
+			{
+				i = x;
+			}
+			if (!n2.compare(names[x]))
+			{
+				j = x;
+			}
 		}
-		if (!n2.compare(names[x]))
-		{
-			j = x;
-		}
+
+		if (i == -1 || j == -1) throw Exception("Node not found");
+
+		return getEdge(i, j);
 	}
-
-	if (i == -1 || j == -1) throw Exception("Node not found");
-
-	return getEdge(i, j);
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
 }
 
 /// Returns the internal index of a **Node** given its **Name**
@@ -235,20 +263,27 @@ int AdjMat<T>::findNodeIndex(const string & lookup) const
 template <typename T>
 void AdjMat<T>::setNode(const int index, const string &name)
 {
+	try
+	{
 	if (index < 0 || index >= names.size())
 		throw Exception("Trying to add name out of range");
 
 	names[index] = name;
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
 }
 
 /// Returns the nameof a **Node** given its index
 template <typename T>
 string AdjMat<T>::getNode(const int index) const
-{
+{	
 	if (index < 0 || index >= names.size())
 		throw Exception("Trying to add name out of range");
 
-	return names[index];
+	return names[index];    
 }
 
 /// Removes an **Edge** from the **Network** given its two neighboring Node-names
@@ -266,10 +301,17 @@ void AdjMat<T>::deleteEdge(const string & istr, const string & jstr)
 template <typename T>
 void AdjMat<T>::deleteEdge(const int i, const int j)
 {
-	unsigned size = names.size();
-	if (i < 0 || j < 0 || i >= size || j >= size)
-		throw Exception("Trying to delete invaid edge");
-	matrix[i][j] = 0;
+	try
+	{
+		unsigned size = names.size();
+		if (i < 0 || j < 0 || i >= size || j >= size)
+			throw Exception("Trying to delete invaid edge");
+		matrix[i][j] = 0;
+	}	
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
 }
 
 /// Removes a **Node** from the **Network** given its name
@@ -284,25 +326,33 @@ void AdjMat<T>::deleteNode(const string & nodeName)
 template <typename T>
 void AdjMat<T>::deleteNode(const int nodeIndex)
 {
-	unsigned size = matrix.size();
-	if (nodeIndex < 0 || nodeIndex >= size)
-		throw Exception("Trying to delete invaid Node");
+	try
+	{
+		unsigned size = matrix.size();
+		if (nodeIndex < 0 || nodeIndex >= size)
+			throw Exception("Trying to delete invaid Node");
 
-	matrix.erase(matrix.begin() + nodeIndex);
-	for (auto & node : matrix)
-		node.erase(node.begin() + nodeIndex);
+		matrix.erase(matrix.begin() + nodeIndex);
+		for (auto & node : matrix)
+			node.erase(node.begin() + nodeIndex);
+	}	
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
 }
 
 /// Re-sizes the **Network** to a new given size
 template <typename T>
-void AdjMat<T>::resize(const int size) {
+void AdjMat<T>::resize(const int size) 
+{	
 	if (size <= 0)
 		throw Exception("resize value is invalid");
 	matrix.resize(size);
 	for (unsigned i = 0; i < matrix.size(); i++) {
 		matrix[i].resize(size);
 	}
-	names.resize(size);
+	names.resize(size);	
 }
 
 /// Returns the size of the current **Network**
@@ -314,9 +364,16 @@ unsigned int AdjMat<T>::size() const {
 
 template <typename T>
 T AdjMat<T>::degree(const int index) const {
-	if (index < 0 || index >= matrix.size())
-		throw Exception("Index out of bounds!");
-	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
+	try
+	{
+		if (index < 0 || index >= matrix.size())
+			throw Exception("Index out of bounds!");
+		return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
+	}
+	catch (exception e)
+	{
+		cerr << e.what() << endl;
+	}
 }
 
 template <typename T>
