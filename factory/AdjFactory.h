@@ -21,7 +21,7 @@ namespace BioNet {
 
 	public:
 
-		unordered_map<string, GenericAdj* (*) ()>mFactoryMap;
+		unordered_map<string, GenericAdj* (*) ()> mFactoryMap;
 		~AdjFactory() { instanceFlag = false; }
 
 		static AdjFactory* getInstance() {
@@ -60,7 +60,7 @@ namespace BioNet {
 		@param type - generic/defined keyword provided for search of function map to retrieve the desired constructor.
 		*/
 		template<typename T>
-		static Adj<T>* create(const string & s) {
+		static Adj<T>* create(string s) {
 			return mFactoryMap[s]();
 		}
 	};
