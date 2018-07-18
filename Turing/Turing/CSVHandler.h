@@ -8,7 +8,8 @@
 #include "Writer.h"
 #include <fstream>
 #include <sstream>
-#include "Exception.h"
+#include "FileNotExistException.h"
+#include "DataInvalidFormatException.h"
 #include "FileHandler.h"
 
 using std::ifstream;
@@ -39,8 +40,14 @@ public:
 	{
 		//string filename;
 		ifstream inputFile(fname/*_filename*/, ios::in);
-		if (inputFile.fail())
-			throw Exception("Unable to open given file");
+		try {
+			if (inputFile.fail())
+				throw FileNotExistException("Unable to open given file");
+		}
+		catch(FileNotExistException e){
+			cout << e.what() << endl;
+			exit(1);
+		}
 		string line;
 		//vector <string> col_Values;
 		vector<string> col_Values;
@@ -59,23 +66,22 @@ public:
 		vector <string> row_line;
 		unsigned int row_count = 0;
 		char * rowVal = 0;
-		while (!inputFile.eof())
-		{
-			getline(inputFile, line);
-			if (line == "")
-				continue;
-			rowVal = split2(line, ',', cols - 1);
-
-			//Moving through every row, and setting the col value.
-			for (unsigned int i = 1; i < cols; i++)
+			while (!inputFile.eof())
 			{
-				bionet.setEdge(row_count, i - 1, (T)stod(&rowVal[i]));
+				getline(inputFile, line);
+				if (line == "")
+					continue;
+				rowVal = split2(line, ',', cols - 1);
+
+				//Moving through every row, and setting the col value.
+				for (unsigned int i = 1; i < cols; i++)
+				{
+					bionet.setEdge(row_count, i - 1, (T)stod(&rowVal[i]));
+				}
+				row_count++;
 			}
-			row_count++;
-		}
-
-		free(rowVal);
-
+			/// Make sure the memory gets deallocated
+			free(rowVal);
 	}
 
 	template <typename T>
@@ -86,9 +92,15 @@ public:
 	*/
 	static void doWrite(Net<T> &bionet, const string & fname)
 	{
-		ofstream outpuFile(fname, ios::out);
-		if(!bionet)
-			throw Exception("Bionet doesn't contain any data");
+		try {
+			ofstream outpuFile(fname, ios::out);
+			if (!bionet)
+				throw DataInvalidFormatException("Bionet doesn't contain any data");
+		}
+		catch (DataInvalidFormatException e) {
+			cout << e.what() << endl;
+			exit(1);
+		}
 
 		unsigned int rows = bionet.size();
 		unsigned int row = 0;
@@ -96,32 +108,32 @@ public:
 		//looping throgh columns like a matrix
 		while (row < rows)
 		{
-			if (row == 0)
-			{
-				//setting the nodes names
-				for (unsigned int col = 0; col < bionet.size(); col++)
+				if (row == 0)
 				{
-					if (col == 0)
-						outpuFile << "\"\"";
-					else
+					//setting the nodes names
+					for (unsigned int col = 0; col < bionet.size(); col++)
 					{
-						outpuFile << "," << bionet.getNode(col - 1);
+						if (col == 0)
+							outpuFile << "\"\"";
+						else
+						{
+							outpuFile << "," << bionet.getNode(col - 1);
+						}
 					}
 				}
-			}
-			else
-			{ //setting the edges values 
-				for (unsigned int col = 0; col < bionet.size(); col++)
-				{
-				if(col == 0)
-					outpuFile << bionet.getNode(col);
-				else				
-					outpuFile << "," << bionet.getEdge(row - 1,col - 1);	
-				}
-				outpuFile << "\n";
+				else
+				{ //setting the edges values 
+					for (unsigned int col = 0; col < bionet.size(); col++)
+					{
+						if (col == 0)
+							outpuFile << bionet.getNode(col);
+						else
+							outpuFile << "," << bionet.getEdge(row - 1, col - 1);
+					}
+					outpuFile << "\n";
 
-			}
-			row++;
+				}
+				row++;
 		}	
 	}
 

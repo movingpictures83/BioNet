@@ -6,9 +6,11 @@
 #include <unordered_map>
 #include <functional>
 #include <typeinfo>
+#include <stdexcept>
 
 using std::string;
 using std::unordered_map;
+using std::invalid_argument;
 
 namespace BioNet {
 
@@ -28,47 +30,31 @@ namespace BioNet {
 
 		@return Unique factory instance to be available at runtime.
 		*/
-		static AdjFactory* getInstance() {
-
-			if (!instanceFlag) {
-
-				instance = new AdjFactory();
-
-				instanceFlag = true;
-
-				return instance;
-
-			}
-
-			else
-
-				return instance;
-
-		}
-
-
-
+		static AdjFactory* getInstance();
 		/**
 		Adds the contructing function to mFactoryMap
 
 		@param id - unique string identifier for the function being provided for the map.
 		@param func - unique function for constructing desired underlying type.
 		*/
-		void RegisterType(const string & id, GenericAdj* (*f) ()) { 
-			mFactoryMap[id] = f; 
-		}
-
+		void RegisterType(const string & id, GenericAdj* (*f) ());
 		/**
 		Factory function utilized to create Adj network objects based on user's input and template type
 
 		@param type - generic/defined keyword provided for search of function map to retrieve the desired constructor.
 		*/
 		template<typename T>
-		Adj<T>* create(const string & s) {
+		Adj<T>* create(const string & s, const string& nettype) {
+			
 			if (mFactoryMap.count(s) == 0)
 				throw Exception("Error Creating network of type " + s + ".\n");
-			else
-				return static_cast<Adj<T> *>(mFactoryMap[s]());
+			else {
+				Adj<T>* ret = static_cast<Adj<T> *>(mFactoryMap[s]());
+				if (ret->getKeyword() != nettype) {
+					throw std::invalid_argument("Input nettype does not match the registered Net type.");
+				}
+				return ret;
+			}
 		}
 	};
 }
