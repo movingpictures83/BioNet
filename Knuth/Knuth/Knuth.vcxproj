@@ -173,7 +173,6 @@
     <ClInclude Include="..\..\io\Reader.h" />
     <ClInclude Include="..\..\io\Writer.h" />
     <ClInclude Include="..\..\Net.h" />
-    <ClInclude Include="GMLException.h" />
     <ClInclude Include="GMLHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
