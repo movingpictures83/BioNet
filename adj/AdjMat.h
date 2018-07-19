@@ -244,6 +244,10 @@ int AdjMat<T>::findNodeIndex(const string & lookup) const
 }
 
 /// Sets the name of a **Node** given its internal index
+/**
+	@param index index of the node to set
+	@param name name to set that node to
+*/
 template <typename T>
 void AdjMat<T>::setNode(const int index, const string &name)
 {
@@ -254,6 +258,9 @@ void AdjMat<T>::setNode(const int index, const string &name)
 }
 
 /// Returns the name of a **Node** given its index
+/**
+	@param index index of the node to get
+*/
 template <typename T>
 string AdjMat<T>::getNode(const int index) const
 {
@@ -264,6 +271,10 @@ string AdjMat<T>::getNode(const int index) const
 }
 
 /// Removes an **Edge** from the **Network** given its two neighboring Node-names
+/**
+	@param istr name of the first index of edge
+	@param jstr name of the second index of edge
+*/
 template <typename T>
 void AdjMat<T>::deleteEdge(const string & istr, const string & jstr)
 {
@@ -273,7 +284,10 @@ void AdjMat<T>::deleteEdge(const string & istr, const string & jstr)
 }
 
 /// Removes an **Edge** from the **Network** given its internal indexes
-/**- it does this by setting the value of the **Edge** to 0 in the **Matrix** representation
+/**
+	- it does this by setting the value of the **Edge** to 0 in the **Matrix** representation
+	@param i first index of edge
+	@param j second index of edge
 */
 template <typename T>
 void AdjMat<T>::deleteEdge(const int i, const int j)
@@ -285,27 +299,36 @@ void AdjMat<T>::deleteEdge(const int i, const int j)
 }
 
 /// Removes a **Node** from the **Network** given its name
+/**
+	@param nodename the name of the node to delete
+*/
 template <typename T>
-void AdjMat<T>::deleteNode(const string & nodeName)
+void AdjMat<T>::deleteNode(const string & nodename)
 {
-	int node = findNodeIndex(nodeName);
+	int node = findNodeIndex(nodename);
 	deleteNode(node);
 }
 
 /// Removes a **Node** from the **Network** given its index
+/**
+	@param nodeindex the index of the node to delete
+*/
 template <typename T>
-void AdjMat<T>::deleteNode(const int nodeIndex)
+void AdjMat<T>::deleteNode(const int nodeindex)
 {
 	unsigned size = matrix.size();
-	if (nodeIndex < 0 || nodeIndex >= size)
+	if (nodeindex < 0 || nodeindex >= size)
 		throw Exception("Trying to delete invaid Node");
 
-	matrix.erase(matrix.begin() + nodeIndex);
+	matrix.erase(matrix.begin() + nodeindex);
 	for (auto & node : matrix)
-		node.erase(node.begin() + nodeIndex);
+		node.erase(node.begin() + nodeindex);
 }
 
 /// Resizes the **Network** to a new given size
+/**
+	@param size the new size of the network
+*/
 template <typename T>
 void AdjMat<T>::resize(const int size) {
 	if (size <= 0)
@@ -318,12 +341,19 @@ void AdjMat<T>::resize(const int size) {
 }
 
 /// Returns the size of the current **Network**
+/**
+	@return the size of the network
+*/
 template <typename T>
 int AdjMat<T>::size() const {
 	return names.size();
 }
 
-
+///Gets the degree of the node given an index
+/**	
+	@param x the index of the node
+	@return the total of the edges
+*/
 template <typename T>
 T AdjMat<T>::degree(const int index) const {
 	if (index < 0 || index >= matrix.size())
@@ -331,6 +361,10 @@ T AdjMat<T>::degree(const int index) const {
 	return std::accumulate(matrix[index].begin(), matrix[index].end(), 0.0f);
 }
 
+///Gets the total number of edges
+/**
+	@return the number of edges
+*/
 template <typename T>
 unsigned int AdjMat<T>::numberOfEdges() const {
 	unsigned edges = 0;
@@ -343,247 +377,5 @@ unsigned int AdjMat<T>::numberOfEdges() const {
 		}
 	return edges;
 }
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-////ADD TEAM
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-////EQUALS TEAM
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-////SCALE TEAM
-
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// removing this operator overload in favor of having them only in BioNet
-//template <typename T>
-//BioAdjMat<T> BioAdjMat<T>::addNode (const string& aNode)
-//{
-//	BioAdjMat<T> newAdjMat;
-//	newAdjMat.resize((*this).size() + 1);
-//	for (int i = 0; i < (*this).size(); i++)
-//	{
-//		newAdjMat.names[i] = names[i];
-//		for (int j = 0; j < (*this).size(); j++)
-//		{
-//			newAdjMat.matrix[i][j] = matrix[i][j];
-//		}
-//	}
-//	newAdjMat.names[(*this).size()] = aNode;
-//	return newAdjMat;
-//}
-
-//template <typename T>
-//const BioAdjMat<T> & BioAdjMat<T>::operator/= (const T & factor)
-//{
-//	if (factor > -FLT_EPSILON && factor < FLT_EPSILON)
-//		throw BioNetException("Can't divide 0");
-//	for (int i = 0; i < names.size(); i++)
-//		for (int j = 0; j < names.size(); j++)
-//			matrix[i][j] /= factor;
-//	return (*this);
-//}
-//
-//template <typename T>
-//const BioAdjMat<T> & BioAdjMat<T>::operator*= (const T & factor)
-//{
-//	for (int i = 0; i < names.size(); i++)
-//		for (int j = 0; j < names.size(); j++)
-//			matrix[i][j] *= factor;
-//	return (*this);
-//
-//}
-//
-//template <typename T>
-//bool BioAdjMat<T>::operator== (const BioAdjMat<T>& rhs)
-//{
-//	for (int i = 0; i < names.size(); i++)
-//	{
-//		if (names[i].compare(rhs.names[i]))
-//			return false;
-//		for (int j = 0; j < names.size(); j++)
-//			if (!((matrix[i][j] - rhs.matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs.matrix[i][j]) < FLT_EPSILON))
-//				return false;
-//	}
-//	return true;
-//}
-//
-//template <typename T>
-//bool BioAdjMat<T>::operator!= (const BioAdjMat<T>& rhs)
-//{
-//	for (int i = 0; i < names.size(); i++)
-//	{
-//		if (names[i].compare(rhs.names[i]))
-//			return true;
-//		for (int j = 0; j < names.size(); j++)
-//			if (!((matrix[i][j] - rhs.matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - rhs.matrix[i][j]) < FLT_EPSILON))
-//				return true;
-//	}
-//	return false;
-//}
-
-//template <typename T>
-//const string & BioAdjMat<T>::operator[] (int i)
-//{
-//	if (i < 0 || i > names.size())
-//		throw BioNetException("Index is out of range");
-//	return names[i];
-//}
-//
-//template <typename T>
-//T BioAdjMat<T>::operator() (int i, int j)
-//{
-//	if (i < 0 || i > names.size() || j < 0 || j > names.size())
-//		throw BioNetException("Index is out of range");
-//	return matrix[i][j];
-//}
-//
-//template <typename T>
-//ostream & operator<<(ostream & o, const BioAdjMat<T> & rhs)
-//{
-//	for (int i = 0; i < rhs.size(); i++)
-//	{
-//		o << rhs.getNode(i) << " ";
-//		for (int j = 0; j < rhs.size(); j++)
-//			o << rhs.getEdge(i, j) << " ";
-//		o << endl;
-//	}
-//	return o;
-//}
-
-
-/* OLD CODE FROM BIONET, FOR BioAdjMat.  DO NOT DELETE
-*
-*
-*
-*-BioNet::BioNet(float min, float max, bool dir) {
-// for now start a default unconnected network
--	for (int i = 0; i < NETWORK_SIZE; i++) {
--		names[i] = to_string(i);
--		for (int j = 0; j < NETWORK_SIZE; j++) {
--			network[i][j] = 0.0f;
--		}
--	}
-}
-*
-void BioNet::setEdge(int i, int j, float w) {
--	network->setEdge(i, j, w);
--
--	if (i < 0 || i > network.size())
--	if (j < 0 || j > network.size())
--	network[i][j] = w;
--		if (network[j][i] == 0)
--			network[j][i] = w;
--		if (network[j][i] != w)
--			throw BioNetException("Both directions do not have the same weight");
--	}
-
-void BioNet::setNode(int i, string n) {
--	network->setNode(i, n);
--
--	if (i < 0 || i > network.size())
-names[i] = n;
-}
-
-float BioNet::getEdge(int i, int j) {
--
--	if (i < 0 || i > network.size())
-throw BioNetException("Node is not in the matrix range");
--	if (j < 0 || j > network.size())
-throw BioNetException("Node is not in the matrix range");
--	return network[i][j];
-}
-
-string BioNet::getNode(int i) {
--	if (i < 0 || i > names.size())  // corrected from network.size()
-throw BioNetException("Node is not in the matrix range");
--	return names[i];
-}
-
-
-void BioNet::resize(int size) {
-if (size <= 0)
-throw BioNetException("resize value is invalid");
--	network.resize(size);
--	for (int i = 0; i < network.size(); i++) {
--		network[i].resize(size);
--	}
--
--
--	names.resize(size);
-}
-
-void BioNet::clear() {
--	// network.clear();  // Converting to a Network Class
--	names.clear();
-}
-
-size_t BioNet::size()
-{
--	return network.size();
-}
-
-
--void BioNet::reserve(size_t size)
-if (size < 0)
-throw BioNetException("Size is negative!");
--	names.resize(size);
--	network.reserve(size);
--	for (int i{ 0 }; i < size; i++)
--		network.emplace_back(size);
--}
-
-float BioNet::degree(int index) {  //converting network to vectors - EINSTEIN
--	if (index < 0 || index >= network.size())
-throw BioNetException("Index out of bounds!");
--	return std::accumulate(network[index].begin(), network[index].end(), 0.0f);
-}
-
-float BioNet::shortestPath(int start, int end) {  //converting network to vectors - EINSTEIN
--	if (start < 0 || start > network.size())
-throw BioNetException("Start node is not in the matrix range");
--	if (end < 0 || end > network.size())
-throw BioNetException("End node is not in the matrix range");
-
-float negativeEdges = 0.0;
-if (minweight < 0)
-negativeEdges = minweight * -1 + 1;
--	vector<float> dist(network.size(), std::numeric_limits<float>::max());
--	vector<int> prev(network.size(), -1);
-set<int> vertexSet;
-dist[start] = 0;
--	for (int i = 0; i < network.size(); i++)
-vertexSet.insert(i);
-auto distFunct = bind([](vector<float>& d, int x, int y) {return d[x] < d[y]; }, dist, _1, _2);
-}
-
-int BioNet::numberOfEdges() {  //converting network to vectors - EINSTEIN
--	int edges = 0;
--
--	for (int i = 0; i < network.size(); i++)
--		for (int j = directed ? 0:i ; j < network.size(); j++)
--		{
--			if (network[i][j] < -FLT_EPSILON || network[i][j] > FLT_EPSILON)
--				edges++;
--		}
--	return edges;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
-*
-*
-*
-*
-*
-*
-*
-*/
 
 }
