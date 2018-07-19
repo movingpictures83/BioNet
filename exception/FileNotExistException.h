@@ -8,16 +8,15 @@ using namespace BioNet;
 #include <string>
 using std::string;
 
+/// File not exist exception
 /**
-Inherits from BioNet::Exception
-
-*/
+ * Exception for when a file does not exist when trying to access it.
+ */
 class FileNotExistException : public Exception {
 public:
 	/**
-	Declares FileNotExistException constructor that inherits from BioNet::Exception
-	Takes Exception message as parameter
-
-	*/
+	 * Declares FileNotExistException constructor that inherits from BioNet::Exception
+	 * @param message Exception message
+	 */
 	FileNotExistException(string message) : Exception(message) {}
 };

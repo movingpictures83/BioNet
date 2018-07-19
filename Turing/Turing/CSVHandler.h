@@ -8,7 +8,9 @@
 #include "Writer.h"
 #include <fstream>
 #include <sstream>
-#include "Exception.h"
+#include "FileNotExistException.h"
+#include "DataInvalidFormatException.h"
+#include "FileHandler.h"
 
 using std::ifstream;
 using std::ofstream;
@@ -18,22 +20,36 @@ using std::string;
 using std::cin;
 using std::cout;
 using std::vector;
+using std::stod;
 using BioNet::Net;
 using BioNet::Exception;
+using BioNet::FileHandler;
 
 
-
-class CSVHandler
+/// Inherits from **FileHandler** to handle CSV input files.
+/**
+Inherits from FileHandler to handle CSV input files.
+*/
+class CSVHandler: public FileHandler
 {
 public:
-	///Method to read the files and populates a bionet
+	/// Method to read the files and populates a bionet
+	/**
+	@param bionet Reference to a **Net** object.
+	@param fname  File name to read from.
+	*/
 	template <typename T>
 	static void doRead(Net<T> &bionet, const string & fname)
 	{
-		//string filename;
-		ifstream inputFile(fname/*_filename*/, ios::in);
-		if (inputFile.fail())
-			throw Exception("Unable to open given file");
+		ifstream inputFile(fname);
+		try {
+			if (inputFile.fail())
+				throw FileNotExistException("Unable to open given file");
+		}
+		catch(FileNotExistException e){
+			cout << e.what() << endl;
+			exit(1);
+		}
 		string line;
 		//vector <string> col_Values;
 		vector<string> col_Values;
@@ -45,83 +61,108 @@ public:
 		col_Values = split(line, ',');
 		auto cols = col_Values.size();
 		bionet.resize((int)cols - 1);
-		for (int col = 1; col < cols; col++)
+		for (unsigned int col = 1; col < cols; col++)
 		{
 			bionet.setNode(col - 1, col_Values[col]);
 		}
 		vector <string> row_line;
-		int row_count = 0;
-		while (!inputFile.eof())
-		{
-			getline(inputFile, line);
-			if (line == "")
-				continue;
-			col_Values = split(line, ',');
-			auto row_perCol = col_Values.size();
-			//Verify each row has the same column numbers
-			if (row_perCol != cols)
+		unsigned int row_count = 0;
+		char ** rowVal = 0;
+		int colsize = sizeof(T);
+		auto len = cols * colsize;
+			while (!inputFile.eof())
 			{
-				string error = "Invalid column width for row " + std::to_string(row_count) + "Expected: " + std::to_string(cols)
-					+ " columns recieved: " + std::to_string(row_perCol);
-				throw Exception(error);
-			}
+				getline(inputFile, line);
+				if (line == "")
+					continue;
 
-			//Moving through every row, and setting the col value.
-			for (int i = 1; i < cols; i++)
-			{
-				bionet.setEdge(row_count, i - 1, (T)stod(col_Values[i]));
+				
+				rowVal = split2(line, ',', cols, colsize);
+
+				//Moving through every row, and setting the col value.
+				
+				
+				for (unsigned int i = 0; i < cols - 1; i++)
+				{
+					T aux = (T)stod(rowVal[i]);
+					bionet.setEdge(row_count, i, (T)stod(rowVal[i]));
+				}
+
+				row_count++;
 			}
-			row_count++;
-		}
+			/// Make sure the memory gets deallocated
+			if (rowVal) free(rowVal);
 	}
 
 	template <typename T>
+	/// Writes the BioNet to a file
+	/**
+	@param bionet Reference to a **Net** object.
+	@param fname  File name to output to.
+	*/
 	static void doWrite(Net<T> &bionet, const string & fname)
 	{
-		ofstream outpuFile(fname, ios::out);
-		if(!bionet)
-			throw Exception("Bionet doesn't contain any data");
+		try {
+			ofstream outpuFile(fname, ios::out);
+			if (!bionet)
+				throw DataInvalidFormatException("Bionet doesn't contain any data");
+		}
+		catch (DataInvalidFormatException e) {
+			cout << e.what() << endl;
+			exit(1);
+		}
 
-		int rows = bionet.size();
-		int row = 0;
-		int col = 0;
+		unsigned int rows = bionet.size();
+		unsigned int row = 0;
+		unsigned int col = 0;
 		//looping throgh columns like a matrix
 		while (row < rows)
 		{
-			if (row == 0)
-			{
-				//setting the nodes names
-				for (int col = 0; col < bionet.size(); col++)
+				if (row == 0)
 				{
-					if (col == 0)
-						outpuFile << "\"\"";
-					else
+					//setting the nodes names
+					for (unsigned int col = 0; col < bionet.size(); col++)
 					{
-						outpuFile << "," << bionet.getNode(col - 1);
+						if (col == 0)
+							outpuFile << "\"\"";
+						else
+						{
+							outpuFile << "," << bionet.getNode(col - 1);
+						}
 					}
 				}
-				
-			}
-			else
-			{ //setting the edges values 
-				for (int col = 0; col < bionet.size(); col++)
-				{
-				if(col == 0)
-					outpuFile << bionet.getNode(col);
-				else				
-					outpuFile << "," << bionet.getEdge(row - 1,col - 1);	
-				}
-				outpuFile << "\n";
+				else
+				{ //setting the edges values 
+					for (unsigned int col = 0; col < bionet.size(); col++)
+					{
+						if (col == 0)
+							outpuFile << bionet.getNode(col);
+						else
+							outpuFile << "," << bionet.getEdge(row - 1, col - 1);
+					}
+					outpuFile << "\n";
 
-			}
-			row++;
+				}
+				row++;
 		}	
 	}
 
-	static string getDefaultExt() { return "csv"; }
-//private:
-	//string _filename;
 private :
+	/**
+	Splits the first line of the file into a vector of strings.
+
+	@param s - First line of file
+	@param delim - delimiter for splitting in this case a comma
+	*/
 	static vector<string> split(const string &s, char delim);
+	/**
+	Splits the remaining lines after the first more efficiently by not using a vector.
+
+	@param s - Line to be split
+	@param delim - delimiter for splitting the line
+	@param rows - Number of rows so an array can be initalized with the right size
+	@param colsize - Lenth of the largest column
+	*/
+	static char ** split2(const string &s, const char delim, const int rows , const int colsize);
 };
 

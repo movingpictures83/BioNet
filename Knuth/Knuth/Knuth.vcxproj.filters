@@ -27,9 +27,6 @@
     <ClInclude Include="..\..\exception\IncorrectFileFormatException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\io\File.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\io\IO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,10 +39,13 @@
     <ClInclude Include="..\..\Net.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GMLException.h">
+    <ClInclude Include="GMLHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GMLHandler.h">
+    <ClInclude Include="..\..\io\FileHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\exception\FileCreationFailedException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,6 +60,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\io\IO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\factory\AdjFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

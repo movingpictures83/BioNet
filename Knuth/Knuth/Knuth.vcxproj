@@ -100,12 +100,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../adj/;../../factory/;../../exception/;../../io/;../../</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -141,6 +142,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../adj/;../../factory/;../../exception/;../../io/;../../</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\exception\Exception.cpp" />
+    <ClCompile Include="..\..\factory\AdjFactory.cpp" />
     <ClCompile Include="..\..\io\IO.cpp" />
     <ClCompile Include="Knuth.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -163,14 +166,14 @@
   <ItemGroup>
     <ClInclude Include="..\..\exception\DataInvalidFormatException.h" />
     <ClInclude Include="..\..\exception\Exception.h" />
+    <ClInclude Include="..\..\exception\FileCreationFailedException.h" />
     <ClInclude Include="..\..\exception\FileNotExistException.h" />
     <ClInclude Include="..\..\exception\IncorrectFileFormatException.h" />
-    <ClInclude Include="..\..\io\File.h" />
+    <ClInclude Include="..\..\io\FileHandler.h" />
     <ClInclude Include="..\..\io\IO.h" />
     <ClInclude Include="..\..\io\Reader.h" />
     <ClInclude Include="..\..\io\Writer.h" />
     <ClInclude Include="..\..\Net.h" />
-    <ClInclude Include="GMLException.h" />
     <ClInclude Include="GMLHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

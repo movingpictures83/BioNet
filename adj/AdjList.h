@@ -23,17 +23,18 @@ namespace BioNet {
 	class AdjList : public Adj<T>
 	{
 	public:
+		/// A vector of List<T> containing the network.
 		vector<List<T>> network;
+		
+		/// Registers the network type.
 		static Register reg;
 	public:
 		/// Used for factory Construction
 		/**
 		@return A new, dynamic instance of AdjList
 		*/
-		static GenericAdj* make()
-		{
-			return new AdjList<T>();
-		}
+	
+		static GenericAdj* make() { return new AdjList<T>; }
 		/// Specifies the type of the network used to register instances in the factory.
 		/**
 		@return Type name of the network.
@@ -61,7 +62,7 @@ namespace BioNet {
 		}
 		~AdjList() {}
 
-		/// Set the edge between two nodes
+		/// Sets the edge between two nodes
 		/**
 			@param x index of the first node
 			@param y index of the second node
@@ -72,7 +73,7 @@ namespace BioNet {
 			network[x].setWeight(network[y].getName(), w);
 		}
 
-		/// Set the edge between two nodes
+		/// Sets the edge between two nodes
 		/**
 		@param x name of the first node
 		@param y name of the second node
@@ -121,7 +122,7 @@ namespace BioNet {
 		*/
 		void setNode(const int i, const string& s)
 		{
-			auto oldName = network[i].getName();
+			string oldName = (string)network[i].getName();
 			network[i].setName(s);
 			for (int z = 0; z < network.size(); z++) {
 				if (z != i)
@@ -155,8 +156,8 @@ namespace BioNet {
 		*/
 		T degree(const int x) const
 		{
-			auto node = network[x].front();
-			auto result = 0.0f;
+			Edge<T>* node = network[x].front();
+			float result = 0.0f;
 			while (node)
 			{
 				result += (float) node->getWeight();
@@ -165,37 +166,37 @@ namespace BioNet {
 			return result;
 		}
 
-		/// get the number of edges in the network
+		/// gets the number of edges in the network
 		/**
 			@return the number of edges
 		*/
-		int numberOfEdges() const
+		unsigned int numberOfEdges() const
 		{
-			auto result = 0;
+			unsigned int result = 0;
 			for (size_t i = 0; i < network.size(); i++)
 			{
-				auto node = network[i].front();
+				Edge<T>* node = network[i].front();
 				for(node; node != nullptr; node = node->getNext())
 					result++;
 			}
 			return result;
 		}
 		
-		/// resize the AdjList
+		/// resizes the AdjList
 		/**
 			@param newSize the new size of the network
 		*/
 		void resize(const int newSize)
 		{
-			auto sizeDifference = newSize - network.size();
+			unsigned int networkSize = network.size();
+			int sizeDifference = newSize - networkSize;
 
 			if (sizeDifference < 0) //Last sizeDifference nodes will be destroyed, so the other nodes that have edges to them must be cleaned.
 			{
 				sizeDifference *= -1;
-				auto networkSize = network.size();
 				for (size_t i = networkSize - sizeDifference; i < networkSize; i++)
 				{
-					auto name = network[i].getName();
+					string name = network[i].getName();
 					for (size_t j = 0; j < networkSize - sizeDifference; j++)
 						network[j].deleteEdge(name);
 				}
@@ -204,7 +205,7 @@ namespace BioNet {
 			network.resize(newSize);
 		}
 
-		/// find the index of a node
+		/// finds the index of a node
 		/**
 			Finds the index of a node or returns a BioNetException if not found.
 			@param name the name of the node
@@ -218,7 +219,7 @@ namespace BioNet {
 			throw Exception("Node not found.");
 		}
 
-		/// delete an edge in the network
+		/// deletes an edge in the network
 		/**
 			@param x the name of the first node
 			@param y the name of the second node
@@ -228,7 +229,7 @@ namespace BioNet {
 			network[findNodeIndex(x)].deleteEdge(y);
 		}
 
-		/// delete an edge in the network
+		/// deletes an edge in the network
 		/**
 			@param x the index of the first node
 			@param y the index of the second node
@@ -238,53 +239,44 @@ namespace BioNet {
 			network[x].deleteEdge(network[y].getName());
 		}
 
-		/// delete a node in the network
+		/// deletes a node in the network
 		/**
 			@param name the name of the node to delete
 		*/
 		void deleteNode(const string & name)
 		{
-			auto index = findNodeIndex(name);
+			int index = findNodeIndex(name);
 			for (size_t i = 0; i < network.size(); i++)
 				if (i != index)
 					network[i].deleteEdge(name);
 			network.erase(network.begin() + index);
 		}
 
-		/// delete a node in the network
+		/// deletes a node in the network
 		/**
 			@param index the index of the node to delete
 		*/
 		void deleteNode(int index)
 		{
-			auto name = network[index].getName();
+			string name = network[index].getName();
 			for (size_t i = 0; i < network.size(); i++)
 				if (i != index)
 					network[i].deleteEdge(name);
 			network.erase(network.begin() + index);
 		}
 
-		/// create a copy of the network
+		/// creates a copy of the network
 		/**
 			@param rhs the Adj to copy
 		*/
-		void copy(const Adj<T>* rhs) {
-			auto _rhs = static_cast<const AdjList<T>*>(rhs);
+		void copy(const Adj<T>* rhs) override {
+			const AdjList<T>* _rhs = static_cast<const AdjList<T>*>(rhs);
 			network = vector<List<T>>(_rhs->network.size());
 			for (size_t i = 0; i < _rhs->network.size(); i++)
 				network[i] = List<T>(_rhs->network[i]);
 		}
-		//void addNode(const string& str)
-		//{}
 
-		/// scale the weights of the network
-		/**
-			@param scale the factor to scale the weights
-		*/
-		void scaleWeights(const T& scale)
-		{}
-
-		/// check if two networks are equal
+		/// checks whether two networks are equal
 		/**
 			@param adj the network to compare
 		*/
@@ -356,7 +348,7 @@ namespace BioNet {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		////ADD TEAM
 
-		/// add a node to the network
+		/// adds a node to the network
 		/**
 			@param name the name of the node to add
 		*/
@@ -375,7 +367,7 @@ namespace BioNet {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		////SCALE TEAM
 
-		/// scale the network by a factor
+		/// scales the network by a factor
 		/**
 			@param weight the factor to scale by
 		*/
@@ -392,7 +384,7 @@ namespace BioNet {
 			}
 		}
 
-		/// scale the network by a factor
+		/// scales the network by a factor
 		/**
 		@param weight the factor to scale by
 		*/
@@ -412,11 +404,11 @@ namespace BioNet {
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 	};
 
-	template<>
+	//template<>
 	BioNet::Register BioNet::AdjList<int>::reg = Register("BioAdjListInt", &AdjList<int>::make);
-	template<>
+	//template<>
 	BioNet::Register BioNet::AdjList<float>::reg = Register("BioAdjListFloat", &AdjList<float>::make);
-	template<>
+	//template<>
 	BioNet::Register BioNet::AdjList<double>::reg = Register("BioAdjListDouble", &AdjList<double>::make);
 }
 

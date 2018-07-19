@@ -15,6 +15,15 @@ namespace BioNet {
 	*/
 	//class Adj {};
 
+	template <typename T>
+	struct Keyword {
+		static const string value;
+	};
+
+	const string Keyword<int>::value = "int";
+	const string Keyword<float>::value = "float";
+	const string Keyword<double>::value = "double";
+
 	/// represents a **Network** with a selected implementation type (Matrix, List, etc.)
 	/** - most methods will need to be overrided by each particular **Network** implementation
 	- named methods (copy, isEqual, etc) are suposed to be used in the parent's class overrided operators
@@ -22,7 +31,7 @@ namespace BioNet {
 	template <typename T = float>
 	class Adj : public GenericAdj {
 	protected:
-		string keyword;
+		const string keyword = Keyword<T>::value;
 	public:
 		/// sets an **Edge** given the *indexes* of its neighboring **Nodes**
 		virtual void setEdge(const int, const int, const T) = 0;
@@ -41,7 +50,7 @@ namespace BioNet {
 		/// returns the sum of all weights of the **Edges** in the **Network**
 		virtual T degree(const int) const = 0;
 		/// returns the number of **Edges** in the **Network**
-		virtual int numberOfEdges() const = 0;
+		virtual unsigned int numberOfEdges() const = 0;
 		/// resizes the **Network** to a given size
 		virtual void resize(const int) = 0;
 		/// returns the internal index of a **Node** with the given name
@@ -66,7 +75,7 @@ namespace BioNet {
 		virtual void scaleDown(const T) = 0;
 
 		/// returns the keyword describing the current **Network** implementation
-		const auto& getKeyword() { return keyword; }
+		const string getKeyword() const override { return keyword; }
 
 		/// Copies from another **Network**
 		/** - it will make the current **Network** the same size as the given source

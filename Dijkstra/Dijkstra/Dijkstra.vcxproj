@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\adj\Adj.h" />
+    <ClInclude Include="..\..\adj\AdjBasic.h" />
     <ClInclude Include="..\..\adj\AdjList.h" />
     <ClInclude Include="..\..\adj\AdjMat.h" />
     <ClInclude Include="..\..\adj\Edge.h" />
@@ -175,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\exception\Exception.cpp" />
+    <ClCompile Include="..\..\factory\AdjFactory.cpp" />
     <ClCompile Include="..\..\io\IO.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="stdafx.cpp">

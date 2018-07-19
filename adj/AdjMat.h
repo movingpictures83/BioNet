@@ -29,14 +29,14 @@ private:
 	vector<string> names;
 	static Register reg;
 public:
-	/// Returns the Network **Type** (Matrix, List, etc.) of a Network
+	/// Returns the Network's **Type** (Matrix, List, etc.).
 	static string NetworkType()
 	{
 		//static const string network = "BioAdjMat";
 		//return network;
 	    static const type_info& ti = typeid(AdjMat<T>);
 		string keyword = ti.name();
-		AdjFactory::mFactoryMap.find(keyword) == AdjFactory::mFactoryMap.end() ? Register(keyword, &AdjMat::make) : reg;
+		AdjFactory::getInstance()->mFactoryMap.find(keyword) == AdjFactory::getInstance()->mFactoryMap.end() ? Register(keyword, &AdjMat::make) : reg;
 		return keyword;
 	}
 
@@ -51,35 +51,38 @@ public:
 			n.resize(size, 0);
 	}
 	~AdjMat() {}
-	///Sets edge given two node indexes and numeric weight.
-	void setEdge(const int, const int, const T);
-	///Sets edge given two node names and numeric weight.
+	///Sets the edge given two node indexes and numeric weight.
+	/**
+
+	*/
+	void setEdge(const int, const int, const T); 
+	///Sets the edge given two node names and numeric weight.
 	void setEdge(const string&, const string&, const T);
-	///Get the weight of the edge given two numeric indexes.
+	///Gets the weight of the edge given two numeric indexes.
 	T getEdge(const int, const int) const;
-	///Get the weight of the edge given two node names
+	///Gets the weight of the edge given two node names
 	T getEdge(const string&, const string&) const;
-	///Set's the node name given an index
+	///Sets the node name given an index
 	void setNode(const int, const string&);
-	///Get the node name given an index
+	///Gets the node name given an index
 	string getNode(const int) const;
-	///Return's the size of the matrix
+	///Returns the size of the matrix
 	int size() const;
-	///Resize the matrix
+	///Resizes the matrix
 	void resize(const int);
-	///Get the degree of the node given an index
+	///Gets the degree of the node given an index
 	T degree(const int) const;
 	///Gets the total number of edges
-	int numberOfEdges() const;
+	unsigned int numberOfEdges() const;
 	///Returns the index of the node given a name
 	int findNodeIndex(const string&) const;
-	///Delete's the edge given two node names
+	///Deletes the edge given two node names
 	void deleteEdge(const string &, const string &);
-	///Delete's the edge given the two node indexes
+	///Deletes the edge given the two node indexes
 	void deleteEdge(int, int);
-	///Delete node given name
+	///Deletes node given name
 	void deleteNode(const string &);
-	///Delete node given index
+	///Deletes node given index
 	void deleteNode(const int);
 	//BioAdjMat<T> operator+ (const string &);
 	//const AdjMat<T> & operator+= (const string &);
@@ -95,44 +98,56 @@ public:
 	///Copies rhs into itself.
 	void copy(const Adj<T> * rhs) {
 		names.resize(rhs->size());
-		for (int i = 0; i < names.size(); i++) {
+		for (unsigned i = 0; i < names.size(); i++) {
 			names[i] = rhs->getNode(i);
 		}
 		matrix.resize(rhs->size());
-		for (int i = 0; i < rhs->size(); i++) {
-			for (int j = 0; j < rhs->size(); j++) {
+		for (unsigned i = 0; i < rhs->size(); i++) {
+			for (unsigned j = 0; j < rhs->size(); j++) {
 				matrix[i][j] = (T)rhs->getEdge(i, j);
 			}
 		}
 	}
-	///Add node with no edges given a name
+	///Adds node with no edges given a name
+	/**
+	@param aNode Node to be added.
+	*/
 	void addNode (const string& aNode) {
-		int sz = size();
+		unsigned sz = size();
 		resize( sz + 1);
 		setNode( sz, aNode);
 	}
 	///Checks if rhs is equal 
 	bool isEqual (const Adj<T>* rhs) {
 		auto _rhs = static_cast<const AdjMat<T> *>(rhs);
-		for (int i = 0; i < names.size(); i++) {
+		unsigned size = names.size();
+		for (unsigned i = 0; i < size; i++) {
 			if (names[i].compare(_rhs->names[i]))
 				return false;
-			for (int j = 0; j < names.size(); j++)
+			for (unsigned j = 0; j < size; j++)
 				if (!((matrix[i][j] - _rhs->matrix[i][j]) > -FLT_EPSILON && (matrix[i][j] - _rhs->matrix[i][j]) < FLT_EPSILON))
 					return false;
 		}
 		return true;
 	}
 	///Scales up the weights by a given factor
+	/**
+	@param factor number to scale on.
+	*/
 	void scaleUp(const T factor) {
-		for (int i = 0; i < names.size(); i++)
-			for (int j = 0; j < names.size(); j++)
+		unsigned size = names.size();
+		for (unsigned i = 0; i < size; i++)
+			for (unsigned j = 0; j < size; j++)
 				matrix[i][j] *= factor;
 	}
 	///Scales down the weights by a given factor
+	/**
+	@param factor number to scale on.
+	*/
 	void scaleDown(const T factor) {
-		for (int i = 0; i < names.size(); i++)
-			for (int j = 0; j < names.size(); j++)
+		unsigned size = names.size();
+		for (unsigned i = 0; i < size; i++)
+			for (unsigned j = 0; j < size; j++)
 				matrix[i][j] *= factor;
 	}
 };
@@ -164,7 +179,7 @@ void AdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 	int j = -1;
 
 	// loop through to find indeces
-	for (int x = 0; x < names.size(); x++) {
+	for (unsigned x = 0; x < names.size(); x++) {
 		if (!n1.compare(names[x]))
 		{
 			i = x;
@@ -197,7 +212,7 @@ T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 	int j = -1;
 
 	// loop through to find indeces
-	for (int x = 0; x < names.size(); x++) {
+	for (unsigned x = 0; x < names.size(); x++) {
 		if (!n1.compare(names[x]))
 		{
 			i = x;
@@ -217,10 +232,10 @@ T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 template <typename T>
 int AdjMat<T>::findNodeIndex(const string & lookup) const
 {
-	int index = 0;
-	for (auto node : names)
+	unsigned index = 0;
+	for (unsigned i = 0; i < names.size(); i++)
 	{
-		if (lookup.compare(node))
+		if (lookup.compare(names[i]))
 			return index;
 
 		index++;
@@ -238,7 +253,7 @@ void AdjMat<T>::setNode(const int index, const string &name)
 	names[index] = name;
 }
 
-/// Returns the nameof a **Node** given its index
+/// Returns the name of a **Node** given its index
 template <typename T>
 string AdjMat<T>::getNode(const int index) const
 {
@@ -263,7 +278,7 @@ void AdjMat<T>::deleteEdge(const string & istr, const string & jstr)
 template <typename T>
 void AdjMat<T>::deleteEdge(const int i, const int j)
 {
-	auto size = names.size();
+	unsigned size = names.size();
 	if (i < 0 || j < 0 || i >= size || j >= size)
 		throw Exception("Trying to delete invaid edge");
 	matrix[i][j] = 0;
@@ -273,7 +288,7 @@ void AdjMat<T>::deleteEdge(const int i, const int j)
 template <typename T>
 void AdjMat<T>::deleteNode(const string & nodeName)
 {
-	auto node = findNodeIndex(nodeName);
+	int node = findNodeIndex(nodeName);
 	deleteNode(node);
 }
 
@@ -281,7 +296,7 @@ void AdjMat<T>::deleteNode(const string & nodeName)
 template <typename T>
 void AdjMat<T>::deleteNode(const int nodeIndex)
 {
-	auto size = matrix.size();
+	unsigned size = matrix.size();
 	if (nodeIndex < 0 || nodeIndex >= size)
 		throw Exception("Trying to delete invaid Node");
 
@@ -290,13 +305,13 @@ void AdjMat<T>::deleteNode(const int nodeIndex)
 		node.erase(node.begin() + nodeIndex);
 }
 
-/// Re-sizes the **Network** to a new given size
+/// Resizes the **Network** to a new given size
 template <typename T>
 void AdjMat<T>::resize(const int size) {
 	if (size <= 0)
 		throw Exception("resize value is invalid");
 	matrix.resize(size);
-	for (int i = 0; i < matrix.size(); i++) {
+	for (unsigned i = 0; i < matrix.size(); i++) {
 		matrix[i].resize(size);
 	}
 	names.resize(size);
@@ -317,11 +332,11 @@ T AdjMat<T>::degree(const int index) const {
 }
 
 template <typename T>
-int AdjMat<T>::numberOfEdges() const {
-	int edges = 0;
+unsigned int AdjMat<T>::numberOfEdges() const {
+	unsigned edges = 0;
 
-	for (int i = 0; i < matrix.size(); i++)
-		for (int j = 0; j < matrix[i].size(); j++)
+	for (unsigned i = 0; i < matrix.size(); i++)
+		for (unsigned j = 0; j < matrix[i].size(); j++)
 		{
 			if (matrix[i][j] < -FLT_EPSILON || matrix[i][j] > FLT_EPSILON)
 				edges++;

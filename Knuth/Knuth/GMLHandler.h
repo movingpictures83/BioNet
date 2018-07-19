@@ -6,12 +6,13 @@
 #include "Net.h"
 #include "Reader.h"
 #include "Writer.h"
-#include "File.h"
+#include "FileHandler.h"
 #include "List.h"
 #include <vector>
 #include "FileNotExistException.h"
 #include "IncorrectFileFormatException.h"
 #include "DataInvalidFormatException.h"
+#include "FileCreationFailedException.h"
 using std::string;
 using std::ifstream;
 using std::ofstream;
@@ -20,24 +21,44 @@ using std::fixed;
 using std::endl;
 using std::vector;
 
+/// GMLNode struct
+/**
+	GMLNode struct holds node id and a label 
+*/
 struct GMLNode {
+	///Node ID
 	unsigned int id;
+	///Node label
 	string label;
 };
-template <typename T>
-struct GMLEdge {
-	unsigned int source;
-	unsigned int target;
-	T weight;
-};
 
-
+/// GMLHandler subclass of FileHandler 
+/**
+	Used to read or write GML files
+*/
 class GMLHandler : public BioNet::FileHandler
 {
 private:
 
 public:
+	/**
+	 * GMLHandler constructor.
+	 *
+	 * Creates the object and sets extension as "gml".
+	 */
 	GMLHandler() { extension = "gml"; }
+
+	/** 
+	 * Reads a GML file into a Net<T> object.
+	 * 
+	 * Goes line by line reading the nodes and creating them in the Net<T> object,
+	 * then reads the edges and sets them in the appropriate nodes in the Net<T>.
+	 * Checks for wrong source or target nodes and for valid numbers. (No negatives)
+	 *
+	 * @param b Reference to the Net<T> object
+	 * @param fname File path of the GML file
+	 * @return No return value
+	 */
 	template <typename T>
 	static void doRead(Net<T>& b, const string& fname){	
 		ifstream infile;
@@ -45,17 +66,16 @@ public:
 		nodes.reserve(20);
 		try {
 			infile.open(fname);
+			if (infile.fail())
+				throw FileNotExistException("File does not exist");		
 		}
 		catch (FileNotExistException ex) {
-
-			cout << ex.what() << endl;
-			exit(1);
+			cerr << ex.what() << endl;
+			return;
 		}
 
 		GMLNode node;
-		GMLEdge<T> edge;
 
-		try {
 			string temp;
 			do {
 				infile >> temp;
@@ -67,9 +87,9 @@ public:
 					{
 						node.id = stoi(temp);
 					}
-					catch (DataInvalidFormatException ex)
+					catch (const std::invalid_argument& ex)
 					{
-						cout << ex.what() << endl;
+						cerr << ex.what() << endl;
 						exit(1);
 					}
 					infile >> temp >> temp;
@@ -83,11 +103,16 @@ public:
 				else continue;
 			} while (!infile.eof());
 
+			b.resize(nodes.size());
 			for (size_t i = 0; i < nodes.size(); i++)
 			{
 				b.setNode(nodes[i].id, nodes[i].label);
 			}
 
+			// temporary vars for reading data
+			unsigned int tempsource;
+			unsigned int temptarget;
+			T tempweight;
 			do {
 				if (0 == temp.compare("edge"))
 				{
@@ -95,22 +120,22 @@ public:
 
 					try
 					{
-						edge.source = stoi(temp);
+						tempsource = stoi(temp);
 
 						infile >> temp >> temp;
 
-						edge.target = stoi(temp);
+						temptarget = stoi(temp);
 
 						infile >> temp >> temp;
 
-						edge.weight = stof(temp);
+						tempweight = stof(temp);
 					}
-					catch (DataInvalidFormatException ex)
+					catch (const std::invalid_argument& ex)
 					{
-						cout << ex.what() << endl;
+						cerr << ex.what() << endl;
 						exit(1);
 					}
-					b.setEdge(edge.source, edge.target, edge.weight);
+					b.setEdge(tempsource, temptarget, tempweight);
 
 				}
 				else
@@ -119,21 +144,62 @@ public:
 					continue;
 				}
 			} while (!infile.eof());
-
-		}
-		catch (IncorrectFileFormatException ex)
-		{
-			cout << ex.what() << endl;
-			exit(1);
-
-		}
 	}
+
+	/**
+	 *  Writes a GML file from a Net<T> object.
+	 * 
+	 *	Writes line by line reading the nodes in the Net<T> object, then writes the
+	 *	the edges tied to the nodes in the Net<T>. Creates the GML file it it doesn't
+	 *	exist.
+	 *
+	 *	@param net Reference to the Net<T> object
+	 *	@param fname File path of the GML file
+	 *	@return No return value
+	 */
 	template <typename T>
-	static void doWrite(Net<T>&, const string& fname) {
-		return;
+	static void doWrite(Net<T>& net, const string& fname) {
+		ofstream outfile;
+		try {
+			outfile.open(fname);
+			if (outfile.fail())
+				throw FileCreationFailedException("Could not create file");
+		}
+		catch (FileCreationFailedException ex) {
+
+			cout << ex.what() << endl;
+			return;
+		}
+			unsigned int netsize = net.size();
+
+			// start of file
+			outfile << "graph [" << "\n";
+
+			// nodes
+			for (int i = 0; i < netsize; i++) {
+				outfile << "node [" << "\n";
+				outfile << "id " << i << "\n";
+				outfile << "label " << "\"" << net.getNode(i) << "\"" << "\n";
+				outfile << "]" << "\n";
+			}
+
+			// edges
+			for (int x = 0; x < netsize; x++) {
+				for (int y = 0; y < netsize; y++) {
+					T edgeweight = net.getEdge(x, y);
+					if(edgeweight){
+						outfile << "edge [" << "\n";
+						outfile << "source " << x << "\n";
+						outfile << "target " << y << "\n";
+						outfile << "weight " << edgeweight << "\n";
+						outfile << "]" << "\n";
+					}
+				}
+			}
+
+			// end of file
+			outfile << "]" << endl;
+			outfile.close();
 	};
-//	GMLHandler(string p = "") : Reader(p), Writer(p) {};
-//	~GMLHandler();
-//	string getDefaultExt() { return ".gml"; }
 };
 

@@ -11,7 +11,10 @@ using std::endl;
 using BioNet::IO;
 
 namespace BioNet {
-	///Subclass of IO used to write in files given a file handler
+	/// Writer subclass of IO
+	/**
+	 * Subclass of IO used to write in files given a file handler
+	 */
 	class Writer : public IO {
 
 	public:
@@ -29,9 +32,9 @@ namespace BioNet {
 		not the provided path will be used
 		*/
 		template <typename R, typename T>
-		void writeFile(Net<T>& bn, string& fname, bool useDefault = true)
+		static void writeFile(Net<T>& bn, string& fname, bool useDefault = true)
 		{
-			fname = (useDefault ? defaultPath : "") + fname;
+			fname = (useDefault ? defaultpath : "") + fname;
 			R::doWrite(bn, fname);
 		};
 	};

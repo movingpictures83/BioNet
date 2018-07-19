@@ -50,6 +50,9 @@ namespace BioNet
 		List() : head(nullptr) {}
 		/// Copy constructor
 		List(const List<T>& copy) {
+			this->name = copy.name;
+			this->head = nullptr;
+
 			for (auto node = copy.head; node != nullptr; node = node->getNext())
 				insertFront(node->getWeight(), node->getName());
 		}
@@ -80,6 +83,8 @@ namespace BioNet
 		@param New weight of the edge.
 		*/
 		bool setWeight(const string& name, const T weight) {
+			if (!search(name))
+				head = insertFront(weight, name);
 			auto * current = head;
 			while (current)
 			{
@@ -109,7 +114,7 @@ namespace BioNet
 		@param New name for the destination node on an edge.
 		*/
 		void setEdgeName(const string& oldName, const string& newName) {
-			auto* node = head;
+			Edge<T>* node = head;
 			while (node)
 			{
 				if (node->getName() == oldName)
@@ -117,6 +122,7 @@ namespace BioNet
 					node->setName(newName);
 					break;
 				}
+				node = node->getNext();
 			}
 		}
 
@@ -164,6 +170,7 @@ namespace BioNet
 		void clear()
 		{
 			recursiveClear(head);
+			head = nullptr;
 		}
 
 		/// Get accessor method for the head of the linked list of edges.

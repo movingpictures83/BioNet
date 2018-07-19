@@ -13,6 +13,7 @@
 #include "..\..\exception\Exception.h"
 #include "..\..\factory\AdjFactory.h"
 #include "..\..\adj\AdjMat.h"
+#include "..\..\adj\AdjBasic.h"
 
 using std::string;
 using std::to_string;
@@ -31,9 +32,11 @@ void UnitTestRegister();
 bool BioListTest();
 bool BioListOperatorTest();
 bool BioAdjListTest();
+void BioAdjBasicTest();
 bool OperatorTest();
 bool OperatorsTest();
 Net<int> createTestBioNet_BioAdjListInt(int size);
+
 
 bool fequal(float a, float b) {
 	return fabs(b - a) < FLT_EPSILON;
@@ -41,6 +44,7 @@ bool fequal(float a, float b) {
 
 int main()
 {
+	
 	cout << "======BIOLIST TEST======" << endl;
 	BioListTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 	cout << "======BIOADJLIST TEST======" << endl;
@@ -52,6 +56,11 @@ int main()
 	cout << "======SHORTEST PATH UNIT TEST======" << endl;
 
 	ShortestPathUnitTest() ? cout << "PASSED" << endl :  cout << "FAILED" << endl;
+	
+	cout << endl << "======ADJ BASIC TEST START ======" << endl;
+	BioAdjBasicTest();
+	cout << "======ADJ BASIC TEST END ======" << endl << endl;
+
 	//
 	cout << "======Exception UNIT TEST======" << endl;
 	ExceptionTest();
@@ -60,14 +69,70 @@ int main()
 	
 	cout << "====== Register Test ======" << endl;
 	UnitTestRegister();
-	 
+	
 	cout << "====== BioList Operator Test ======" << endl;
 	
 	cout << "======OPERATOR TEST======" << endl;
 	OperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 
+	cout << "======BIO LIST OPERATOR TEST======" << endl;
 	BioListOperatorTest() ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	
+	
+
 	return 0;
+}
+
+void BioAdjBasicTest()
+{
+	AdjBasic<float> arr(3);
+	arr.setNode(0, "A");
+	arr.setNode(1, "B");
+	
+	arr.setEdge("A", "B", 0.5);
+	arr.setEdge("B", "A", -0.5);
+	arr.setEdge("A", "A", 1.0);
+	arr.setEdge("B", "B", 1.0);
+	
+	// Add New Node
+	arr.setNode(2, "C");
+
+	arr.setEdge("A", "C", 0.7);
+	arr.setEdge("B", "C", 0.8);
+	arr.setEdge("C", "C", 1.0);
+
+	AdjBasic<float> copyarr(3);
+	//arr.copy(arr<T>);
+	
+	// Testing of GetEdge Function
+	float nWeight = 0.0;
+	nWeight = arr.getEdge("A", "B");
+	if (fequal(nWeight,0.5))
+		cout << "1. ADJ BASIC TEST WEIGHT PASSED" << endl;
+	else
+		cout << "1. ADJ BASIC TEST WEIGHT FAILED" << endl;
+
+	// Testing of Find Node Index
+	int index = arr.findNodeIndex("C");
+	if(index ==2)
+		cout << "2. ADJ BASIC FIND NODE INDEX PASSED" << endl;
+	else
+		cout << "2. ADJ BASIC FIND NODE INDEX FAILED" << endl;
+
+	// Testing for degree
+	float degree = arr.degree(0);  // Get degree for Node -'A'
+	if (fequal(degree,1.7))
+		cout << "3. ADJ BASIC TEST DEGREE PASSED" << endl;
+	else
+		cout << "3. ADJ BASIC TEST DEGREE FAILED" << endl;
+
+	
+	// Testing for Node Delete
+	arr.deleteNode("A");
+	if(arr.size() == 2 && arr.numberOfEdges() == 3)
+		cout << "4. ADJ BASIC NODE & EDGE DELETE PASSED" << endl;
+	else
+		cout << "4. ADJ BASIC NODE & EDGE DELETE FAILED" << endl;
 }
 
 bool OperatorsTest() {
@@ -189,7 +254,16 @@ bool UnitTest()
 		TestBio.setNode(i, to_string(i));
 		for (int j{ 0 }; j < TestBio.size(); j++)
 		{
-			float amount = (i+j) % 5 == 0 ? 0.0f : (static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+
+			float amount = (i + j) % 5 == 0 ? 0.0f : (static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+			float amount1 = TestBio.getEdge(j, i);
+			if ( amount1 != 0)
+			{
+				amount = amount1;
+				int test = 0;
+				test = 1;
+			}
+			
 			TestBio.setEdge( i, j, ((i + j) % 2 == 0 ? -1 : 1) * amount);
 			if (amount > FLT_EPSILON || amount < -FLT_EPSILON)
 				nEdges++;
@@ -217,6 +291,7 @@ void ExceptionTest()
 	catch (Exception & e)
 	{
 		cout << "First Parameter of getEdge() -" << e.what() << endl;
+		return;
 	}
 
 	try {
@@ -240,7 +315,7 @@ void ExceptionTest()
 void UnitTestRegister()
 {
 	try {
-		Adj<int> * e = AdjFactory::create<int>(AdjMat<int>::NetworkType());
+		Adj<int> * e = AdjFactory::getInstance()->create<int>(AdjMat<int>::NetworkType(), Keyword<int>::value);
 		e->resize(10);
 		auto const val = e->getEdge(0, 0);
 		if (typeid(decltype(val)) == typeid(int))

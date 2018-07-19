@@ -11,7 +11,10 @@ using std::endl;
 using BioNet::IO;
 
 namespace BioNet {
-	///Subclass of IO used to read in files given a file handler
+	/// Reader subclass of IO
+	/** 
+	Subclass of IO used to read in files given a file handler
+	*/
 	class Reader : public IO {
 	protected:  // Accessible in Reader and classes that inherit from Reader
 
@@ -28,10 +31,10 @@ namespace BioNet {
 		not the provided path will be used
 		*/
 		template <class R, class T>
-		static void readFile(Net<T>& bn, const string& fname, bool useDefault = true)
+		static void readFile(Net<T>& bn, const string& fname, bool usedefault = true)
 		{
-			string fullFname = (useDefault ? IO::getDefaultPath() : "") + fname;
-			R::doRead(bn, fullFname);
+			string fullfilename = (usedefault ? IO::getDefaultPath() : "") + fname;
+			R::doRead(bn, fullfilename);
 		}
 	};
 }

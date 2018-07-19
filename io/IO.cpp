@@ -7,5 +7,5 @@ using std::string;
 
 namespace BioNet {
 	///Set default path
-	string BioNet::IO::defaultPath = "C:\\Users\\student\\Desktop\\BioNet\\data\\Basic\\three_triads\\";
+	string BioNet::IO::defaultpath = "C:\\Users\\student\\Desktop\\BioNet\\data\\Basic\\three_triads\\";
 }
