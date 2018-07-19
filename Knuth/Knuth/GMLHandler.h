@@ -21,12 +21,21 @@ using std::fixed;
 using std::endl;
 using std::vector;
 
+/// GMLNode struct
+/**
+	GMLNode struct holds node id and a label 
+*/
 struct GMLNode {
+	///Node ID
 	unsigned int id;
+	///Node label
 	string label;
 };
 
-
+/// GMLHandler subclass of FileHandler 
+/**
+	Used to read or write GML files
+*/
 class GMLHandler : public BioNet::FileHandler
 {
 private:
@@ -192,8 +201,5 @@ public:
 			outfile << "]" << endl;
 			outfile.close();
 	};
-//	GMLHandler(string p = "") : Reader(p), Writer(p) {};
-//	~GMLHandler();
-//	string getDefaultExt() { return ".gml"; }
 };
 

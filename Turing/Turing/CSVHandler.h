@@ -10,6 +10,7 @@
 #include <sstream>
 #include "FileNotExistException.h"
 #include "DataInvalidFormatException.h"
+#include "NoMemoryAllocatedException.h"
 #include "FileHandler.h"
 
 using std::ifstream;
@@ -26,10 +27,7 @@ using BioNet::Exception;
 using BioNet::FileHandler;
 
 
-/// Inherits from **FileHandler** to handle CSV input files.
-/**
-Inherits from FileHandler to handle CSV input files.
-*/
+
 class CSVHandler: public FileHandler
 {
 public:
@@ -103,7 +101,7 @@ public:
 	static void doWrite(Net<T> &bionet, const string & fname)
 	{
 		try {
-			ofstream outpuFile(fname, ios::out);
+			ofstream outputFile(fname, ios::out);
 			if (!bionet)
 				throw DataInvalidFormatException("Bionet doesn't contain any data");
 		}
@@ -147,10 +145,22 @@ public:
 		}	
 	}
 
-//private:
-	//string _filename;
 private :
+	/**
+	Splits the first line of the file into a vector of strings.
+
+	@param s - First line of file
+	@param delim - delimiter for splitting in this case a comma
+	*/
 	static vector<string> split(const string &s, char delim);
+	/**
+	Splits the remaining lines after the first more efficiently by not using a vector.
+
+	@param s - Line to be split
+	@param delim - delimiter for splitting the line
+	@param rows - Number of rows so an array can be initalized with the right size
+	@param colsize - Lenth of the largest column
+	*/
 	static char ** split2(const string &s, const char delim, const int rows , const int colsize);
 };
 

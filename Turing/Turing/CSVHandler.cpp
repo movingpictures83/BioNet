@@ -13,7 +13,7 @@ vector <string> CSVHandler::split(const string &s, const char delim) {
 	while (pch != NULL)
 	{
 		result.push_back(pch);
-		pch = strtok_s(NULL, ",", &next_token);
+		pch = strtok_s(NULL, &delim, &next_token);
 	}
 	return result;
 }
@@ -21,14 +21,26 @@ vector <string> CSVHandler::split(const string &s, const char delim) {
 
 char ** CSVHandler::split2(const string &s, const char delim, const int rows, const int colsize)
 {
-	char ** result = (char **)malloc(rows*sizeof(char *));
-	if (0 == result)
+	char ** result = (char **)malloc(rows * sizeof(char *));
+	try {
+		if (0 == result)
+		throw NoMemoryAllocatedException("There is no memory allocated");
+	}
+	catch (NoMemoryAllocatedException e) {
+		cout << e.what() << endl;
 		return 0;
+	}
 	for (int i = 0; i < rows; i++)
 	{
 		result[i] = (char *)malloc(colsize);
-		if (0 == result[i])
+		try {
+			if (0 == result[i])
+				throw NoMemoryAllocatedException("There is no memory allocated");
+		}
+		catch (NoMemoryAllocatedException e) {
+			cout << e.what() << endl;
 			return 0;
+		}
 		memset((void *)result[i], 0, colsize);
 	}
 	char * str_s = (char *)s.c_str();
