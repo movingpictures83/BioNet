@@ -14,7 +14,14 @@ using std::invalid_argument;
 
 namespace BioNet {
 
-	/// Implements the Factory Pattern for Adj
+	/**
+	Implements Factory Pattern for GenericAdj 
+
+	Contains a map of strings to funtion pointers for making children of GenericAdj
+
+	Uses a static instance pointer so that the class is a singleton.
+
+	*/
 	class  AdjFactory {
 
 	private:
