@@ -27,16 +27,15 @@ using std::cerr;
 using std::endl;
 
 namespace BioNet {
-	/*
-		Network class	
-	
+	/// Network class
+	/**
+		Net class implements collection of nodes which are connected by edges.
+		The connection can be unidirectional or bidirectional. Each edge has a 
+		defined weight that must fall within the minimum and maximum allowed weight 
+		for edges.	
 	*/
 	template<typename T>
-	class Net {
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// MORNING COHORT EINSTEIN
-		//
-		//
+	class Net {		
 	private:
 		/// The minimum weight allowed for edges
 		T minweight;
@@ -103,8 +102,7 @@ namespace BioNet {
 
 		/// Overloaded operator+=
 		/**
-		
-
+		@param rhs Net class to set 'this' equal to
 		*/
 		Net<T>* operator+=(const string& rhs)
 		{
@@ -113,6 +111,9 @@ namespace BioNet {
 		}
 
 		/// Overloaded operator+
+		/**
+		@param rhs Net class to set 'this' equal to
+		*/
 		Net<T> operator+(const string& rhs)const
 		{
 			Net<T> bionet = *this;
@@ -125,35 +126,21 @@ namespace BioNet {
 
 		Net<T> operator/(const T)const;
 		const Net<T>& operator/=(const T) const;
-
 		
-	   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	   // AFTERNOON COHORT DIJKSTRA
-	   //
-	   /// 
-	   /**
-		
-
-	   */
 		void convertToType(const string&);
 		const T degree(const int) const;
 		//void reserve(size_t);
 		const size_t size() const;
 		const unsigned int numberOfEdges() const;
 
-		//
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	};
 
-
-	// Moving All templated implementation to the Header so it works as expected
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// MORNING COHORT EINSTEIN
-	//
-	//
-
+	// Moving All templated implementation to the Header so it works as expected	
+	/// Constructor for Net class to create an unconnected network with a default range
+	/**
+	@param min Minimum weight value
+	@param max Maximum weight value
+	*/
 	template<typename T>
 	Net<T>::Net() : Net(-1.0, 1.0) {
 		// for now start a default unconnected network with default range
@@ -170,11 +157,11 @@ namespace BioNet {
 	*/
 	template<typename T>
 	Net<T>::Net(const T min, const T max, const bool isDir, const string& type) {
-
-		setRange(min, max);
-		directed = isDir;
-		networkType = type;
+		
 		try {
+			setRange(min, max);
+			directed = isDir;
+			networkType = type;
 			network = AdjFactory::create<T>(networkType);
 		}
 		catch (const exception & e)
@@ -190,10 +177,11 @@ namespace BioNet {
 	*/
 	template<typename T>
 	Net<T>::Net(const Net<T>& rhs) {
-		setRange(rhs.minweight, rhs.maxweight);
-		directed = rhs.directed;
-		networkType = rhs.networkType;
+		
 		try {
+			setRange(rhs.minweight, rhs.maxweight);
+			directed = rhs.directed;
+			networkType = rhs.networkType;
 			network = AdjFactory::create(networkType);
 			*network = *rhs.network;
 		}
@@ -205,6 +193,10 @@ namespace BioNet {
 		}
 	}
 
+	/// Move constructor for the Net class
+	/**
+	@param rhs Net class to move
+	*/
 	template<typename T>
 	Net<T>::Net(Net<T>&& rhs) {
 		setRange(rhs.minweight, rhs.maxweight);
@@ -266,7 +258,7 @@ namespace BioNet {
 		}
 	}
 
-	/// Set Edge
+	/// Set the edge from one node to another
 	/*
 	@param n1 origin node
 	@param n2 destination node
@@ -289,7 +281,7 @@ namespace BioNet {
 		
 	}
 
-	/// Set Node
+	/// Set the edge from one node to another
 	/**
 	@param i node, should be present in the matrix
 	@param n name of the node
@@ -299,8 +291,12 @@ namespace BioNet {
 		/// Converting to a Network Class
 		if (i < 0 || i > network->size())
 			throw Exception("Node is not in the matrix range");
-
-		network->setNode(i, n);
+		try{
+			network->setNode(i, n);
+		}
+		catch (exception e) {
+			cerr << e.what() << endl;
+		}
 	}
 
 	// Accessors
@@ -308,6 +304,7 @@ namespace BioNet {
 	/**
 	@param i first index
 	@param j second index
+	@return Edge between the secified nodes
 	*/
 	template<typename T>
 	const T Net<T>::getEdge(const int i, const int j) const {
@@ -317,19 +314,29 @@ namespace BioNet {
 
 		if (j < 0 || j > network->size())
 			throw Exception("Node is not in the matrix range");
-		return network->getEdge(i, j);
+		try {
+			return network->getEdge(i, j);
+		}
+		catch(exception e) {
+			cerr << e.what() << endl;
+		}		
 	}
 
 	/// Returns the name of a node from a given index
 	/**
 	@param i Index of the network to retrieve 
+	@return Node at the specified index
 	*/
 	template<typename T>
 	const string Net<T>::getNode(const int i) const {
 		if (i < 0 || i > network->size())  // corrected from network.size()
 			throw Exception("Node is not in the matrix range");
-
-		return network->getNode(i);
+		try{
+			return network->getNode(i);
+		}
+		catch (exception e) {
+			cerr << e.what() << endl;
+		}
 	}
 
 	/// Resizes the network based off of given size
@@ -341,33 +348,27 @@ namespace BioNet {
 
 		if (size <= 0)
 			throw Exception("resize value is invalid");
-		network->resize(size);
+		try {
+			network->resize(size);
+		}
+		catch (exception e) {
+			cerr << e.what() << endl;
+		}
 	}
 
-
+	/// Resizes the network based off of given size
+	/**
+	@param size new size the resize to
+	*/
 	template<typename T>
 	void Net<T>::clear() {
 		//network->clear();
 	}
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// MORNING COHORT TURING
-	//
-	//
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// AFTERNOON COHORT KNUTH
-	//
-	//
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// AFTERNOON COHORT DIJKSKTRA
-	//
-
+	
+	/// Converts the network to the given type
+	/**
+	@param type new type of the network
+	*/
 	template<typename T>
 	void Net<T>::convertToType(const string& type)
 	{
@@ -392,7 +393,8 @@ namespace BioNet {
 	}
 
 	/// Network size accessor
-	/** Returns the size of the network
+	/** 
+	@return the size of the network
 	*/
 	template<typename T>
 	const size_t Net<T>::size() const
@@ -410,6 +412,10 @@ namespace BioNet {
 	network->reserve(size);
 	}*/
 
+	/// Network degree accessor
+	/**
+	@return the degree of the network
+	*/
 	template<typename T>
 	const T Net<T>::degree(const int index) const {
 		if (index < 0 || index >= network->size())
@@ -421,6 +427,7 @@ namespace BioNet {
 	/**
 	@param start The starting node index
 	@param end The ending node index
+	@return the shortest path between two nodes
 	*/
 	template<typename T>
 	const T Net<T>::shortestPath(const int start, const int end) const {
@@ -491,6 +498,7 @@ namespace BioNet {
 
 	/// Returns the number of edges in the network
 	/**
+	@return Number of edges in the network
 	*/
 	template<typename T>
 	const unsigned int Net<T>::numberOfEdges() const {
@@ -519,12 +527,10 @@ namespace BioNet {
 	void Net<T>::deleteEdge(const string& lstr, const string& rstr) {
 		network->deleteEdge(lstr, rstr);
 	}
-	//
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	
 	/// Overloaded assignment operator
 	/**
-	@param rhs The Net object to set 'this' equal to
+	@param rhs Net object to set 'this' equal to
 	*/
 	template<typename T>
 	const Net<T>& Net<T>::operator=(const Net<T>& rhs)
@@ -555,7 +561,10 @@ namespace BioNet {
 	//	return *this;
 	//}
 
-
+	/// Overloaded shift operator
+	/**
+	@param os Network is assigned to output stream object
+	*/
 	template<typename T>
 	ostream& Net<T>::operator<<(ostream& os) const
 	{
@@ -563,6 +572,10 @@ namespace BioNet {
 		return os;
 	}
 
+	/// Overloaded operator *
+	/**
+	@param i Weight of the edges in the network are mutliplied by the given value
+	*/
 	template<typename T>
 	Net<T> Net<T>::operator*(const T i)const
 	{
@@ -571,6 +584,10 @@ namespace BioNet {
 		return retVal;
 	}
 
+	/// Overloaded operator *=
+	/**
+	@param i Weight of the edges in the network are mutliplied by the given value
+	*/
 	template<typename T>
 	const Net<T>& Net<T>::operator*=(const T i) const
 	{
@@ -578,6 +595,10 @@ namespace BioNet {
 		return *this;
 	}
 
+	/// Overloaded operator /
+	/**
+	@param i Weight of the edges in the network are divided by the given value
+	*/
 	template<typename T>
 	Net<T> Net<T>::operator/(const T i)const
 	{
@@ -586,6 +607,10 @@ namespace BioNet {
 		return retVal;
 	}
 
+	/// Overloaded operator /=
+	/**
+	@param i Weight of the edges in the network are divided by the given value
+	*/
 	template<typename T>
 	const Net<T>& Net<T>::operator/=(const T i) const
 	{
