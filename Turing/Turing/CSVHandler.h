@@ -147,10 +147,22 @@ public:
 		}	
 	}
 
-//private:
-	//string _filename;
 private :
+	/**
+	Splits the first line of the file into a vector of strings.
+
+	@param s - First line of file
+	@param delim - delimiter for splitting in this case a comma
+	*/
 	static vector<string> split(const string &s, char delim);
+	/**
+	Splits the remaining lines after the first more efficiently by not using a vector.
+
+	@param s - Line to be split
+	@param delim - delimiter for splitting the line
+	@param rows - Number of rows so an array can be initalized with the right size
+	@param colsize - Lenth of the largest column
+	*/
 	static char ** split2(const string &s, const char delim, const int rows , const int colsize);
 };
 
