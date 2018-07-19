@@ -31,10 +31,10 @@ namespace BioNet {
 		not the provided path will be used
 		*/
 		template <class R, class T>
-		static void readFile(Net<T>& bn, const string& fname, bool useDefault = true)
+		static void readFile(Net<T>& bn, const string& fname, bool usedefault = true)
 		{
-			string fullFname = (useDefault ? IO::getDefaultPath() : "") + fname;
-			R::doRead(bn, fullFname);
+			string fullfilename = (usedefault ? IO::getDefaultPath() : "") + fname;
+			R::doRead(bn, fullfilename);
 		}
 	};
 }
