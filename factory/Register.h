@@ -6,6 +6,10 @@ using std::string;
 using std::function;
 
 namespace BioNet {
+	/// A struct to register the adj type from the factory map.
+	/**
+	Registers the adj type from the factory map.
+	*/
 	struct Register {
 		// name="B"  checkType= address of B::checkType
 		string keyword;

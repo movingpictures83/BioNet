@@ -26,7 +26,10 @@ using BioNet::Exception;
 using BioNet::FileHandler;
 
 
-
+/// Inherits from **FileHandler** to handle CSV input files.
+/**
+Inherits from FileHandler to handle CSV input files.
+*/
 class CSVHandler: public FileHandler
 {
 public:
