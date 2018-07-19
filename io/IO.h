@@ -5,23 +5,25 @@
 using std::string;
 
 namespace BioNet {
-	///Parent class for reader and writer classes allows for shared paths between classes
-	
+	/** 
+	 * Class for all I/O functionality.
+	 * Intended to be the base class for all I/O
+	 */
 	class IO {
 	protected:
 		///Global path directory used when the directory is not given by the user
 		static string defaultPath;
 	public:
 		/**
-			@returns the gobal default path used by all subclasses
-		*/
+		 * Gets the default path for I/O.
+		 * @returns the global default path.
+		 */
 		static string getDefaultPath() { return defaultPath; }
 
 		/**
-			updates the global default path for all IO subclasses
-
-			@params p - updated global default path
-		*/
+		 * Updates the global default path for I/O.
+		 * @param p Global default path to set.
+		 */
 		static void setDefaultPath(string p) { defaultPath = p; }
 
 	};

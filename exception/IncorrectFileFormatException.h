@@ -9,15 +9,13 @@ using namespace BioNet;
 using std::string;
 
 /**
-Inherits from BioNet::Exception
-
+* Exception for when a file is not the correct format when trying to access it.
 */
 class IncorrectFileFormatException : public Exception {
 public:
 	/**
-	Declares IncorrectFileFormatException constructor that inherits from BioNet::Exception
-	Takes Exception message as parameter
-
-	*/
+	 * Declares IncorrectFileFormatException constructor that inherits from BioNet::Exception
+	 * @param message Exception message
+	 */
 	IncorrectFileFormatException(string message) : Exception(message) {}
 };
