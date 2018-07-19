@@ -11,6 +11,10 @@ namespace BioNet {
 	class ReadWriter : public  Reader, public Writer {
 	
 	public:
+		/**
+		* Declares ReadWriter constructor that inherits from Reader and Writer
+		* @param p default file path
+		*/
 		ReadWriter(string p = IO::getDefaultPath()) : Reader(p), Writer(p) {}
 	};
 }

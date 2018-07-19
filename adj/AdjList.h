@@ -284,69 +284,6 @@ namespace BioNet {
 		{
 			return true;
 		}
-		/*const BioAdjList& operator+=(const string nodename)
-		{
-			network.push_back(List<T>(0, nodename));
-			return *this;
-		}*/
-
-		/*BioAdjList operator+(const string nodename)
-		{
-			BioAdjList list = *this;
-			list += nodename;
-			return list;
-		}
-
-		const BioAdjList& operator-=(const string nodename)
-		{
-			deleteNode(nodename);
-			return *this;
-		}
-
-		BioAdjList operator-(const string nodename)
-		{
-			BioAdjList list = *this;
-			list -= nodename;
-			return list;
-		}
-
-		BioAdjList operator=(const BioAdjList &rhs)
-		{
-			return BioAdjList(rhs);
-		}
-
-		BioAdjList operator*(const T weight)
-		{
-			BioAdjList list = *this;
-			for (int i = 0; i < list.network.size(); i++)
-				list.network[i] *= weight;
-			return list;
-		}
-
-		BioAdjList operator/(const T weight)
-		{
-			BioAdjList list = *this;
-			for (int i = 0; i < list.network.size(); i++)
-				list.network[i] /= weight;
-			return list;
-		}
-
-		const BioAdjList& operator*=(const T weight)
-		{
-			for (int i = 0; i < network.size(); i++)
-				network[i] *= weight;
-			return *this;
-		}
-
-		const BioAdjList& operator/=(const T weight)
-		{
-			for (int i = 0; i < network.size(); i++)
-				network[i] /= weight;
-			return *this;
-		}*/
-
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		////ADD TEAM
 
 		/// adds a node to the network
 		/**
@@ -357,15 +294,6 @@ namespace BioNet {
 			network.emplace_back(List<T>(name));
 
 		}
-
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		////EQUALS TEAM
-
-
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
-		////SCALE TEAM
 
 		/// scales the network by a factor
 		/**
