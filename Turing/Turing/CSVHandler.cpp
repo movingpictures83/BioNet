@@ -13,7 +13,7 @@ vector <string> CSVHandler::split(const string &s, const char delim) {
 	while (pch != NULL)
 	{
 		result.push_back(pch);
-		pch = strtok_s(NULL, ",", &next_token);
+		pch = strtok_s(NULL, &delim, &next_token);
 	}
 	return result;
 }
