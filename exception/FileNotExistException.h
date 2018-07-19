@@ -8,6 +8,7 @@ using namespace BioNet;
 #include <string>
 using std::string;
 
+/// File not exist exception
 /**
  * Exception for when a file does not exist when trying to access it.
  */

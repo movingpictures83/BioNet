@@ -4,6 +4,7 @@
 using std::string;
 
 namespace BioNet {
+	///IO class
 	/** 
 	 * Class for all I/O functionality.
 	 * Intended to be the base class for all I/O

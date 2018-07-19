@@ -7,6 +7,7 @@ using namespace BioNet;
 #include <string>
 using std::string;
 
+/// File create exception
 /**
  * Exception for when a file could not be created.
  */

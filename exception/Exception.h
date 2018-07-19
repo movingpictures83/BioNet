@@ -3,6 +3,7 @@
 #include <exception>      // std::exception
 
 namespace BioNet {
+	///Exception class for BioNet
 	/**
 	 * Exception class for BioNet that is used as parent class of all exceptions.
 	 */

@@ -7,6 +7,7 @@ using namespace BioNet;
 #include <string>
 using std::string;
 
+///Incorrect file format exceptions
 /**
 * Exception for when a file is not the correct format when trying to access it.
 */
