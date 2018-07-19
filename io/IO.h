@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <string>
 using std::string;
 
@@ -12,19 +11,19 @@ namespace BioNet {
 	class IO {
 	protected:
 		///Global path directory used when the directory is not given by the user
-		static string defaultPath;
+		static string defaultpath;
 	public:
 		/**
 		 * Gets the default path for I/O.
 		 * @returns the global default path.
 		 */
-		static string getDefaultPath() { return defaultPath; }
+		static string getDefaultPath() { return defaultpath; }
 
 		/**
 		 * Updates the global default path for I/O.
 		 * @param p Global default path to set.
 		 */
-		static void setDefaultPath(string p) { defaultPath = p; }
+		static void setDefaultPath(string p) { defaultpath = p; }
 
 	};
 

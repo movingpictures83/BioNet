@@ -2,7 +2,6 @@
 
 #include <exception>
 #include "Exception.h"
-using std::exception;
 using namespace BioNet;
 
 #include <string>
