@@ -10,6 +10,7 @@
 #include <sstream>
 #include "FileNotExistException.h"
 #include "DataInvalidFormatException.h"
+#include "NoMemoryAllocatedException.h"
 #include "FileHandler.h"
 
 using std::ifstream;
@@ -26,10 +27,7 @@ using BioNet::Exception;
 using BioNet::FileHandler;
 
 
-/// Inherits from **FileHandler** to handle CSV input files.
-/**
-Inherits from FileHandler to handle CSV input files.
-*/
+
 class CSVHandler: public FileHandler
 {
 public:
@@ -103,7 +101,7 @@ public:
 	static void doWrite(Net<T> &bionet, const string & fname)
 	{
 		try {
-			ofstream outpuFile(fname, ios::out);
+			ofstream outputFile(fname, ios::out);
 			if (!bionet)
 				throw DataInvalidFormatException("Bionet doesn't contain any data");
 		}
