@@ -83,6 +83,11 @@ int main()
 	return 0;
 }
 
+/// Test class for testing the functions of AdjBasic
+/**
+ Tests the functions implemented in AdjBasic class .
+ Tests following functions: GetEdge(), GetWeight(), FindNodeIndex(), Delete(), Degree()
+*/
 void BioAdjBasicTest()
 {
 	AdjBasic<float> arr(3);
@@ -101,9 +106,25 @@ void BioAdjBasicTest()
 	arr.setEdge("B", "C", 0.8);
 	arr.setEdge("C", "C", 1.0);
 
-	AdjBasic<float> copyarr(3);
-	//arr.copy(arr<T>);
+	cout << endl << "Printing Original Basic Network Start" << endl;
+	arr.printAdjBasicNetwork();
+	cout << endl << "Printing Original Basic Network End" << endl;
+
+	AdjMat<float>adjMat(3);
+	adjMat.setNode(0, "A");
+	adjMat.setNode(1, "B");
+	adjMat.setNode(2, "C");
+
+	adjMat.setEdge("A", "B", 0.5);
+	adjMat.setEdge("A", "C", 0.7);
+	adjMat.setEdge("B", "C", 0.8);
+
+	arr.copy(&adjMat);
+	cout << endl << "Printing Copied Network Start" << endl;
+	arr.printAdjBasicNetwork();
+	cout << endl << "Printing Copied Network End" << endl;
 	
+	cout << endl;
 	// Testing of GetEdge Function
 	float nWeight = 0.0;
 	nWeight = arr.getEdge("A", "B");

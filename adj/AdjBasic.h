@@ -65,8 +65,21 @@ namespace BioNet {
 		/**
 		Clears the existing contents of the edge array
 		*/
+		void clearEdge()
+		{
+			for (int nEdg = 0; nEdg < nCurEdges; nEdg++)
+			{
+				arrBEdges[nEdg].source = arrBEdges[nEdg].destination = "";
+				arrBEdges[nEdg].weight = 0.0;
+				//memset(&arrBEdges[nEdg], 0, sizeof(arrBEdges[nEdg]));
+			}
+
+			nCurEdges = 0;
+		}
 		
 	public:
+
+		
 		
 		/// Used for factory Construction
 		/**
@@ -401,20 +414,22 @@ namespace BioNet {
 			delete[] arrBNodes;
 			arrBNodes = tempArrBNodes;			
 		}
-
+		
 		/// Copy network 
 		/**
 		Copies existing network in a new network
 		@param rhs the Adj to copy
 		*/
 		void copy(const Adj<T>* rhs) {
-			int test = rhs->size();
-			int abc = 0;
-			arrBNodes->resize(rhs->size());
-			
-			for (unsigned i = 0; i < nTotalNodes; i++) {
+			arrBNodes->resize(rhs->size());		
+
+			nCurNodes = 0;
+			for (unsigned i = 0; i < rhs->size(); i++) {
 				arrBNodes[i] = rhs->getNode(i);
+				nCurNodes++;
 			}
+			
+			clearEdge();
 
 			for (unsigned i = 0; i < rhs->size(); i++) {
 				for (unsigned j = 0; j < rhs->size(); j++) {
@@ -438,11 +453,37 @@ namespace BioNet {
 		*/
 		bool isEqual(const Adj<T>* adj)
 		{
-		/*	auto _rhs = static_cast<const AdjBasic<T> *>(rhs);
-			for (unsigned i = 0; i < nCurNodes; i++) {
-				if (arrBNodes[i].compare(_rhs->))
-					return false;*/
-			return true;
+			for (int nNodes = 0; nNodes < nCurNodes; nNodes++)
+			{
+				try {
+					if (adj->findNodeIndex(arrBNodes[nNodes]) == -1)
+						return false;
+				}
+				catch (std::exception e)
+				{
+					return false;
+				}				
+			}
+
+			for (int nEdges = 0; nEdges < nCurEdges; nEdges++)
+			{
+				try
+				{
+					BasicEdge<T> ourEdge = arrBEdges[nEdges];
+					
+					T weight = adj->getEdge(ourEdge.source, ourEdge.destination);
+					if (!fequal(weight, ourEdge.weight))
+					{
+						return false;
+					}
+				}
+				catch (std::exception e)
+				{
+					return false;
+				}
+			}
+			
+			return true;		
 		}
 
 		/// Add node
@@ -481,6 +522,28 @@ namespace BioNet {
 				edge.weight = edge.weight / weight;
 			}
 		}		
+
+		/// Prints the content of network
+		/**
+		Prints the names of the nodes and edges with their weights present in a network
+		*/
+
+		void printAdjBasicNetwork()
+		{
+			cout << "AdjBasic Network Nodes" << endl;
+			for (int n = 0; n < nCurNodes; n++)
+			{
+				cout << "Node[" << n << "]: " << arrBNodes[n] << "   " ;
+			}
+			cout << endl << "Edge Nodes" << endl;
+			for (int e = 0; e < nCurEdges; e++)
+			{
+				BasicEdge<T> edge = arrBEdges[e];
+				
+				cout << "Edge[" << e << "]: " << edge.source << edge.destination << "-->" << edge.weight << "   ";
+			}
+
+		}
 	};
 
 	template<>
