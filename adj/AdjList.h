@@ -57,76 +57,83 @@ namespace BioNet {
 		/**
 		@param Initial size of the network
 		*/
-		AdjList(int i = 5) {
-			network.resize(i);
+		AdjList(int size = 5) {
+			network.resize(size);
 		}
 		~AdjList() {}
 
-		/// Sets the edge between two nodes
+		///Sets the edge given two node indexes and numeric weight.
 		/**
-			@param x index of the first node
-			@param y index of the second node
-			@param w weight of the edge
+		* Sets the edge given two node indexes and numeric weight.
+		* @param source The index of source node of the edge.
+		* @param target The index of target node of the edge.
+		* @param weight The weight of the edge.
 		*/
-		void setEdge(const int x, const int y, const T w)
+		void setEdge(const int source, const int target, const T weight)
 		{
-			network[x].setWeight(network[y].getName(), w);
+			network[source].setWeight(network[target].getName(), weight);
 		}
 
-		/// Sets the edge between two nodes
+		///Sets the edge given two node names references and numeric weight.
 		/**
-		@param x name of the first node
-		@param y name of the second node
-		@param w weight of the edge
+		* Sets the edge given two node indexes and numeric weight.
+		* @param source The label of source node of the edge.
+		* @param target The label of target node of the edge.
+		* @param weight The weight of the edge.
 		*/
-		void setEdge(const string& x, const string& y, const T w)
+		void setEdge(const string& source, const string& target, const T weight)
 		{
 			for (int i = 0; i < network.size(); i++) {
-				if (network[i].getName() == x && network[i].search(y)) {
-					network[i].setWeight(y, w);
+				if (network[i].getName() == source && network[i].search(target)) {
+					network[i].setWeight(target, weight);
 					return;
 				}
 			}
-			network[this->findNodeIndex(x)].insertFront(w, y);
+			network[this->findNodeIndex(source)].insertFront(weight, target);
 		}
 
-		/// gets the weight of the edge
+		///Gets the edge weight given two numeric indexes.
 		/**
-			@param x index of the first node
-			@param y index of the second node
-			@return the weight of the edge
+		* Get the edge weight given two node indexes.
+		* @param source The index of source node of the edge.
+		* @param target The index of target node of the edge.
+		* @return Edge weight.
 		*/
-		T getEdge(const int x, const int y) const
+		T getEdge(const int source, const int target) const
 		{
-			return network[x].getWeight(network[y].getName());
+			return network[source].getWeight(network[target].getName());
 		}
-		/// gets the weight of the edge
+
+		///Gets the weight of the edge given two node names
 		/**
-			@param a name of the first node
-			@param b name of the second node
-			@return the weight of the edge
+		* Get the edge weight given two node labels.
+		* @param source The label of source node of the edge.
+		* @param target The label target node of the edge.
+		* @return Edge weight.
 		*/
-		T getEdge(const string& a, const string& b) const
+		T getEdge(const string& source, const string& target) const
 		{
 			for (int i = 0; i < network.size(); i++) {
-				if (strcmp(network[i].getName().c_str(), a.c_str()) == 0)
-					return network[i].getWeight(b);
+				if (strcmp(network[i].getName().c_str(), source.c_str()) == 0)
+					return network[i].getWeight(target);
 			}
 			return T();
 		}
 
-		/// sets the node in the network
-		/** 
-			@param i index of the node
-			@param s name of the node
+		///Sets the node name given an index
+		/**
+		* Sets the node name and index.
+		* @param index The index of node.
+		* @param label The label of node.
+		* @return No return value.
 		*/
-		void setNode(const int i, const string& s)
+		void setNode(const int index, const string& label)
 		{
-			string oldName = (string)network[i].getName();
-			network[i].setName(s);
+			string oldName = (string)network[index].getName();
+			network[index].setName(label);
 			for (int z = 0; z < network.size(); z++) {
-				if (z != i)
-					network[z].setEdgeName(oldName, s);
+				if (z != index)
+					network[z].setEdgeName(oldName, label);
 			}
 		}
 
