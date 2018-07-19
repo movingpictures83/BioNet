@@ -11,6 +11,7 @@ using std::endl;
 using BioNet::IO;
 
 namespace BioNet {
+	/// Writer subclass of IO
 	/**
 	 * Subclass of IO used to write in files given a file handler
 	 */

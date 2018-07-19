@@ -7,6 +7,7 @@ using namespace BioNet;
 #include <string>
 using std::string;
 
+/// Invalid data format exception
 /**
  * Exception for when read or used data has invalid format.
  */

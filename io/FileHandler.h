@@ -5,6 +5,7 @@
 using std::string;
 
 namespace BioNet {
+	/// FileHandler class to handle files.
 	/**
 	* Specific functionality for handling files.
 	* To use in conjuction with a Reader or Writer class.
