@@ -12,7 +12,10 @@ namespace BioNet {
 	*/
 	struct Register {
 		// name="B"  checkType= address of B::checkType
+		/// Gets the name of the register type
 		string keyword;
+
+		/// Constructor that registers function with AdjFactory's mFactoryMap
 		/**
 		Constructor that registers function with AdjFactory's mFactoryMap
 
