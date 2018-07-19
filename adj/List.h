@@ -13,15 +13,28 @@ namespace BioNet
 	template<typename T>
 	class List {
 	private:
+		/// Name of the List
 		string name;
+		/// The starting Edge in the list
 		Edge<T> * head;
 		/// Recursive helper function to search over the linked list for a specific destination edge.
+		/**
+		@return Returns true if the search was successful
+		@param name Name of the List
+		@param start The first Edge in the List
+		*/
 		bool doSearch(string name, Edge<T>* start) {
 			if (start == NULL) return false;
 			else if (start->getName() == name) return true;
 			else return doSearch(name, start->getNext());
 		}
+
 		/// Recursive helper function to delete a node from the linked list.
+		/**
+		@return Edge<T>* The delete Edge's next
+		@param node The Edge to delete
+		@param name The name of the Node
+		*/
 		Edge<T>* recursiveDeleteEdge(Edge<T>* node, const string& name) {
 			if (node == nullptr)
 				return nullptr;
@@ -36,7 +49,11 @@ namespace BioNet
 			node->setNext(recursiveDeleteEdge(node->getNext(), name));
 			return node;
 		}
+
 		/// Recursive helper function to delete the linked list.
+		/**
+		@param node The starting node of the List
+		*/
 		void recursiveClear(Edge<T>* node)
 		{
 			if (node)
@@ -47,8 +64,14 @@ namespace BioNet
 		}
 	public:
 		/// Default constructor, initializes linked list to null.
+		/**
+		*/
 		List() : head(nullptr) {}
+
 		/// Copy constructor
+		/**
+		@param copy List to copy
+		*/
 		List(const List<T>& copy) {
 			this->name = copy.name;
 			this->head = nullptr;
@@ -58,7 +81,7 @@ namespace BioNet
 		}
 		/// Main Constructor
 		/**
-		@param Name of the node
+		@param name Name of the node
 		*/
 		List(const string& name)
 		{
@@ -74,13 +97,15 @@ namespace BioNet
 		}
 		/// Recursively search for a node on the linked list.
 		/**
-		@param Name of the destination node of the edge.
+		@return Returns if the search was successful or not
+		@param name Name of the destination node of the edge.
 		*/
 		bool search(const string& name) { return doSearch(name, head); }
 		/// Sets the weight of an edge
 		/**
-		@param Name of the destination node of the edge.
-		@param New weight of the edge.
+		@return Returns true if the setWeight was successful
+		@param name Name of the destination node of the edge.
+		@param weight New weight of the edge.
 		*/
 		bool setWeight(const string& name, const T weight) {
 			auto * current = head;
@@ -103,13 +128,14 @@ namespace BioNet
 
 		/// Set accessor method for the name of the node.
 		/**
-		@param New name for the node.
+		@param s New name for the node.
 		*/
 		void setName(const string& s) { name = s; }
 
 		/// Set accessor method for the name of the destination node of an edge.
 		/**
-		@param New name for the destination node on an edge.
+		@param oldName Old name for the destination node on an edge.
+		@param newName New name for the destination node on an edge.
 		*/
 		void setEdgeName(const string& oldName, const string& newName) {
 			auto* node = head;
@@ -125,7 +151,7 @@ namespace BioNet
 
 		/// Get accessor method for the weight of an edge.
 		/**
-		@param Name of the destination node of the edge.
+		@param name Name of the destination node of the edge.
 		@return Weight of the edge.
 		*/
 		T getWeight(const string& name) const {
@@ -142,8 +168,8 @@ namespace BioNet
 		///Add a new edge to the node.
 		/**
 		The edge is inserted at the front of the linked list.
-		@param Weight of the new node.
-		@param Name of the destination node.
+		@param weight Weight of the new node.
+		@param name Name of the destination node.
 		@return A pointer to the new edge.
 		*/
 		Edge<T>* insertFront(const T weight, const string& name) {
@@ -154,12 +180,16 @@ namespace BioNet
 
 		/// Recursively deletes an edge from the node.
 		/**
-		@param Name of the destiantion node of the edge to be deleted.
+		@param name Name of the destiantion node of the edge to be deleted.
 		*/
 		void deleteEdge(const string& name) {
 			head = recursiveDeleteEdge(head, name);
 		}
 
+		/// An iterative delete edge function
+		/**
+		@param name Name of the edge to delete
+		*/
 		void deleteEdgeIter(const string& name)
 		{
 			Edge<T> temp;
