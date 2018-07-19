@@ -101,7 +101,7 @@ public:
 	static void doWrite(Net<T> &bionet, const string & fname)
 	{
 		try {
-			ofstream outpuFile(fname, ios::out);
+			ofstream outputFile(fname, ios::out);
 			if (!bionet)
 				throw DataInvalidFormatException("Bionet doesn't contain any data");
 		}
