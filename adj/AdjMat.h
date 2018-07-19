@@ -18,8 +18,9 @@ using std::endl;
 namespace BioNet {
 
 /// Network implemented as an Adjacency **Matrix**
-/** represents a Network implemented as an Adjacency **Matrix**
-- overrides most methods from its parent's generic class
+/** 
+ * Represents a Network implemented as an Adjacency **Matrix**
+ * Overrids most methods from its parent generic class.
 */
 template<typename T>
 class AdjMat : public Adj<T>
@@ -29,7 +30,11 @@ private:
 	vector<string> names;
 	static Register reg;
 public:
-	/// Returns the Network's **Type** (Matrix, List, etc.).
+	/// Returns the Network's **Type** (Matrix, List, etc.)
+	/**
+	 * Returns the network type keyword.
+	 * @return the network type keyword.
+	 */
 	static string NetworkType()
 	{
 		//static const string network = "BioAdjMat";
@@ -41,58 +46,154 @@ public:
 	}
 
 	/// Uses a Factory to create a new **Network** of the current type
+	/**
+	* Allocates a new Adjacency Matrix in memory and returns it.
+	* @return A new memory-allocated Adjacency Matrix.
+	*/
 	static GenericAdj* make() { return new AdjMat<T>; }
 
 	/// Creates a new Network
+	/**
+	* Constructor.
+	* Initializes an Adjacency Matrix.
+	*/
 	AdjMat(int size = 5) {
 		names.resize(size);
 		matrix.resize(size);
 		for (auto& n : matrix)
 			n.resize(size, 0);
 	}
+
+	/**
+	* Default destructor.
+	* Default destructor to destroy the Adjacency Matrix.
+	*/
 	~AdjMat() {}
+
 	///Sets the edge given two node indexes and numeric weight.
 	/**
-
+	* Sets the edge given two node indexes and numeric weight.
+	* @param source The index of source node of the edge.
+	* @param target The index of target node of the edge.
+	* @param weight The weight of the edge.
 	*/
-	void setEdge(const int, const int, const T); 
-	///Sets the edge given two node names and numeric weight.
-	void setEdge(const string&, const string&, const T);
-	///Gets the weight of the edge given two numeric indexes.
-	T getEdge(const int, const int) const;
+	void setEdge(const int source, const int target, const T weight);
+
+	///Sets the edge given two node names references and numeric weight.
+	/**
+	* Sets the edge given two node indexes and numeric weight.
+	* @param source The label of source node of the edge.
+	* @param target The label of target node of the edge.
+	* @param weight The weight of the edge.
+	*/
+	void setEdge(const string& source, const string& target, const T weight);
+
+	///Gets the edge weight given two numeric indexes.
+	/**
+	* Get the edge weight given two node indexes.
+	* @param source The index of source node of the edge.
+	* @param target The index of target node of the edge.
+	* @return Edge weight.
+	*/
+	T getEdge(const int source, const int target) const;
+
 	///Gets the weight of the edge given two node names
-	T getEdge(const string&, const string&) const;
+	/**
+	* Get the edge weight given two node labels.
+	* @param source The label of source node of the edge.
+	* @param target The label target node of the edge.
+	* @return Edge weight.
+	*/
+	T getEdge(const string& source, const string& target) const;
+
 	///Sets the node name given an index
-	void setNode(const int, const string&);
+	/**
+	* Sets the node name and index.
+	* @param index The index of node.
+	* @param label The label of node.
+	* @return No return value.
+	*/
+	void setNode(const int index, const string& label);
+
 	///Gets the node name given an index
-	string getNode(const int) const;
+	/**
+	* Gets the node name given an index.
+	* @param index The index of node.
+	* @return Name of the node.
+	*/
+	string getNode(const int index) const;
+
 	///Returns the size of the matrix
+	/**
+	* Returns the size of the matrix.
+	* @return Size of the matrix.
+	*/
 	int size() const;
+
 	///Resizes the matrix
-	void resize(const int);
+	/**
+	* Resizes the matrix given an size.
+	* @param size Target size of matrix.
+	* @return No return value.
+	*/
+	void resize(const int size);
+
 	///Gets the degree of the node given an index
-	T degree(const int) const;
-	///Gets the total number of edges
+	/**
+	* Gets the degree of the node given an index.
+	* @param index Index of the node.
+	* @return Degree of node.
+	*/
+	T degree(const int index) const;
+
+	///Gets the total number of edges in the matrix
+	/**
+	* Gets the total number of edges in the matrix.
+	* @return Number of edges in matrix.
+	*/
 	unsigned int numberOfEdges() const;
+
 	///Returns the index of the node given a name
-	int findNodeIndex(const string&) const;
+	/**
+	* Returns the index of the node given a name.
+	* @param name Name of the node.
+	* @return Index of node.
+	*/
+	int findNodeIndex(const string& name) const;
+
 	///Deletes the edge given two node names
-	void deleteEdge(const string &, const string &);
+	/**
+	* Deletes the edge given two node names
+	* @param first Name of the first node.
+	* @param second Name of the second node.
+	* @return No return value.
+	*/
+	void deleteEdge(const string & first, const string & second);
+
 	///Deletes the edge given the two node indexes
-	void deleteEdge(int, int);
+	/**
+	* Deletes the edge given two node indeces.
+	* @param first Index of the first node.
+	* @param second Index of the second node.
+	* @return No return value.
+	*/
+	void deleteEdge(int first, int second);
+
 	///Deletes node given name
-	void deleteNode(const string &);
+	/**
+	* Deletes the node given the name.
+	* @param name Name of the node.
+	* @return No return value.
+	*/
+	void deleteNode(const string & name);
+
 	///Deletes node given index
-	void deleteNode(const int);
-	//BioAdjMat<T> operator+ (const string &);
-	//const AdjMat<T> & operator+= (const string &);
-	//const AdjMat<T> & operator/= (const T &);
-	//const AdjMat<T> & operator*= (const T &);
-	//bool operator== (const AdjMat<T> &);
-	//bool operator!= (const AdjMat<T> &);
-	//const string & operator[] (int);
-	//T operator() (int, int);
-	//friend ostream & operator<< (const ostream &, const AdjMat<T> &);
+	/**
+	* Deletes the node given the index.
+	* @param index Index of the node.
+	* @return No return value.
+	*/
+	void deleteNode(const int index);
 
 	// moving operators to BioNet Class, this becomes copy
 	///Copies rhs into itself.
@@ -110,14 +211,21 @@ public:
 	}
 	///Adds node with no edges given a name
 	/**
-	@param aNode Node to be added.
-	*/
+	 * Adds node with no edges with the given name.
+	 * @param aNode Node to be added.
+	 */
 	void addNode (const string& aNode) {
 		unsigned sz = size();
 		resize( sz + 1);
 		setNode( sz, aNode);
 	}
-	///Checks if rhs is equal 
+
+	///Checks if rhs is equal
+	/**
+	* Checks if given Adjacency Matrix is equal to this one.
+	* @param rhs Adjacency Matrix to compare.
+	* @return True if equal, false otherwise.
+	*/
 	bool isEqual (const Adj<T>* rhs) {
 		auto _rhs = static_cast<const AdjMat<T> *>(rhs);
 		unsigned size = names.size();
@@ -132,17 +240,22 @@ public:
 	}
 	///Scales up the weights by a given factor
 	/**
-	@param factor number to scale on.
-	*/
+	 * Scales up the weights by a given factor.
+	 * @param factor Number to scale on.
+	 * @return No return value.
+	 */
 	void scaleUp(const T factor) {
 		unsigned size = names.size();
 		for (unsigned i = 0; i < size; i++)
 			for (unsigned j = 0; j < size; j++)
 				matrix[i][j] *= factor;
 	}
+
 	///Scales down the weights by a given factor
 	/**
-	@param factor number to scale on.
+	* Scales down the weights by a given factor.
+	* @param factor Number to scale on.
+	* @return No return value.
 	*/
 	void scaleDown(const T factor) {
 		unsigned size = names.size();
@@ -163,6 +276,12 @@ Register AdjMat<float>::reg = Register("BioAdjMatFloat", &AdjMat::make);
 Register AdjMat<double>::reg = Register("BioAdjMatDouble", &AdjMat::make);
 
 /// Sets the weight of a given **Edge** (by its indexes) in the Network **Matrix**
+/**
+* Sets the edge given two node indexes and numeric weight.
+* @param i The index of source node of the edge.
+* @param j The index of target node of the edge.
+* @param w The weight of the edge.
+*/
 template <typename T>
 void AdjMat<T>::setEdge(const int i, const int j, const T w)
 {
@@ -172,6 +291,12 @@ void AdjMat<T>::setEdge(const int i, const int j, const T w)
 }
 
 /// Sets the weight of a given **Edge** (by its neightboring Node-Names) in the Network **Matrix**
+/**
+* Sets the edge given two node names and numeric weight.
+* @param n1 The name of source node of the edge.
+* @param n2 The name of target node of the edge.
+* @param w The weight of the edge.
+*/
 template <typename T>
 void AdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 {
@@ -196,6 +321,12 @@ void AdjMat<T>::setEdge(const string& n1, const string& n2, const T w)
 }
 
 /// Returns the weight of a given **Edge** (by its indexes) in the Network **Matrix**
+/**
+* Get the edge weight given two node indexes.
+* @param i The index of source node of the edge.
+* @param j The index of target node of the edge.
+* @return Edge weight.
+*/
 template <typename T>
 T AdjMat<T>::getEdge(const int i, const int j) const {
 	if (i < 0 || i > names.size() || j < 0 || j > names.size())
@@ -205,6 +336,12 @@ T AdjMat<T>::getEdge(const int i, const int j) const {
 }
 
 /// Returns the weight of a given **Edge** (by its neightboring Node-Names) in the Network **Matrix**
+/**
+* Get the edge weight given two node names.
+* @param n1 The name of source node of the edge.
+* @param n2 The name of target node of the edge.
+* @return Edge weight.
+*/
 template <typename T>
 T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 {
@@ -229,6 +366,11 @@ T AdjMat<T>::getEdge(const string& n1, const string& n2) const
 }
 
 /// Returns the internal index of a **Node** given its **Name**
+/**
+* Get the index of the node given its name.
+* @param lookup Name of the node to find.
+* @return Index of found node.
+*/
 template <typename T>
 int AdjMat<T>::findNodeIndex(const string & lookup) const
 {
