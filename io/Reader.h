@@ -11,7 +11,10 @@ using std::endl;
 using BioNet::IO;
 
 namespace BioNet {
-	///Subclass of IO used to read in files given a file handler
+	/// Reader subclass of IO
+	/** 
+	Subclass of IO used to read in files given a file handler
+	*/
 	class Reader : public IO {
 	protected:  // Accessible in Reader and classes that inherit from Reader
 
